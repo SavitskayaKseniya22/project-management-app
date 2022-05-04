@@ -11,6 +11,8 @@
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.4.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-scripts": "5.0.1",
@@ -25,6 +27,13 @@
     "lint-fix": "eslint . --fix",
     "prettier": "prettier --write .",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{tsx,ts,test.tsx}": [
+      "npm run prettier",
+      "npm run lint",
+      "npm run lint-fix"
+    ]
   },
   "eslintConfig": {
     "extends": [
