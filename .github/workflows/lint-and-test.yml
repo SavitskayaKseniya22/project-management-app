@@ -22,9 +22,12 @@ jobs:
         uses: actions/setup-node@v2
         with: 
            node-version: 14.x 
-      - name: Ci
-        run: npm ci
-      - name: lint  
-        run: npm run lint
-      - name: test  
-        run: npm run test
+      - name: Install dependencies
+        run: |
+          npm install
+      - name: Lint
+        run: |
+          npm run lint
+      - name: Test
+        run: |
+          npm run test
