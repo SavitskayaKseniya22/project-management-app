@@ -14,21 +14,18 @@ on:
       -develop 
       -main
 
-  # Allows you to run this workflow manually from the Actions tab
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   Linting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install NodeJS
+      - name: Node
       - uses: actions/setup-node@v2
         with: 
-           node-version: 14 
-      - name: Ci, lint and test
+           node-version: 14.x 
+      - name: Ci,lint,test
         run: | 
          npm ci
          npm run lint
          npm run test
-         npm run lint
