@@ -17,11 +17,11 @@ jobs:
   Linting:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Node
         uses: actions/setup-node@v2
         with: 
-           node-version: 14.x 
+           node-version: 14.15 
       - name: Install dependencies
         run: |
           npm install
