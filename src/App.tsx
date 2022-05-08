@@ -1,12 +1,13 @@
-import './App.css';
 import { PageHeader } from './components/header/header';
-import { PageFooter } from './components/footer/footer';
+import PageFooter from './components/footer/footer';
 import { Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page/main-page';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { BoardPage } from './pages/board-page/board-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
 import { ProfileEditPage } from './pages/profile-edit-page/profile-edit-page';
+import './App.scss';
+
 function App() {
   return (
     <div className="App">
