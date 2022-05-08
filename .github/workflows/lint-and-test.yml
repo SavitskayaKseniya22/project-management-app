@@ -1,0 +1,32 @@
+
+name: CI
+
+on:
+  push:
+    branches: 
+      - develop 
+      - main
+  pull_request:
+    branches: 
+      - develop 
+      - main
+
+
+jobs:
+  Linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Node
+        uses: actions/setup-node@v2
+        with: 
+           node-version: '14.15' 
+      - name: Install dependencies
+        run: |
+          npm install
+      - name: Lint
+        run: |
+          npm run lint
+      - name: Test
+        run: |
+          npm run test
