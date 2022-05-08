@@ -1,4 +1,4 @@
-import { PageHeader } from './components/header/header';
+import PageHeader from './components/header/header';
 import PageFooter from './components/footer/footer';
 import { Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/main-page/main-page';

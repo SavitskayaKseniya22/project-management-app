@@ -1,20 +1,20 @@
 @import-normalize;
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Roboto:wght@300;400;500;700&display=swap');
-@import "../src/variables.scss";
+@import '../src/variables.scss';
 
-
-.App{
+.App {
   font-size: $main-font-size;
   font-family: $main-font-family;
   font-weight: $main-font-weight;
   color: $black-color;
 }
 
-h1, h2, h3{
+h1,
+h2,
+h3 {
   font-family: $heading-font-family;
 }
 
-body{
+body {
   margin: 0;
 }
-

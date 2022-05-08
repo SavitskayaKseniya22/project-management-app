@@ -32,10 +32,13 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{tsx,ts,css,scss,test.tsx,json}": [
+    "*.{tsx,ts,test.tsx,json}": [
       "npm run prettier",
       "npm run lint",
       "npm run lint-fix"
+    ],
+    "*.{css,scss}": [
+      "npm run prettier"
     ]
   },
   "eslintConfig": {
