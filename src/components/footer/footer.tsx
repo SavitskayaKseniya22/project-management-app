@@ -1,5 +1,6 @@
 import './footer.scss';
 import logo from '../../assets/svg/rs-school-js.svg';
+import { FormattedMessage } from 'react-intl';
 
 const PageFooter = () => {
   return (
@@ -16,7 +17,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          Nikita Kravchenko
+          <FormattedMessage id="footer_nameNikita" defaultMessage="Nikita Kravchenko" />
         </a>
         <a
           className="footer-git-link"
@@ -24,7 +25,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          Vadim Ilyinchik
+          <FormattedMessage id="footer_nameVadim" defaultMessage="Vadim Ilyinchik" />
         </a>
         <a
           className="footer-git-link"
@@ -32,7 +33,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          Kseniya Savitskaya
+          <FormattedMessage id="footer_nameKseniya" defaultMessage="Kseniya Savitskaya" />
         </a>
       </div>
       <span className="footer-copyright">&#169; 2022</span>

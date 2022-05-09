@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 import './header.scss';
 
 const PageHeader = () => {
   const [scroll, setScroll] = useState(0);
+  const intl = useIntl();
 
   //вынести в глобал стейт значение языка и значение поиска
 
@@ -28,8 +30,15 @@ const PageHeader = () => {
   return (
     <header className={scroll > 120 ? 'header header-sticky' : 'header'}>
       <label className="header-search">
-        <i className="fa-solid fa-magnifying-glass" />
-        <input type="text" placeholder="search" value={searchValue} onChange={handleChange} />
+        <button type="submit">
+          <i className="fa-solid fa-magnifying-glass" />
+        </button>
+        <input
+          type="text"
+          placeholder={intl.formatMessage({ id: 'header_search' })}
+          value={searchValue}
+          onChange={handleChange}
+        />
       </label>
 
       <div className="header-language">
@@ -56,12 +65,16 @@ const PageHeader = () => {
           Ru
         </label>
       </div>
-      <button className="header-new-board">Create new board</button>
+      <button className="header-new-board">
+        <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
+      </button>
 
       <a href="/profile" className="header-edit">
-        Edit profile
+        <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
       </a>
-      <button className="header-logout">Log out</button>
+      <button className="header-logout">
+        <FormattedMessage id="header_logout" defaultMessage="Log out" />
+      </button>
     </header>
   );
 };
