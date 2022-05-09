@@ -35,7 +35,7 @@ const jobSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     });
-    builder.addCase(signupThunk.fulfilled, (state, action) => {
+    builder.addCase(signupThunk.fulfilled, (state) => {
       state.isLoading = false;
     });
     builder.addCase(signupThunk.rejected, (state, action) => {

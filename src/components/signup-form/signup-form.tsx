@@ -9,7 +9,6 @@ interface LoginDataModel {
 function SignupForm() {
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm<LoginDataModel>();
 
