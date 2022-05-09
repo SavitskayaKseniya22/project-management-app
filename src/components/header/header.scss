@@ -41,7 +41,11 @@
     }
   }
 
-  button {
+  button,
+  a {
+    text-decoration: none;
+    text-align: center;
+    font-weight: 400;
     @extend %button-default;
     @extend %button-color;
   }
