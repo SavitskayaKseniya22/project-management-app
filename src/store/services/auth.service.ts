@@ -1,35 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { SigninQueryRequest, SigninQueryResponse, SignupQueryRequest } from './types';
 
-export interface SigninResponse {
-  token: string;
-}
-
-export interface SigninQuery {
-  login: string;
-  password: string;
-}
-
-export interface SignupQuery extends SigninQuery {
-  name: string;
-}
+export const AUTH_API_REDUCER_KEY = 'authApi';
 
 const authApi = createApi({
+  reducerPath: AUTH_API_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.API_URL,
   }),
   endpoints: (builder) => ({
-    signin: builder.query<SigninResponse, SigninQuery>({
-      query: (credentials: SigninQuery) => ({
+    signin: builder.query<SigninQueryResponse, SigninQueryRequest>({
+      query: (credentials: SigninQueryRequest) => ({
         url: '/signin',
         method: 'POST',
         body: credentials,
       }),
     }),
-    signup: builder.query<SigninResponse, SignupQuery>({
-      query: (credentials: SignupQuery) => ({
+    signup: builder.query<SigninQueryResponse, SignupQueryRequest>({
+      query: (userData: SignupQueryRequest) => ({
         url: '/signup',
         method: 'POST',
-        body: credentials,
+        body: userData,
       }),
     }),
   }),
