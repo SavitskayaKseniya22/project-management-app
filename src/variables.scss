@@ -3,38 +3,32 @@ $main-font-family: 'Roboto', sans-serif;
 $main-font-size: 16px;
 $main-font-weight: 300;
 
-
-
-
-$white-color: #FFFFFF;
+$white-color: #ffffff;
 $black-color: #000000;
 
-$gray-color: #E5E5E5;
+$gray-color: #e5e5e5;
 $darkgray-color: #434b57;
 $violet-color: #7953f5;
-$red-color: #ED4A44;
-$yellow-color: #FCA311;
+$red-color: #ed4a44;
+$yellow-color: #fca311;
 $green-color: #3b8f43;
-
 
 $main-bg-color: $violet-color;
 $emphasis-color: $yellow-color;
 
-
-
 $border-width: 2px;
 $border: $border-width solid $emphasis-color;
 $border-transparent: $border-width solid transparent;
-$border-radius: .4rem;
+$border-radius: 0.4rem;
 $border-transition: border 1s;
 
-
 $main-padding: 1rem;
-$half-padding: $main-padding*0.5;
-$double-padding: $main-padding*2;
+$half-padding: $main-padding * 0.5;
+$double-padding: $main-padding * 2;
 
 $min-width: 420px;
 $medium-width: 768px;
+$medium-second-width: 960px;
 $maximum-width: 1200px;
 
 %anchor-default {
@@ -43,7 +37,6 @@ $maximum-width: 1200px;
   border: $border-transparent;
   transition: $border-transition;
   padding: $half-padding;
-  
 }
 
 %anchor-hover {
@@ -53,7 +46,6 @@ $maximum-width: 1200px;
 
 %button-default {
   cursor: pointer;
-  border: none;
   padding: $half-padding $main-padding;
   font-size: 1rem;
   transition: $border-transition;
@@ -73,10 +65,4 @@ $maximum-width: 1200px;
 %button-hover {
   transition: $border-transition;
   border-top: $border;
-  
-  
 }
-
-
-
-
