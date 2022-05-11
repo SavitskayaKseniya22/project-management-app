@@ -1,33 +1,53 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { useSignupQuery } from '../../store/services';
 
-interface LoginDataModel {
-  username: string;
+interface UserDataModel {
+  name: string;
+  login: string;
   password: string;
 }
 
 function SignupForm() {
   const {
     register,
+    handleSubmit,
     formState: { errors },
-  } = useForm<LoginDataModel>();
+  } = useForm<UserDataModel>();
+
+  const [userData, setUserData] = useState<UserDataModel>();
+
+  useSignupQuery(userData, {
+    skip: !userData,
+  });
 
   return (
-    <Form>
+    <Form
+      onSubmit={handleSubmit((data: UserDataModel) => {
+        setUserData(data);
+      })}
+    >
       <Form.Control
         label="User name"
-        controlKey="emailInput"
-        errorMessage={errors.username?.message}
-        {...register('username', { required: true })}
+        controlKey="userNameInput"
+        errorMessage={errors.name?.message}
+        {...register('name', { required: true })}
       />
       <Form.Control
-        label="Last name"
-        controlKey="lastNameInput"
+        label="Login"
+        controlKey="loginInput"
+        errorMessage={errors.login?.message}
+        {...register('login', { required: true })}
+      />
+      <Form.Control
+        label="Password"
+        controlKey="passwordInput"
         errorMessage={errors.password?.message}
-        {...register('password')}
+        {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" />
+        <Form.Button type="submit">Submit</Form.Button>
       </Form.Group>
     </Form>
   );

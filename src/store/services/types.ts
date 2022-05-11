@@ -10,3 +10,8 @@ export interface SigninQueryRequest {
 export interface SignupQueryRequest extends SigninQueryRequest {
   name: string;
 }
+
+export interface SignupQueryResponse extends Omit<SigninQueryRequest, 'password'> {
+  id: string;
+  name: string;
+}

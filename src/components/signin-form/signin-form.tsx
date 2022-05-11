@@ -1,31 +1,51 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-// import { useSigninQuery } from '../../store/services';
+import { useSigninQuery } from '../../store/services';
+import { useEffect, useState } from 'react';
+import { SigninQueryRequest } from '../../store/services/types';
+import { useTypedDispatch } from '../../store';
+import { authSlice } from '../../store/slices';
 
-interface LoginDataModel {
-  username: string;
-  password: string;
-}
+type LoginDataModel = SigninQueryRequest;
 
-function LoginForm() {
+function SigninForm() {
   const {
     register,
+    handleSubmit,
     formState: { errors },
   } = useForm<LoginDataModel>();
 
+  const dispatch = useTypedDispatch();
+
+  const [credentials, setCredentials] = useState<LoginDataModel>();
+
+  const { data } = useSigninQuery(credentials, {
+    skip: !credentials,
+  });
+
+  useEffect(() => {
+    if (!data) return;
+    const { token } = data;
+    dispatch(authSlice.actions.updateAccessToken(token));
+  }, [dispatch, data]);
+
   return (
-    <Form>
+    <Form
+      onSubmit={handleSubmit((data: LoginDataModel) => {
+        setCredentials(data);
+      })}
+    >
       <Form.Control
         label="Login"
         controlKey="loginInput"
-        errorMessage={errors.username?.message}
-        {...register('username', { required: true })}
+        errorMessage={errors.login?.message}
+        {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
         errorMessage={errors.password?.message}
-        {...register('password')}
+        {...register('password', { required: true })}
       />
       <Form.Group>
         <Form.Button type="submit">Login</Form.Button>
@@ -34,4 +54,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default SigninForm;

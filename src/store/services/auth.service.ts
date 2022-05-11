@@ -1,23 +1,34 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { SigninQueryRequest, SigninQueryResponse, SignupQueryRequest } from './types';
+import {
+  SigninQueryRequest,
+  SigninQueryResponse,
+  SignupQueryRequest,
+  SignupQueryResponse,
+} from './types';
 
 export const AUTH_API_REDUCER_KEY = 'authApi';
 
 const authApi = createApi({
   reducerPath: AUTH_API_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.API_URL,
+    baseUrl: process.env.REACT_APP_API_URL,
   }),
   endpoints: (builder) => ({
-    signin: builder.query<SigninQueryResponse, SigninQueryRequest>({
-      query: (credentials: SigninQueryRequest) => ({
-        url: '/signin',
-        method: 'POST',
-        body: credentials,
-      }),
+    signin: builder.query<SigninQueryResponse, SigninQueryRequest | undefined>({
+      query: (credentials?: SigninQueryRequest) => {
+        if (!credentials || !credentials.login || !credentials.password) {
+          throw new Error('Login and password are required');
+        }
+
+        return {
+          url: '/signin',
+          method: 'POST',
+          body: credentials,
+        };
+      },
     }),
-    signup: builder.query<SigninQueryResponse, SignupQueryRequest>({
-      query: (userData: SignupQueryRequest) => ({
+    signup: builder.query<SignupQueryResponse, SignupQueryRequest | undefined>({
+      query: (userData?: SignupQueryRequest) => ({
         url: '/signup',
         method: 'POST',
         body: userData,
