@@ -16,7 +16,7 @@ export const messages = {
     header_search: `поиск`,
     header_newBoard: `Создать новую доску`,
     footer_nameNikita: 'Никита Кравченко',
-    footer_nameVadim: 'Vadim Ilyinchik',
+    footer_nameVadim: 'Вадим Ильинчик',
     footer_nameKseniya: 'Ксения Савицкая',
   },
 };

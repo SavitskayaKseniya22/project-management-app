@@ -66,14 +66,26 @@ const PageHeader = () => {
         </label>
       </div>
       <button className="header-new-board">
-        <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
+        {scroll > 120 ? (
+          <i className="fa-solid fa-folder-plus"></i>
+        ) : (
+          <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
+        )}
       </button>
 
       <a href="/profile" className="header-edit">
-        <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
+        {scroll > 120 ? (
+          <i className="fa-solid fa-user-pen"></i>
+        ) : (
+          <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
+        )}
       </a>
       <button className="header-logout">
-        <FormattedMessage id="header_logout" defaultMessage="Log out" />
+        {scroll > 120 ? (
+          <i className="fa-solid fa-arrow-right-from-bracket"></i>
+        ) : (
+          <FormattedMessage id="header_logout" defaultMessage="Log out" />
+        )}
       </button>
     </header>
   );
