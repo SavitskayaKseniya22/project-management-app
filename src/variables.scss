@@ -28,6 +28,7 @@ $double-padding: $main-padding * 2;
 
 $min-width: 420px;
 $medium-width: 768px;
+$medium-second-width: 960px;
 $maximum-width: 1200px;
 
 %anchor-default {
@@ -45,7 +46,6 @@ $maximum-width: 1200px;
 
 %button-default {
   cursor: pointer;
-  border: none;
   padding: $half-padding $main-padding;
   font-size: 1rem;
   transition: $border-transition;
