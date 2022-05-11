@@ -53,6 +53,10 @@
         break-after: auto;
       }
     }
+
+    .language-eng::after {
+      font-size: 14px;
+    }
   }
 
   & > * {
@@ -72,6 +76,11 @@
     font-weight: 400;
     @extend %button-default;
     @extend %button-color;
+  }
+
+  button:hover,
+  a:hover {
+    @extend %button-hover;
   }
 
   .header-new-board {
@@ -135,13 +144,8 @@
     display: none;
   }
 
-  input:checked + label {
-    background-color: $red-color;
-    color: white;
-  }
-
   label {
-    width: 2rem;
+    width: 4rem;
     cursor: pointer;
     padding: $half-padding $main-padding;
     background-color: $white-color;
@@ -150,5 +154,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+    overflow: visible;
+  }
+
+  .language-eng::after {
+    content: 'Ru';
+    box-sizing: border-box;
+    width: 4rem;
+    padding: $half-padding $main-padding;
+    position: absolute;
+    top: 0;
+    left: 4rem;
+    background-color: $red-color;
+    color: white;
+    transition: 0.5s;
+    font-size: 1rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid transparent;
+  }
+
+  input:checked + .language-eng::after {
+    content: 'En';
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
   }
 }

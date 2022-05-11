@@ -51,7 +51,7 @@ const PageHeader = () => {
           onChange={toggleLanguage}
         />
         <label htmlFor="language-eng" className="language-eng">
-          Eng
+          En
         </label>
         <input
           type="radio"
