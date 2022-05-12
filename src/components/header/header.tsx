@@ -1,29 +1,25 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { langSlice } from '../../store/slices/lang.slice';
+import { searchSlice } from '../../store/slices/search.slice';
 
 import './header.scss';
 
 const PageHeader = () => {
-  const [scroll, setScroll] = useState(0);
+  const [scroll, setScroll] = useState(window.pageYOffset);
   const intl = useIntl();
 
-  const [searchValue, setSearchValue] = useState(window.localStorage.getItem('searchValue') || '');
-
-  const dispatch = useTypedDispatch();
   const lang = useTypedSelector((state: RootState) => state.langSlice.lang);
+  const searchValue = useTypedSelector((state: RootState) => state.searchSlice.searchValue);
+  const dispatch = useTypedDispatch();
 
   window.onscroll = function () {
     setScroll(window.pageYOffset);
   };
 
-  useEffect(() => {
-    window.localStorage.setItem('searchValue', searchValue);
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(e.target.value);
+  const handleChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(searchSlice.actions.updateSearchValue(e.target.value));
   };
 
   const toggleLanguage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +36,7 @@ const PageHeader = () => {
           type="text"
           placeholder={intl.formatMessage({ id: 'header_search' })}
           value={searchValue}
-          onChange={handleChange}
+          onChange={handleChangeSearchValue}
         />
       </label>
 

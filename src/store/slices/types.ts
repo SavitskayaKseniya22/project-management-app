@@ -5,3 +5,7 @@ export interface AuthState {
 export interface LangState {
   lang: string;
 }
+
+export interface SearchState {
+  searchValue: string;
+}
