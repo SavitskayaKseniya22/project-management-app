@@ -1,0 +1,30 @@
+@import '../../variables.scss';
+
+.search-panel {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+
+  @media (min-width: $min-width) {
+    width: 100%;
+  }
+
+  @media (min-width: $medium-width) {
+    width: auto;
+  }
+
+  @media (min-width: $maximum-width) {
+    width: 350px;
+  }
+
+  input {
+    padding: $half-padding $main-padding;
+    font-size: 1rem;
+    order: -1;
+    flex-grow: 1;
+    border: none;
+  }
+  button {
+    color: $red-color;
+  }
+}

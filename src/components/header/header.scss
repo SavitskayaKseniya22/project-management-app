@@ -49,7 +49,7 @@
       break-after: auto;
     }
 
-    .header-language {
+    .language-panel {
       flex-grow: 0;
 
       @media (min-width: $medium-width) {
@@ -102,95 +102,5 @@
 .header-edit {
   @media (min-width: $medium-width) {
     margin-left: auto;
-  }
-}
-
-.header-search {
-  display: flex;
-  flex-wrap: nowrap;
-  position: relative;
-
-  @media (min-width: $min-width) {
-    width: 100%;
-  }
-
-  @media (min-width: $medium-width) {
-    width: auto;
-  }
-
-  @media (min-width: $maximum-width) {
-    width: 350px;
-  }
-
-  input {
-    padding: $half-padding $main-padding;
-    font-size: 1rem;
-    order: -1;
-    flex-grow: 1;
-    border: none;
-  }
-  button {
-    color: $red-color;
-  }
-}
-
-.header-language {
-  display: flex;
-  flex-grow: 0;
-  justify-content: right;
-
-  @media (min-width: $medium-width) {
-    break-after: always;
-  }
-
-  @media (min-width: $maximum-width) {
-    break-after: auto;
-    margin-left: 10%;
-  }
-
-  input {
-    display: none;
-  }
-
-  label {
-    width: 4rem;
-    cursor: pointer;
-    padding: $half-padding $main-padding;
-    background-color: $white-color;
-    color: $main-bg-color;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    position: relative;
-    overflow: visible;
-    font-weight: 400;
-    min-height: 37px;
-  }
-
-  .language-eng::after {
-    content: 'Ru';
-    box-sizing: border-box;
-    width: 4rem;
-    padding: $half-padding $main-padding;
-    position: absolute;
-    top: 0;
-    left: 4rem;
-    background-color: $red-color;
-    color: white;
-    transition: left 0.5s;
-    z-index: 1;
-    text-align: center;
-    min-height: 37px;
-
-    @media (min-width: $min-width) {
-      border: 3px solid transparent;
-    }
-  }
-
-  input:checked + .language-eng::after {
-    content: 'En';
-    left: 0;
   }
 }
