@@ -15,87 +15,50 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+
   @media (min-width: $maximum-width) {
     flex-wrap: nowrap;
   }
+}
 
-  button,
-  input,
-  label,
-  a {
-    transition: 0.3s;
+.header-sticky {
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 14px;
+
+  .header-new-board {
+    break-after: auto;
   }
+}
 
-  &.header-sticky {
-    flex-direction: row;
-    flex-wrap: wrap;
+.header-new-board {
+  background-color: $red-color;
+  color: $white-color;
+  break-after: always;
 
-    & > * {
-      flex-grow: 1;
-      @media (min-width: $maximum-width) {
-        flex-grow: 0;
-      }
-    }
-
-    button,
-    input,
-    label,
-    a {
-      font-size: 14px;
-      transition: 0.3s;
-    }
-
-    .header-new-board {
-      break-after: auto;
-    }
-
-    .language-panel {
-      flex-grow: 0;
-
-      @media (min-width: $medium-width) {
-        break-after: auto;
-      }
-    }
-
-    .language-eng::after {
-      font-size: 14px;
-    }
+  @media (min-width: $medium-width) {
+    break-after: auto;
   }
+}
 
-  & > * {
-    box-sizing: border-box;
+.header-edit,
+.header-logout,
+.header-new-board {
+  box-sizing: border-box;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 400;
+  @extend %button-default;
+  @extend %button-color;
+  transition: 0.3s;
+  flex-grow: 1;
 
-    @media (min-width: $min-width) {
-      flex-grow: 1;
-    }
-
-    @media (min-width: $maximum-width) {
-      flex-grow: 0;
-    }
-  }
-
-  button,
-  a {
-    text-decoration: none;
-    text-align: center;
-    font-weight: 400;
-    @extend %button-default;
-    @extend %button-color;
-  }
-
-  button:hover,
-  a:hover {
+  &:hover {
     @extend %button-hover;
   }
 
-  .header-new-board {
-    background-color: $red-color;
-    color: $white-color;
-    break-after: always;
-
-    @media (min-width: $medium-width) {
-      break-after: auto;
-    }
+  @media (min-width: $maximum-width) {
+    flex-grow: 0;
   }
 }
 

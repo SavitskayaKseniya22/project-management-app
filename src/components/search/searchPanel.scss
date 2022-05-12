@@ -4,9 +4,11 @@
   display: flex;
   flex-wrap: nowrap;
   position: relative;
+  box-sizing: border-box;
 
   @media (min-width: $min-width) {
     width: 100%;
+    flex-grow: 1;
   }
 
   @media (min-width: $medium-width) {
@@ -15,6 +17,7 @@
 
   @media (min-width: $maximum-width) {
     width: 350px;
+    flex-grow: 0;
   }
 
   input {
@@ -24,7 +27,27 @@
     flex-grow: 1;
     border: none;
   }
+
   button {
     color: $red-color;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 400;
+    @extend %button-default;
+    @extend %button-color;
+    transition: 0.3s;
+
+    &:hover {
+      @extend %button-hover;
+    }
+  }
+}
+
+.header-sticky {
+  .search-panel {
+    flex-grow: 1;
+    @media (min-width: $min-width) {
+      flex-grow: 0;
+    }
   }
 }

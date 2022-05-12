@@ -4,6 +4,7 @@
   display: flex;
   flex-grow: 0;
   justify-content: right;
+  box-sizing: border-box;
 
   @media (min-width: $medium-width) {
     break-after: always;
@@ -24,7 +25,6 @@
     padding: $half-padding $main-padding;
     background-color: $white-color;
     color: $main-bg-color;
-    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -33,6 +33,7 @@
     overflow: visible;
     font-weight: 400;
     min-height: 37px;
+    transition: 0.3s;
   }
 
   .language-eng::after {
@@ -47,8 +48,10 @@
     color: white;
     transition: left 0.5s;
     z-index: 1;
-    text-align: center;
-    min-height: 37px;
+    min-height: 39px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     @media (min-width: $min-width) {
       border: 3px solid transparent;
@@ -58,5 +61,14 @@
   input:checked + .language-eng::after {
     content: 'En';
     left: 0;
+  }
+}
+
+.header-sticky {
+  .language-panel {
+    flex-grow: 0;
+    @media (min-width: $medium-width) {
+      break-after: auto;
+    }
   }
 }
