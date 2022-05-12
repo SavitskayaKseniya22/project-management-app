@@ -29,6 +29,11 @@
   .header-new-board {
     break-after: auto;
   }
+  .header-edit,
+  .header-logout,
+  .header-new-board {
+    font-size: 14px;
+  }
 }
 
 .header-new-board {

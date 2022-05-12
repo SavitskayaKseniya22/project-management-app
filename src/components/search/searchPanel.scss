@@ -46,8 +46,13 @@
 .header-sticky {
   .search-panel {
     flex-grow: 1;
+    font-size: 14px;
     @media (min-width: $min-width) {
       flex-grow: 0;
+    }
+
+    button {
+      font-size: 14px;
     }
   }
 }
