@@ -1,7 +1,9 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSignupQuery } from '../../store/services';
+import { errorSlice } from '../../store/slices';
+import { useTypedDispatch } from '../../store';
 
 interface UserDataModel {
   name: string;
@@ -18,9 +20,16 @@ function SignupForm() {
 
   const [userData, setUserData] = useState<UserDataModel>();
 
-  useSignupQuery(userData, {
+  const dispatch = useTypedDispatch();
+
+  const { error } = useSignupQuery(userData, {
     skip: !userData,
   });
+
+  /*useEffect(() => {
+    if (!error) return;
+    if (error) dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);*/
 
   return (
     <Form

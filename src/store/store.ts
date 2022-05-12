@@ -3,11 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { unauthenticatedMiddleware } from './middlewares/authenticatedMiddleware';
 import { authApi } from './services';
-import { authReducer, authSlice } from './slices';
+import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
   [authSlice.name]: authReducer,
+  [errorSlice.name]: errorReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

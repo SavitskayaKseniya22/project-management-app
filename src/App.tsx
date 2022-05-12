@@ -13,12 +13,14 @@ import { ProtectedRoute } from './components/protected-route';
 import './App.scss';
 import { SigninPage } from './pages/signin';
 import { SignupPage } from './pages/signup';
+import { ErrorPropmt } from './components/error-prompt/error-prompt';
 
 function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <div className="App">
+          <ErrorPropmt></ErrorPropmt>
           <PageHeader></PageHeader>
           <main className="main">
             <Routes>
