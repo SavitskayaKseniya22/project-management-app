@@ -1,0 +1,36 @@
+@import '../../variables.scss';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  row-gap: 0.5rem;
+  height: 80%;
+  width: 40%;
+}
+
+.form > * {
+  width: 100%;
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.form-input-text {
+  color: black;
+  padding: 0;
+  height: 45px;
+  box-sizing: border-box;
+  width: 100%;
+  border-color: $violet-color;
+}
+input:invalid {
+  border: 2px solid $red-color;
+}
+
+input:valid {
+  border: 2px solid $violet-color;
+}

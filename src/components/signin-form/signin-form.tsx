@@ -38,12 +38,14 @@ function SigninForm() {
       <Form.Control
         label="Login"
         controlKey="loginInput"
+        className="form-input-text"
         errorMessage={errors.login?.message}
         {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
+        className="form-input-text"
         errorMessage={errors.password?.message}
         {...register('password', { required: true })}
       />
