@@ -15,6 +15,9 @@
     flex-direction: row;
     flex-wrap: wrap;
   }
+  @media (min-width: $maximum-width) {
+    flex-wrap: nowrap;
+  }
 
   button,
   input,
@@ -60,6 +63,8 @@
   }
 
   & > * {
+    box-sizing: border-box;
+
     @media (min-width: $min-width) {
       flex-grow: 1;
     }
@@ -88,12 +93,15 @@
     color: $white-color;
     break-after: always;
 
-    @media (min-width: $maximum-width) {
-      margin-right: 10rem;
-    }
     @media (min-width: $medium-width) {
       break-after: auto;
     }
+  }
+}
+
+.header-edit {
+  @media (min-width: $medium-width) {
+    margin-left: auto;
   }
 }
 
@@ -108,7 +116,6 @@
 
   @media (min-width: $medium-width) {
     width: auto;
-    margin-right: auto;
   }
 
   @media (min-width: $maximum-width) {
@@ -138,6 +145,7 @@
 
   @media (min-width: $maximum-width) {
     break-after: auto;
+    margin-left: 10%;
   }
 
   input {
@@ -157,6 +165,8 @@
     box-sizing: border-box;
     position: relative;
     overflow: visible;
+    font-weight: 400;
+    min-height: 37px;
   }
 
   .language-eng::after {
@@ -169,20 +179,18 @@
     left: 4rem;
     background-color: $red-color;
     color: white;
-    transition: 0.5s;
-    font-size: 1rem;
+    transition: left 0.5s;
     z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid transparent;
+    text-align: center;
+    min-height: 37px;
+
+    @media (min-width: $min-width) {
+      border: 3px solid transparent;
+    }
   }
 
   input:checked + .language-eng::after {
     content: 'En';
-    position: absolute;
-    top: 0;
     left: 0;
-    transition: 0.5s;
   }
 }
