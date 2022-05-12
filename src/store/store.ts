@@ -4,10 +4,14 @@ import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 
 import { unauthenticatedMiddleware } from './middlewares/authenticatedMiddleware';
 import { authApi } from './services';
 import { authReducer, authSlice } from './slices';
+import { langReducer, langSlice } from './slices/lang.slice';
+import { searchSlice, searchReducer } from './slices/search.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
   [authSlice.name]: authReducer,
+  [langSlice.name]: langReducer,
+  [searchSlice.name]: searchReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

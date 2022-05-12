@@ -5,15 +5,16 @@ import { MemoryRouter } from 'react-router';
 import { IntlProvider } from 'react-intl';
 import { LOCALES } from './lang/locales';
 import { messages } from './lang/messages';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 test('renders learn react link', () => {
-  const locale = LOCALES.ENGLISH;
   render(
-    <MemoryRouter initialEntries={['/']}>
-      <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={LOCALES.ENGLISH}>
+    <Provider store={store}>
+      <MemoryRouter initialEntries={['/']}>
         <App />
-      </IntlProvider>
-    </MemoryRouter>
+      </MemoryRouter>
+    </Provider>
   );
   const linkElement = screen.getByText('Log out');
   expect(linkElement).toBeInTheDocument();

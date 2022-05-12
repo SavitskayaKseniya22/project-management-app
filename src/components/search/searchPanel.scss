@@ -1,0 +1,58 @@
+@import '../../variables.scss';
+
+.search-panel {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+  box-sizing: border-box;
+
+  @media (min-width: $min-width) {
+    width: 100%;
+    flex-grow: 1;
+  }
+
+  @media (min-width: $medium-width) {
+    width: auto;
+  }
+
+  @media (min-width: $maximum-width) {
+    width: 350px;
+    flex-grow: 0;
+  }
+
+  input {
+    padding: $half-padding $main-padding;
+    font-size: 1rem;
+    order: -1;
+    flex-grow: 1;
+    border: none;
+  }
+
+  button {
+    color: $red-color;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 400;
+    @extend %button-default;
+    @extend %button-color;
+    transition: 0.3s;
+
+    &:hover {
+      @extend %button-hover;
+    }
+  }
+}
+
+.header-sticky {
+  .search-panel {
+    flex-grow: 1;
+    font-size: 14px;
+    @media (min-width: $min-width) {
+      flex-grow: 0;
+    }
+
+    button {
+      font-size: 14px;
+    }
+  }
+}

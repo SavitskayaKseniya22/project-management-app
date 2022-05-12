@@ -16,173 +16,59 @@
     flex-wrap: wrap;
   }
 
-  button,
-  input,
-  label,
-  a {
-    transition: 0.3s;
+  @media (min-width: $maximum-width) {
+    flex-wrap: nowrap;
   }
+}
 
-  &.header-sticky {
-    flex-direction: row;
-    flex-wrap: wrap;
+.header-sticky {
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-size: 14px;
 
-    & > * {
-      flex-grow: 1;
-      @media (min-width: $maximum-width) {
-        flex-grow: 0;
-      }
-    }
-
-    button,
-    input,
-    label,
-    a {
-      font-size: 14px;
-      transition: 0.3s;
-    }
-
-    .header-new-board {
-      break-after: auto;
-    }
-
-    .header-language {
-      flex-grow: 0;
-
-      @media (min-width: $medium-width) {
-        break-after: auto;
-      }
-    }
-
-    .language-eng::after {
-      font-size: 14px;
-    }
+  .header-new-board {
+    break-after: auto;
   }
-
-  & > * {
-    @media (min-width: $min-width) {
-      flex-grow: 1;
-    }
-
-    @media (min-width: $maximum-width) {
-      flex-grow: 0;
-    }
+  .header-edit,
+  .header-logout,
+  .header-new-board {
+    font-size: 14px;
   }
+}
 
-  button,
-  a {
-    text-decoration: none;
-    text-align: center;
-    font-weight: 400;
-    @extend %button-default;
-    @extend %button-color;
+.header-new-board {
+  background-color: $red-color;
+  color: $white-color;
+  break-after: always;
+
+  @media (min-width: $medium-width) {
+    break-after: auto;
   }
+}
 
-  button:hover,
-  a:hover {
+.header-edit,
+.header-logout,
+.header-new-board {
+  box-sizing: border-box;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 400;
+  @extend %button-default;
+  @extend %button-color;
+  transition: 0.3s;
+  flex-grow: 1;
+
+  &:hover {
     @extend %button-hover;
   }
 
-  .header-new-board {
-    background-color: $red-color;
-    color: $white-color;
-    break-after: always;
-
-    @media (min-width: $maximum-width) {
-      margin-right: 10rem;
-    }
-    @media (min-width: $medium-width) {
-      break-after: auto;
-    }
+  @media (min-width: $maximum-width) {
+    flex-grow: 0;
   }
 }
 
-.header-search {
-  display: flex;
-  flex-wrap: nowrap;
-  position: relative;
-
-  @media (min-width: $min-width) {
-    width: 100%;
-  }
-
+.header-edit {
   @media (min-width: $medium-width) {
-    width: auto;
-    margin-right: auto;
-  }
-
-  @media (min-width: $maximum-width) {
-    width: 350px;
-  }
-
-  input {
-    padding: $half-padding $main-padding;
-    font-size: 1rem;
-    order: -1;
-    flex-grow: 1;
-    border: none;
-  }
-  button {
-    color: $red-color;
-  }
-}
-
-.header-language {
-  display: flex;
-  flex-grow: 0;
-  justify-content: right;
-
-  @media (min-width: $medium-width) {
-    break-after: always;
-  }
-
-  @media (min-width: $maximum-width) {
-    break-after: auto;
-  }
-
-  input {
-    display: none;
-  }
-
-  label {
-    width: 4rem;
-    cursor: pointer;
-    padding: $half-padding $main-padding;
-    background-color: $white-color;
-    color: $main-bg-color;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    position: relative;
-    overflow: visible;
-  }
-
-  .language-eng::after {
-    content: 'Ru';
-    box-sizing: border-box;
-    width: 4rem;
-    padding: $half-padding $main-padding;
-    position: absolute;
-    top: 0;
-    left: 4rem;
-    background-color: $red-color;
-    color: white;
-    transition: 0.5s;
-    font-size: 1rem;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 3px solid transparent;
-  }
-
-  input:checked + .language-eng::after {
-    content: 'En';
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: 0.5s;
+    margin-left: auto;
   }
 }
