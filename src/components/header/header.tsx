@@ -1,15 +1,18 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
+import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
+import { langSlice } from '../../store/slices/lang.slice';
+
 import './header.scss';
 
 const PageHeader = () => {
   const [scroll, setScroll] = useState(0);
   const intl = useIntl();
 
-  //вынести в глобал стейт значение языка и значение поиска
-
   const [searchValue, setSearchValue] = useState(window.localStorage.getItem('searchValue') || '');
-  const [language, setLanguage] = useState('language-eng');
+
+  const dispatch = useTypedDispatch();
+  const lang = useTypedSelector((state: RootState) => state.langSlice.lang);
 
   window.onscroll = function () {
     setScroll(window.pageYOffset);
@@ -24,7 +27,7 @@ const PageHeader = () => {
   };
 
   const toggleLanguage = (e: ChangeEvent<HTMLInputElement>) => {
-    setLanguage(e.target.value);
+    dispatch(langSlice.actions.updateLang(e.target.value));
   };
 
   return (
@@ -46,8 +49,8 @@ const PageHeader = () => {
           type="radio"
           name="language"
           id="language-eng"
-          value="language-eng"
-          checked={language === 'language-eng'}
+          value="ENGLISH"
+          checked={lang === 'ENGLISH'}
           onChange={toggleLanguage}
         />
         <label htmlFor="language-eng" className="language-eng">
@@ -57,8 +60,8 @@ const PageHeader = () => {
           type="radio"
           name="language"
           id="language-ru"
-          value="language-ru"
-          checked={language === 'language-ru'}
+          value="RUSSIAN"
+          checked={lang === 'RUSSIAN'}
           onChange={toggleLanguage}
         />
         <label htmlFor="language-ru" className="language-ru">
