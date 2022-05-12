@@ -8,3 +8,36 @@ export interface AuthState {
 export interface ErrorState {
   error?: FetchBaseQueryError | SerializedError | null;
 }
+
+export interface BoardListState {
+  boardList?: Board[] | null;
+}
+export interface BoardRequest {
+  title: string;
+  columns: Column[];
+}
+export interface Board extends BoardRequest {
+  id: string;
+}
+
+export interface Column {
+  id: string;
+  title: string;
+  order: number;
+  tasks: Task[];
+}
+
+export interface Task {
+  id: string;
+  title: string;
+  order: number;
+  done: boolean;
+  description: string;
+  userId: string;
+  files: TaskFileItem[];
+}
+
+export interface TaskFileItem {
+  filename: string;
+  fileSize: number;
+}
