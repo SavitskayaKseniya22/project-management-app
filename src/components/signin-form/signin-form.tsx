@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { SigninQueryRequest } from '../../store/services/types';
 import { useTypedDispatch } from '../../store';
 import { authSlice } from '../../store/slices';
+import { Link } from 'react-router-dom';
 
 type LoginDataModel = SigninQueryRequest;
 
@@ -50,7 +51,12 @@ function SigninForm() {
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Login</Form.Button>
+        <Form.Button type="submit" className="button-orange button-big">
+          Login
+        </Form.Button>
+        <Link to="/signup" className="button-orange button-big">
+          Signup
+        </Link>
       </Form.Group>
     </Form>
   );

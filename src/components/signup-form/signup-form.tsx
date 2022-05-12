@@ -31,23 +31,28 @@ function SignupForm() {
       <Form.Control
         label="User name"
         controlKey="userNameInput"
+        className="form-input-text"
         errorMessage={errors.name?.message}
         {...register('name', { required: true })}
       />
       <Form.Control
         label="Login"
         controlKey="loginInput"
+        className="form-input-text"
         errorMessage={errors.login?.message}
         {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
+        className="form-input-text"
         errorMessage={errors.password?.message}
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Submit</Form.Button>
+        <Form.Button type="submit" className="button-orange button-big">
+          Submit
+        </Form.Button>
       </Form.Group>
     </Form>
   );

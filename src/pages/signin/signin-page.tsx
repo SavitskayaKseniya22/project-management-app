@@ -4,7 +4,6 @@ import './signin.scss';
 function AuthPage() {
   return (
     <div className="signin-page">
-      <Link to="/signup">Signup</Link>
       <SigninForm />
     </div>
   );
