@@ -22,9 +22,15 @@ export const boardListApi = createApi({
         body: board,
       }),
     }),
+    deleteBoard: builder.query<undefined, string>({
+      query: (id: string) => ({
+        url: `/boards/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 });
 
-export const { useBoardListQuery, useCreateBoardQuery } = boardListApi;
+export const { useBoardListQuery, useCreateBoardQuery, useDeleteBoardQuery } = boardListApi;
 
 export default boardListApi;

@@ -14,6 +14,7 @@ export interface BoardListState {
 }
 export interface BoardRequest {
   title: string;
+  description: string;
   columns: Column[];
 }
 export interface Board extends BoardRequest {
