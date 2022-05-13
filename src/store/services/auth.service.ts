@@ -35,22 +35,9 @@ export const authApi = createApi({
         body: userData,
       }),
     }),
-    boardList: builder.query<Board[], undefined>({
-      query: () => ({
-        url: '/boards',
-        method: 'GET',
-      }),
-    }),
-    createBoard: builder.query<Board, BoardRequest>({
-      query: (board: BoardRequest) => ({
-        url: '/boards',
-        method: 'POST',
-        body: board,
-      }),
-    }),
   }),
 });
 
-export const { useSigninQuery, useSignupQuery, useBoardListQuery } = authApi;
+export const { useSigninQuery, useSignupQuery } = authApi;
 
 export default authApi;

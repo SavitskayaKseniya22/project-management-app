@@ -3,11 +3,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { unauthenticatedMiddleware } from './middlewares/authenticatedMiddleware';
 import { authApi } from './services';
+import boardListApi from './services/boardList.service';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
+  [boardListApi.reducerPath]: boardListApi.reducer,
   [authSlice.name]: authReducer,
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListReducer,

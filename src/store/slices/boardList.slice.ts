@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { authApi } from '../services';
+import boardListApi from '../services/boardList.service';
 import { RootState } from '../store';
 import { Board, BoardListState, ErrorState } from './types';
 
@@ -13,7 +14,7 @@ export const boardListSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addMatcher(
-      authApi.endpoints.boardList.matchFulfilled,
+      boardListApi.endpoints.boardList.matchFulfilled,
       (state: BoardListState, { payload }) => {
         state.boardList = payload;
       }
