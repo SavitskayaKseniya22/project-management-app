@@ -1,12 +1,22 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Board, BoardRequest } from '../slices/types';
+import { RootState } from '../store';
+import { BoardListRequest } from './types';
 
 export const AUTH_API_REDUCER_KEY = 'boardListApi';
 
 export const boardListApi = createApi({
   reducerPath: AUTH_API_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
+    baseUrl: 'https://damp-savannah-46887.herokuapp.com',
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).authSlice.accessToken;
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`);
+      }
+
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
     boardList: builder.query<Board[], undefined>({
@@ -15,14 +25,14 @@ export const boardListApi = createApi({
         method: 'GET',
       }),
     }),
-    createBoard: builder.query<Board, BoardRequest>({
+    createBoard: builder.query<Board, BoardRequest | undefined>({
       query: (board: BoardRequest) => ({
         url: '/boards',
         method: 'POST',
         body: board,
       }),
     }),
-    deleteBoard: builder.query<undefined, string>({
+    deleteBoard: builder.mutation<undefined, string>({
       query: (id: string) => ({
         url: `/boards/${id}`,
         method: 'DELETE',
@@ -31,6 +41,6 @@ export const boardListApi = createApi({
   }),
 });
 
-export const { useBoardListQuery, useCreateBoardQuery, useDeleteBoardQuery } = boardListApi;
+export const { useBoardListQuery, useCreateBoardQuery, useDeleteBoardMutation } = boardListApi;
 
 export default boardListApi;

@@ -2,6 +2,7 @@ import { Board } from '../../store/slices/types';
 
 interface BoardItemProps {
   board: Board;
+  openDeleteModal: () => void;
 }
 export function BoardItemSmall(props: BoardItemProps) {
   return (
@@ -10,7 +11,9 @@ export function BoardItemSmall(props: BoardItemProps) {
       <p>{props.board.description}</p>
       <div className="buttons">
         <button className="button-orange">Open</button>
-        <button className="button-orange">Delete</button>
+        <button className="button-orange" onClick={props.openDeleteModal}>
+          Delete
+        </button>
       </div>
     </div>
   );

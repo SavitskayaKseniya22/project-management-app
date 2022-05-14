@@ -1,8 +1,5 @@
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
-import { errorSlice } from '../../store/slices';
-import './error-prompt.scss';
+import BoardCreationForm from '../board-creation-form/board-creation-form';
+import './modal-window.scss';
 
 interface ModalWindowProps {
   reason: string;
@@ -10,6 +7,21 @@ interface ModalWindowProps {
   declineFunction: () => void;
 }
 export function ModalWindow(props: ModalWindowProps) {
+  if (props.reason === 'create a board') {
+    return (
+      <div className="modal-page-overlay">
+        <div className="modal-msg">
+          <div className="modal-form-top">
+            <h2>{props.reason}</h2>{' '}
+            <button className="button-orange" onClick={props.declineFunction}>
+              X
+            </button>{' '}
+          </div>
+          <BoardCreationForm></BoardCreationForm>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="modal-page-overlay">
       <div className="modal-msg">
