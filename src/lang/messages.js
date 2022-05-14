@@ -10,6 +10,9 @@ export const messages = {
     footer_nameVadim: 'Vadim Ilyinchik',
     footer_nameKseniya: 'Kseniya Savitskaya',
     mainpage_welcome: 'Welcome!',
+    boardpage_newTask: 'Create new task',
+    boardpage_back: 'Back to boards list',
+    boardpage_newColumn: 'Create new column',
   },
   [LOCALES.RUSSIAN]: {
     header_edit: 'Редактировать профиль',
@@ -20,5 +23,8 @@ export const messages = {
     footer_nameVadim: 'Вадим Ильинчик',
     footer_nameKseniya: 'Ксения Савицкая',
     mainpage_welcome: 'Добро пожаловать!',
+    boardpage_newTask: 'Создать новое задание',
+    boardpage_back: 'Вернуться к странице с досками',
+    boardpage_newColumn: 'Создать новую колонку',
   },
 };
