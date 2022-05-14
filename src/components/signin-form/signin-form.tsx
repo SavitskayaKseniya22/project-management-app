@@ -31,11 +31,11 @@ function SigninForm() {
     dispatch(authSlice.actions.updateAccessToken(token));
   }, [dispatch, data]);
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (!error) return;
     console.log(error);
     dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);*/
+  }, [dispatch, error]);
 
   return (
     <Form

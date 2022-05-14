@@ -16,11 +16,4 @@ export const errorSlice = createSlice({
   },
 });
 
-export const errorReducer = persistReducer(
-  {
-    key: 'rtk:err',
-    storage,
-    whitelist: ['error'],
-  },
-  errorSlice.reducer
-);
+export const errorReducer = errorSlice.reducer;

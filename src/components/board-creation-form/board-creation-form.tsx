@@ -19,12 +19,14 @@ function BoardCreationForm() {
     formState: { errors },
   } = useForm<BoardDataModel>();
 
-  /* const dispatch = useTypedDispatch();
+  const dispatch = useTypedDispatch();
 
-  const [boardInfo, setBoardInfo] = useState<BoardDataModel>();
-  */
+  const [triggerBoardMutation, { error }] = useCreateBoardMutation();
 
-  const [triggerBoardMutation] = useCreateBoardMutation();
+  useEffect(() => {
+    if (!error) return;
+    if (error) dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);
 
   return (
     <Form

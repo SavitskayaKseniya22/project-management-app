@@ -26,10 +26,10 @@ function SignupForm() {
     skip: !userData,
   });
 
-  /*useEffect(() => {
+  useEffect(() => {
     if (!error) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);*/
+  }, [dispatch, error]);
 
   return (
     <Form
