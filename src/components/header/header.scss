@@ -11,6 +11,11 @@
   position: sticky;
   top: 0;
 
+  a,
+  button {
+    white-space: nowrap;
+  }
+
   @media (min-width: $min-width) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -33,7 +38,8 @@
   .header-logout,
   .header-new-board,
   .header-signup,
-  .header-signin {
+  .header-signin,
+  .header-go-main {
     font-size: 14px;
   }
 }
@@ -53,7 +59,7 @@
 .header-new-board,
 .header-signin,
 .header-signup,
-.header-go-main {
+.header-logout + .header-go-main {
   box-sizing: border-box;
   text-decoration: none;
   text-align: center;
@@ -81,6 +87,12 @@
 .header-signin,
 .header-go-main {
   margin-left: auto;
+}
+
+.header-logout + .header-go-main {
+  background-color: $red-color;
+  color: $white-color;
+  margin-left: unset;
 }
 
 .header-edit {

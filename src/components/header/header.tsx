@@ -70,9 +70,18 @@ const PageHeader = () => {
       if (location.pathname === '/') {
         return (
           <>
-            <Link to="/main" className="header-go-main">
-              <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
-            </Link>
+            <SearchPanel />
+            <LanguagePanel />
+            {scroll < 120 ? headerNormal : headerSticky}
+            {scroll < 120 ? (
+              <Link to="/main" className="header-go-main">
+                <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
+              </Link>
+            ) : (
+              <Link to="/main" className="header-go-main">
+                <i className="fa-solid fa-list"></i>
+              </Link>
+            )}
           </>
         );
       } else {
