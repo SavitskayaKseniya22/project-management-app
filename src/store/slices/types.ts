@@ -5,7 +5,6 @@ export interface AuthState {
   accessToken?: string;
 }
 
-
 export interface ErrorState {
   error?: FetchBaseQueryError | SerializedError | null;
 }

@@ -10,7 +10,7 @@ import { RootState, useTypedSelector } from './store';
 import { ProtectedRoute } from './components/protected-route';
 import './App.scss';
 import { SigninPage } from './pages/signin';
-import { SignupPage } from './pages/signup'
+import { SignupPage } from './pages/signup';
 import { ErrorPropmt } from './components/error-prompt/error-prompt';
 import { IntlProvider } from 'react-intl';
 import { LOCALES } from './lang/locales';
