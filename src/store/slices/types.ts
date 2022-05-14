@@ -5,6 +5,7 @@ export interface AuthState {
   accessToken?: string;
 }
 
+
 export interface ErrorState {
   error?: FetchBaseQueryError | SerializedError | null;
 }
@@ -41,4 +42,12 @@ export interface Task {
 export interface TaskFileItem {
   filename: string;
   fileSize: number;
+}
+
+export interface LangState {
+  lang: string;
+}
+
+export interface SearchState {
+  searchValue: string;
 }

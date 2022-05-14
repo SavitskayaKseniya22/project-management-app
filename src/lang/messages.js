@@ -9,6 +9,7 @@ export const messages = {
     footer_nameNikita: 'Nikita Kravchenko',
     footer_nameVadim: 'Vadim Ilyinchik',
     footer_nameKseniya: 'Kseniya Savitskaya',
+    mainpage_welcome: 'Welcome!',
   },
   [LOCALES.RUSSIAN]: {
     header_edit: 'Редактировать профиль',
@@ -18,5 +19,6 @@ export const messages = {
     footer_nameNikita: 'Никита Кравченко',
     footer_nameVadim: 'Вадим Ильинчик',
     footer_nameKseniya: 'Ксения Савицкая',
+    mainpage_welcome: 'Добро пожаловать!',
   },
 };

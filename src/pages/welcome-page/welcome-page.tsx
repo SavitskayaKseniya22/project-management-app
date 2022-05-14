@@ -1,10 +1,14 @@
+import { FormattedMessage } from 'react-intl';
 import { RootState, useTypedSelector } from '../../store';
 import './welcome-page.scss';
+
 export function WelcomePage() {
   const token = useTypedSelector((state: RootState) => state.authSlice.accessToken);
   return (
     <div className="welcome-page">
-      <h1>Welcome to our app!</h1>
+      <h1>
+        <FormattedMessage id="mainpage_welcome" defaultMessage="Welcome!" />
+      </h1>
       {token ? (
         <div className="buttons">
           <a href="/main" className="button-orange button-big">
