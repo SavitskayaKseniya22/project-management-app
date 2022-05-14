@@ -6,7 +6,7 @@ import { BoardRequest } from '../../store/slices/types';
 import { useTypedDispatch } from '../../store';
 import { authSlice, errorSlice } from '../../store/slices';
 import { Link } from 'react-router-dom';
-import { useCreateBoardQuery } from '../../store/services/boardList.service';
+import { useCreateBoardMutation } from '../../store/services/boardList.service';
 import { boardListSlice } from '../../store/slices/boardList.slice';
 
 type LoginDataModel = BoardRequest;
@@ -19,24 +19,17 @@ function BoardCreationForm() {
     formState: { errors },
   } = useForm<BoardDataModel>();
 
-  const dispatch = useTypedDispatch();
+  /* const dispatch = useTypedDispatch();
 
   const [boardInfo, setBoardInfo] = useState<BoardDataModel>();
+  */
 
-  const { error } = useCreateBoardQuery(boardInfo, {
-    skip: !boardInfo,
-  });
-
-  useEffect(() => {
-    if (!error) return;
-    console.log(error);
-    dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);
+  const [triggerBoardMutation] = useCreateBoardMutation();
 
   return (
     <Form
       onSubmit={handleSubmit((data: BoardDataModel) => {
-        setBoardInfo(data);
+        triggerBoardMutation(data);
       })}
     >
       <Form.Control

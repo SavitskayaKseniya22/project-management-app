@@ -32,7 +32,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat([unauthenticatedMiddleware, authApi.middleware]),
+    }).concat([unauthenticatedMiddleware, authApi.middleware, boardListApi.middleware]),
 });
 
 export const persistor = persistStore(store);

@@ -18,29 +18,33 @@ export const boardListApi = createApi({
       return headers;
     },
   }),
+  tagTypes: ['Board'],
   endpoints: (builder) => ({
     boardList: builder.query<Board[], undefined>({
       query: () => ({
         url: '/boards',
         method: 'GET',
       }),
+      providesTags: ['Board'],
     }),
-    createBoard: builder.query<Board, BoardRequest | undefined>({
+    createBoard: builder.mutation<Board, BoardRequest | undefined>({
       query: (board: BoardRequest) => ({
         url: '/boards',
         method: 'POST',
         body: board,
       }),
+      invalidatesTags: ['Board'],
     }),
     deleteBoard: builder.mutation<undefined, string>({
       query: (id: string) => ({
         url: `/boards/${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Board'],
     }),
   }),
 });
 
-export const { useBoardListQuery, useCreateBoardQuery, useDeleteBoardMutation } = boardListApi;
+export const { useBoardListQuery, useCreateBoardMutation, useDeleteBoardMutation } = boardListApi;
 
 export default boardListApi;
