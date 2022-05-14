@@ -17,6 +17,8 @@ const PageHeader = () => {
 
   const headerNormal = (
     <>
+      <SearchPanel />
+      <LanguagePanel />
       <button className="header-new-board">
         <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
       </button>
@@ -31,6 +33,8 @@ const PageHeader = () => {
 
   const headerSticky = (
     <>
+      <SearchPanel />
+      <LanguagePanel />
       <button className="header-new-board">
         <i className="fa-solid fa-folder-plus"></i>
       </button>
@@ -43,7 +47,7 @@ const PageHeader = () => {
     </>
   );
 
-  const headerWelcomeNormal = (
+  const headerWelcomeUnlogin = (
     <>
       <Link to="/signin" className="header-signin">
         <FormattedMessage id="header_signin" defaultMessage="Sign in" />
@@ -54,7 +58,7 @@ const PageHeader = () => {
     </>
   );
 
-  const headerWelcomeSticky = (
+  const headerWelcomeUnloginSticky = (
     <>
       <Link to="/signin" className="header-signin">
         <i className="fa-solid fa-arrow-right-to-bracket"></i>
@@ -65,36 +69,33 @@ const PageHeader = () => {
     </>
   );
 
+  const headerWelcomeLogin = (
+    <>
+      {headerNormal}
+      <Link to="/main" className="header-go-main">
+        <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
+      </Link>
+    </>
+  );
+
+  const headerWelcomeLoginSticky = (
+    <>
+      {headerSticky}
+      <Link to="/main" className="header-go-main">
+        <i className="fa-solid fa-list"></i>
+      </Link>
+    </>
+  );
+
   const getHeaderContent = () => {
     if (accessToken) {
       if (location.pathname === '/') {
-        return (
-          <>
-            <SearchPanel />
-            <LanguagePanel />
-            {scroll < 120 ? headerNormal : headerSticky}
-            {scroll < 120 ? (
-              <Link to="/main" className="header-go-main">
-                <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
-              </Link>
-            ) : (
-              <Link to="/main" className="header-go-main">
-                <i className="fa-solid fa-list"></i>
-              </Link>
-            )}
-          </>
-        );
+        return scroll < 120 ? headerWelcomeLogin : headerWelcomeLoginSticky;
       } else {
-        return (
-          <>
-            <SearchPanel />
-            <LanguagePanel />
-            {scroll < 120 ? headerNormal : headerSticky}
-          </>
-        );
+        return scroll < 120 ? headerNormal : headerSticky;
       }
     } else {
-      return scroll < 120 ? headerWelcomeNormal : headerWelcomeSticky;
+      return scroll < 120 ? headerWelcomeUnlogin : headerWelcomeUnloginSticky;
     }
   };
 
