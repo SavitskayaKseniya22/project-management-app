@@ -1,3 +1,8 @@
+/**
+ * Deprecated. Use jwt-decode lib instead. This function will be removed in the next minor version.
+ * @param token
+ * @returns
+ */
 function parseJwt<T>(token: string) {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

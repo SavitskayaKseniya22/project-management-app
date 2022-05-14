@@ -1,3 +1,6 @@
+import { getProfileSelector, useTypedSelector } from '../../store';
+
 export function MainPage() {
-  return <h1>I display boards</h1>;
+  const { userName } = useTypedSelector(getProfileSelector);
+  return <h1>{`Hi ${userName}, I display  your boards`}</h1>;
 }
