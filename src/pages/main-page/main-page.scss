@@ -19,3 +19,10 @@
   padding: 10px;
   background-color: #e5e5e5;
 }
+.main-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

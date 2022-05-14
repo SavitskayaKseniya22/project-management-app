@@ -24,6 +24,10 @@
   position: relative;
   z-index: 99999999999;
 }
+
+.modal-msg .form {
+  width: auto !important;
+}
 .modal-button {
   align-self: flex-end;
 }

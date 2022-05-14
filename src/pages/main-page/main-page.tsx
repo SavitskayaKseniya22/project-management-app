@@ -31,41 +31,43 @@ export function MainPage() {
 
   if (data && data.length > 0) {
     return (
-      <div className="board-list">
-        {data.map((item: Board, idx) => {
-          return (
-            <BoardItemSmall
-              board={item}
-              openDeleteModal={() => setBoardToDelete(item.id)}
-              key={idx}
-            ></BoardItemSmall>
-          );
-        })}
-        {boardToDelete && (
-          <ModalWindow
-            reason="delete this board"
-            declineFunction={closeDeleteModal}
-            confirmFunction={deleteBoard}
-          ></ModalWindow>
-        )}
-        {boardFormOpen && (
-          <ModalWindow
-            reason="create a board"
-            declineFunction={closeBoardForm}
-            confirmFunction={() => {
-              return;
-            }}
-          ></ModalWindow>
-        )}
-        <div className="board-item-small" onClick={openBoardForm}>
-          {' '}
-          Create a board
+      <div className="main-page">
+        <div className="board-list">
+          {data.map((item: Board, idx) => {
+            return (
+              <BoardItemSmall
+                board={item}
+                openDeleteModal={() => setBoardToDelete(item.id)}
+                key={idx}
+              ></BoardItemSmall>
+            );
+          })}
+          {boardToDelete && (
+            <ModalWindow
+              reason="delete this board"
+              declineFunction={closeDeleteModal}
+              confirmFunction={deleteBoard}
+            ></ModalWindow>
+          )}
+          {boardFormOpen && (
+            <ModalWindow
+              reason="create a board"
+              declineFunction={closeBoardForm}
+              confirmFunction={() => {
+                return;
+              }}
+            ></ModalWindow>
+          )}
+          <div className="board-item-small" onClick={openBoardForm}>
+            {' '}
+            Create a board
+          </div>
         </div>
       </div>
     );
   }
   return (
-    <div>
+    <div className="main-page">
       <h1>There are no boards yet. Would you like to create one?</h1>
       <div className="board-list">
         {boardFormOpen && (
