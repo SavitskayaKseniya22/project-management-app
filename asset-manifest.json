@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/project-management-app/static/css/main.d12dd00f.css",
-    "main.js": "/project-management-app/static/js/main.4b8a6c74.js",
+    "main.css": "/project-management-app/static/css/main.944b9095.css",
+    "main.js": "/project-management-app/static/js/main.834324fb.js",
     "static/media/rs-school-js.svg": "/project-management-app/static/media/rs-school-js.ad178c0df28bc133be34b982d62f431d.svg",
     "index.html": "/project-management-app/index.html",
-    "main.d12dd00f.css.map": "/project-management-app/static/css/main.d12dd00f.css.map",
-    "main.4b8a6c74.js.map": "/project-management-app/static/js/main.4b8a6c74.js.map"
+    "main.944b9095.css.map": "/project-management-app/static/css/main.944b9095.css.map",
+    "main.834324fb.js.map": "/project-management-app/static/js/main.834324fb.js.map"
   },
   "entrypoints": [
-    "static/css/main.d12dd00f.css",
-    "static/js/main.4b8a6c74.js"
+    "static/css/main.944b9095.css",
+    "static/js/main.834324fb.js"
   ]
 }
