@@ -11,6 +11,11 @@
   position: sticky;
   top: 0;
 
+  a,
+  button {
+    white-space: nowrap;
+  }
+
   @media (min-width: $min-width) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -31,7 +36,10 @@
   }
   .header-edit,
   .header-logout,
-  .header-new-board {
+  .header-new-board,
+  .header-signup,
+  .header-signin,
+  .header-go-main {
     font-size: 14px;
   }
 }
@@ -48,7 +56,10 @@
 
 .header-edit,
 .header-logout,
-.header-new-board {
+.header-new-board,
+.header-signin,
+.header-signup,
+.header-logout + .header-go-main {
   box-sizing: border-box;
   text-decoration: none;
   text-align: center;
@@ -65,6 +76,23 @@
   @media (min-width: $maximum-width) {
     flex-grow: 0;
   }
+}
+
+.header-signup,
+.header-signin,
+.header-go-main {
+  flex-grow: 0;
+}
+
+.header-signin,
+.header-go-main {
+  margin-left: auto;
+}
+
+.header-logout + .header-go-main {
+  background-color: $red-color;
+  color: $white-color;
+  margin-left: unset;
 }
 
 .header-edit {
