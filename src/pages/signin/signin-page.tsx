@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 import { SigninForm } from '../../components/signin-form';
-
+import './signin.scss';
 function AuthPage() {
   return (
-    <div>
-      <Link to="/signup">Signup</Link>
+    <div className="signin-page">
       <SigninForm />
     </div>
   );

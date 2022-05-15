@@ -3,13 +3,17 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
 import { unauthenticatedMiddleware } from './middlewares/authenticatedMiddleware';
 import { authApi } from './services';
-import { authReducer, authSlice } from './slices';
+import boardListApi from './services/boardList.service';
+import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
+import { boardListReducer, boardListSlice } from './slices/boardList.slice';
 import { langReducer, langSlice } from './slices/lang.slice';
 import { searchSlice, searchReducer } from './slices/search.slice';
-
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
+  [boardListApi.reducerPath]: boardListApi.reducer,
   [authSlice.name]: authReducer,
+  [errorSlice.name]: errorReducer,
+  [boardListSlice.name]: boardListReducer,
   [langSlice.name]: langReducer,
   [searchSlice.name]: searchReducer,
 };
@@ -31,7 +35,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat([unauthenticatedMiddleware, authApi.middleware]),
+    }).concat([unauthenticatedMiddleware, authApi.middleware, boardListApi.middleware]),
 });
 
 export const persistor = persistStore(store);

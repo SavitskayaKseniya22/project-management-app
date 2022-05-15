@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Board, BoardRequest } from '../slices/types';
 import {
   SigninQueryRequest,
   SigninQueryResponse,
@@ -8,10 +9,10 @@ import {
 
 export const AUTH_API_REDUCER_KEY = 'authApi';
 
-const authApi = createApi({
+export const authApi = createApi({
   reducerPath: AUTH_API_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_API_URL,
+    baseUrl: 'https://damp-savannah-46887.herokuapp.com',
   }),
   endpoints: (builder) => ({
     signin: builder.query<SigninQueryResponse, SigninQueryRequest | undefined>({
@@ -19,7 +20,6 @@ const authApi = createApi({
         if (!credentials || !credentials.login || !credentials.password) {
           throw new Error('Login and password are required');
         }
-
         return {
           url: '/signin',
           method: 'POST',

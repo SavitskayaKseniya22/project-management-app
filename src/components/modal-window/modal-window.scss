@@ -1,0 +1,38 @@
+.hide-elem {
+  display: none !important;
+}
+.modal-page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.modal-msg {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 300px;
+  max-width: 600px;
+  padding: 2%;
+  position: relative;
+  z-index: 2;
+}
+
+.modal-msg .form {
+  width: auto !important;
+}
+.modal-button {
+  align-self: flex-end;
+}
+.modal-form-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
