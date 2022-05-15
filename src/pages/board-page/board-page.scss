@@ -1,0 +1,39 @@
+@import '../../variables.scss';
+
+main {
+  padding: $main-padding 0;
+  flex-grow: 1;
+
+  .board-list {
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    padding: $main-padding;
+    overflow-x: auto;
+  }
+}
+
+header {
+  background-color: $gray-color;
+  padding: $half-padding $main-padding;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    @extend %button-default;
+    @extend %button-invert-color;
+  }
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: $half-padding;
+}
+
+.task-item {
+  background-color: $white-color;
+}

@@ -1,0 +1,10 @@
+@import '../../variables.scss';
+
+.board-item {
+  background-color: $gray-color;
+  border: $border;
+  padding: $half-padding $main-padding;
+  width: 20vw;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
