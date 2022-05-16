@@ -9,6 +9,7 @@ import { boardListReducer, boardListSlice } from './slices/boardList.slice';
 import { langReducer, langSlice } from './slices/lang.slice';
 import { profileSlice, profileReducer } from './slices';
 import { searchSlice, searchReducer } from './slices/search.slice';
+
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
   [boardListApi.reducerPath]: boardListApi.reducer,

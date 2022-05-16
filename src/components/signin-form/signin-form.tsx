@@ -7,9 +7,8 @@ import { useSigninQuery } from '../../store/services';
 import { useEffect, useState } from 'react';
 import { SigninQueryRequest } from '../../store/services/types';
 import { useTypedDispatch } from '../../store';
-import { authSlice, updateUserNameActionCreator } from '../../store/slices';
+import { authSlice, updateUserNameActionCreator, errorSlice } from '../../store/slices';
 import { errorFormatter } from '../../utits';
-import { authSlice, errorSlice } from '../../store/slices';
 import { Link } from 'react-router-dom';
 
 type LoginDataModel = SigninQueryRequest;

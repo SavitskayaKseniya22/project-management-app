@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getAccessTokenSelector } from '../selectors';
 import { Board, BoardRequest } from '../slices/types';
 import { RootState } from '../store';
-import { BoardListRequest } from './types';
 
 export const AUTH_API_REDUCER_KEY = 'boardListApi';
 
@@ -10,7 +10,7 @@ export const boardListApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://damp-savannah-46887.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).authSlice.accessToken;
+      const token = getAccessTokenSelector(getState() as RootState);
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }

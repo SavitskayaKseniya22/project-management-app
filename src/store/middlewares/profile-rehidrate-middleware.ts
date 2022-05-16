@@ -7,7 +7,6 @@ const profileRehydrateMiddleware: Middleware =
   ({ dispatch }) =>
   (next) =>
   (action) => {
-    console.log(action);
     if (action.type === REHYDRATE && action.payload?.accessToken) {
       dispatch(
         updateUserNameActionCreator(jwt_decode<{ login: string }>(action.payload.accessToken).login)
