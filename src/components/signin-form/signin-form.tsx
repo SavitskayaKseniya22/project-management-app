@@ -9,6 +9,8 @@ import { SigninQueryRequest } from '../../store/services/types';
 import { useTypedDispatch } from '../../store';
 import { authSlice, updateUserNameActionCreator } from '../../store/slices';
 import { errorFormatter } from '../../utits';
+import { authSlice, errorSlice } from '../../store/slices';
+import { Link } from 'react-router-dom';
 
 type LoginDataModel = SigninQueryRequest;
 
@@ -36,17 +38,24 @@ function SigninForm() {
 
   const [credentials, setCredentials] = useState<LoginDataModel>();
 
-  const { data } = useSigninQuery(credentials, {
+  const { data, error } = useSigninQuery(credentials, {
     skip: !credentials,
   });
 
   useEffect(() => {
     if (!data) return;
+    console.log(data);
     const { token } = data;
     const jwtPayload = jwt_decode<{ login: string }>(token);
     dispatch(authSlice.actions.updateAccessToken(token));
     dispatch(updateUserNameActionCreator(jwtPayload.login));
   }, [dispatch, data]);
+
+  useEffect(() => {
+    if (!error) return;
+    console.log(error);
+    dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);
 
   return (
     <Form
@@ -61,16 +70,23 @@ function SigninForm() {
           minLength: 3,
           currentLength: getValues('login')?.length || 0,
         })}
+        className="form-input-text"
         {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
+        className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Login</Form.Button>
+        <Form.Button type="submit" className="button-orange button-big">
+          Login
+        </Form.Button>
+        <Link to="/signup" className="button-orange button-big">
+          Signup
+        </Link>
       </Form.Group>
     </Form>
   );

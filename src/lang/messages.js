@@ -6,6 +6,9 @@ export const messages = {
     header_logout: `Log out`,
     header_search: `search`,
     header_newBoard: `Create new board`,
+    header_signin: 'Sign in',
+    header_signup: 'Sign up',
+    header_goMain: 'Go to Main Page',
     footer_nameNikita: 'Nikita Kravchenko',
     footer_nameVadim: 'Vadim Ilyinchik',
     footer_nameKseniya: 'Kseniya Savitskaya',
@@ -24,12 +27,18 @@ export const messages = {
     signup_form__errors__password_required: 'Password is required',
     signup_form__errors__login_min_length:
       'Login must be at least {minLength} characters, but {currentLength} characters given',
+    boardpage_newTask: 'Create new task',
+    boardpage_back: 'Back to boards list',
+    boardpage_newColumn: 'Create new column',
   },
   [LOCALES.RUSSIAN]: {
     header_edit: 'Редактировать профиль',
     header_logout: `Выйти`,
     header_search: `поиск`,
     header_newBoard: `Создать новую доску`,
+    header_signin: 'Войти',
+    header_signup: 'Зарегистрироваться',
+    header_goMain: 'Перейти к главной странице',
     footer_nameNikita: 'Никита Кравченко',
     footer_nameVadim: 'Вадим Ильинчик',
     footer_nameKseniya: 'Ксения Савицкая',
@@ -48,5 +57,8 @@ export const messages = {
     signup_form__errors__password_required: 'Пароль обязателен',
     signup_form__errors__login_min_length:
       'Логин должен быть не менее {minLength} символов, вы ввели символов: {currentLength}',
+    boardpage_newTask: 'Создать новое задание',
+    boardpage_back: 'Вернуться к странице с досками',
+    boardpage_newColumn: 'Создать новую колонку',
   },
 };

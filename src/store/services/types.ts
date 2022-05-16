@@ -15,3 +15,7 @@ export interface SignupQueryResponse extends Omit<SigninQueryRequest, 'password'
   id: string;
   name: string;
 }
+
+export interface BoardListRequest {
+  token: string;
+}

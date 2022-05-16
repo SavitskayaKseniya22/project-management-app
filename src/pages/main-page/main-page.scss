@@ -1,0 +1,28 @@
+.board-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+.board-item-small {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5%;
+  border-bottom: #7953f5 5px solid;
+  width: 263px;
+  height: 327px;
+  padding: 10px;
+  background-color: #e5e5e5;
+}
+.main-page {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

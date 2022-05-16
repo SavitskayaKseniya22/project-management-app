@@ -1,10 +1,12 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useSignupQuery } from '../../store/services';
 import { errorFormatter } from '../../utits';
+import { useEffect, useState } from 'react';
+import { errorSlice } from '../../store/slices';
+import { useTypedDispatch } from '../../store';
 
 interface UserDataModel {
   name: string;
@@ -35,9 +37,16 @@ function SignupForm() {
 
   const [userData, setUserData] = useState<UserDataModel>();
 
-  useSignupQuery(userData, {
+  const dispatch = useTypedDispatch();
+
+  const { error } = useSignupQuery(userData, {
     skip: !userData,
   });
+
+  useEffect(() => {
+    if (!error) return;
+    if (error) dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);
 
   return (
     <Form
@@ -49,6 +58,7 @@ function SignupForm() {
         label="User name"
         controlKey="userNameInput"
         errorMessage={errorFormatter(errors.name)}
+        className="form-input-text"
         {...register('name', { required: true })}
       />
       <Form.Control
@@ -58,16 +68,20 @@ function SignupForm() {
           minLength: 3,
           currentLength: getValues('login')?.length || 0,
         })}
+        className="form-input-text"
         {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
+        className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Submit</Form.Button>
+        <Form.Button type="submit" className="button-orange button-big">
+          Submit
+        </Form.Button>
       </Form.Group>
     </Form>
   );

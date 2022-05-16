@@ -1,8 +1,8 @@
 import { SignupForm } from '../../components/signup-form';
-
+import './signup.scss';
 function SignupPage() {
   return (
-    <div>
+    <div className="signup-page">
       <SignupForm />
     </div>
   );

@@ -5,6 +5,7 @@ import { FormGroup, FormInput, FormLabel, FormError, FormSelect, FormButton } fr
 import FormControl from './form-control';
 import FormControlGroup from './form-control-group';
 import formControlSelect from './form-control-select';
+import './form.scss';
 
 type FormProps = React.FormHTMLAttributes<HTMLFormElement> & InnerRef<HTMLFormElement>;
 

@@ -11,6 +11,7 @@ import { ProtectedRoute } from './components/protected-route';
 import './App.scss';
 import { SigninPage } from './pages/signin';
 import { SignupPage } from './pages/signup';
+import { ErrorPropmt } from './components/error-prompt/error-prompt';
 import { IntlProvider } from 'react-intl';
 import { LOCALES } from './lang/locales';
 import { messages } from './lang/messages';
@@ -21,6 +22,7 @@ function App() {
   return (
     <IntlProvider messages={messages[locale]} locale={locale} defaultLocale={LOCALES.ENGLISH}>
       <div className="App">
+        <ErrorPropmt></ErrorPropmt>
         <PageHeader></PageHeader>
         <main className="main">
           <Routes>
