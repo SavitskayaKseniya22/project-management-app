@@ -14,7 +14,11 @@ export const columnListSlice = createSlice({
     builder.addMatcher(
       columnApi.endpoints.getColumnList.matchFulfilled,
       (state: ColumnListState, { payload }) => {
-        state.columnList = payload;
+        const payloadCopy = payload.slice();
+        payloadCopy.sort(function (a, b) {
+          return a.order - b.order;
+        });
+        state.columnList = payloadCopy;
       }
     );
   },

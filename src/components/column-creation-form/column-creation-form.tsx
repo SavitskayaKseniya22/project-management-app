@@ -1,7 +1,7 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { ColumnRequest } from '../../store/slices/types';
+import { ColumnRequest, ColumnResponseAll } from '../../store/slices/types';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { errorSlice } from '../../store/slices';
 
@@ -9,13 +9,15 @@ import {
   useCreateColumnMutation,
   useGetColumnListQuery,
 } from '../../store/services/column.service';
+import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 
 type ColumnDataModel = ColumnRequest;
 
 function ColumnCreationForm(props: { declineFunction: () => void }) {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id);
-
   const { data } = useGetColumnListQuery(id);
+  const [createColumn, { error }] = useCreateColumnMutation();
+  const dispatch = useTypedDispatch();
 
   const {
     register,
@@ -23,20 +25,17 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
     formState: { errors },
   } = useForm<ColumnDataModel>();
 
-  const dispatch = useTypedDispatch();
-  const [createColumn, { error }] = useCreateColumnMutation();
-
   useEffect(() => {
     if (!error) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
   }, [dispatch, error]);
 
   const onSubmit = async (arg: ColumnDataModel) => {
-    const dataLength = data?.length as number;
     arg.order = 1;
 
     if (data && data.length) {
-      arg.order = data[dataLength - 1].order + 1;
+      const maxValue = getMaxOrderFromData(data);
+      arg.order = maxValue + 1;
     }
 
     await createColumn({ column: arg, id: id as string });
