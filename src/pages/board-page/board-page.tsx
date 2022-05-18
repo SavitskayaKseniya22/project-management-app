@@ -15,8 +15,8 @@ import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautif
 import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 
 export function BoardPage() {
-  const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id);
-  const dataStore = useTypedSelector((state: RootState) => state.columnListSlice.columnList);
+  const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
+  const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
@@ -39,7 +39,6 @@ export function BoardPage() {
 
   const changeOrder = async (list: ColumnResponseAll[]) => {
     const maxValue = getMaxOrderFromData(list);
-
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
         column: {

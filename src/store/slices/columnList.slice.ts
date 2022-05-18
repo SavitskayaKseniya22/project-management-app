@@ -13,12 +13,12 @@ export const columnListSlice = createSlice({
   extraReducers: (builder) => {
     builder.addMatcher(
       columnApi.endpoints.getColumnList.matchFulfilled,
-      (state: ColumnListState, { payload }) => {
+      (state: ColumnListState, { payload, meta }) => {
         const payloadCopy = payload.slice();
         payloadCopy.sort(function (a, b) {
           return a.order - b.order;
         });
-        state.columnList = payloadCopy;
+        state[meta.arg.originalArgs as string] = payloadCopy;
       }
     );
   },

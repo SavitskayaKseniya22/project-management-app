@@ -44,7 +44,7 @@ export interface ColumnResponseAll {
 }
 
 export interface ColumnListState {
-  columnList?: ColumnResponseAll[] | null;
+  [id: string]: ColumnResponseAll[] | null;
 }
 export interface ColumnState {
   column?: ColumnResponseAll | null;

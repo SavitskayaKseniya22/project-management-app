@@ -1,8 +1,7 @@
-import { $CombinedState } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
 import { BoardItemSmall } from '../../components/board-item-small/board-item-small';
 import { ModalWindow } from '../../components/modal-window/modal-window';
-import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
+import { useTypedDispatch } from '../../store';
 import { useBoardListQuery, useDeleteBoardMutation } from '../../store/services/boardList.service';
 import { errorSlice } from '../../store/slices';
 import { Board } from '../../store/slices/types';
