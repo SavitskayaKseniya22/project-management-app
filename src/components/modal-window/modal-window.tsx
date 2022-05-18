@@ -1,4 +1,5 @@
 import BoardCreationForm from '../board-creation-form/board-creation-form';
+import ColumnCreationForm from '../column-creation-form/column-creation-form';
 import './modal-window.scss';
 
 interface ModalWindowProps {
@@ -18,6 +19,20 @@ export function ModalWindow(props: ModalWindowProps) {
             </button>{' '}
           </div>
           <BoardCreationForm></BoardCreationForm>
+        </div>
+      </div>
+    );
+  } else if (props.reason === 'create a column') {
+    return (
+      <div className="modal-page-overlay">
+        <div className="modal-msg">
+          <div className="modal-form-top">
+            <h2>{props.reason}</h2>
+            <button className="button-orange" onClick={props.declineFunction}>
+              X
+            </button>
+          </div>
+          <ColumnCreationForm declineFunction={props.declineFunction}></ColumnCreationForm>
         </div>
       </div>
     );
