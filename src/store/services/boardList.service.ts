@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Board, BoardRequest } from '../slices/types';
 import { RootState } from '../store';
-import { BoardListRequest } from './types';
 
 export const AUTH_API_REDUCER_KEY = 'boardListApi';
 
@@ -42,9 +41,21 @@ export const boardListApi = createApi({
       }),
       invalidatesTags: ['Board'],
     }),
+    getBoard: builder.query<Board, string | undefined>({
+      query: (id: string) => ({
+        url: `/boards/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Board'],
+    }),
   }),
 });
 
-export const { useBoardListQuery, useCreateBoardMutation, useDeleteBoardMutation } = boardListApi;
+export const {
+  useBoardListQuery,
+  useCreateBoardMutation,
+  useDeleteBoardMutation,
+  useGetBoardQuery,
+} = boardListApi;
 
 export default boardListApi;

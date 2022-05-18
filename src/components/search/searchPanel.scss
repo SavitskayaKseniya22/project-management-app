@@ -26,6 +26,9 @@
     order: -1;
     flex-grow: 1;
     border: none;
+    &:valid {
+      border: none;
+    }
   }
 
   button {

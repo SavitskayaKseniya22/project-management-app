@@ -12,20 +12,42 @@ export interface ErrorState {
 export interface BoardListState {
   boardList?: Board[] | null;
 }
+
 export interface BoardRequest {
   title: string;
   description: string;
   columns: Column[];
 }
+
 export interface Board extends BoardRequest {
   id: string;
 }
 
-export interface Column {
+export interface BoardState {
+  board?: Board | null;
+}
+
+export interface ColumnRequest {
+  title: string;
+  order: number;
+}
+
+export interface Column extends ColumnRequest {
+  id: string;
+  tasks: Task[];
+}
+
+export interface ColumnResponseAll {
   id: string;
   title: string;
   order: number;
-  tasks: Task[];
+}
+
+export interface ColumnListState {
+  columnList?: ColumnResponseAll[] | null;
+}
+export interface ColumnState {
+  column?: ColumnResponseAll | null;
 }
 
 export interface Task {
