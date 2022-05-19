@@ -4,18 +4,25 @@ import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 
 import { unauthenticatedMiddleware } from './middlewares/authenticatedMiddleware';
 import { authApi } from './services';
 import boardListApi from './services/boardList.service';
+import columnApi from './services/column.service';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
+import { boardReducer, boardSlice } from './slices/board.slice';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
+import { columnListReducer, columnListSlice } from './slices/columnList.slice';
 import { langReducer, langSlice } from './slices/lang.slice';
 import { searchSlice, searchReducer } from './slices/search.slice';
+
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
   [boardListApi.reducerPath]: boardListApi.reducer,
+  [columnApi.reducerPath]: columnApi.reducer,
   [authSlice.name]: authReducer,
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListReducer,
   [langSlice.name]: langReducer,
   [searchSlice.name]: searchReducer,
+  [boardSlice.name]: boardReducer,
+  [columnListSlice.name]: columnListReducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);
@@ -35,7 +42,12 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat([unauthenticatedMiddleware, authApi.middleware, boardListApi.middleware]),
+    }).concat([
+      unauthenticatedMiddleware,
+      authApi.middleware,
+      boardListApi.middleware,
+      columnApi.middleware,
+    ]),
 });
 
 export const persistor = persistStore(store);

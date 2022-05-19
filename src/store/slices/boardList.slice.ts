@@ -1,10 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { authApi } from '../services';
 import boardListApi from '../services/boardList.service';
-import { RootState } from '../store';
-import { Board, BoardListState, ErrorState } from './types';
+import { BoardListState } from './types';
 
 const initialState: BoardListState = {};
 
@@ -26,7 +24,7 @@ export const boardListReducer = persistReducer(
   {
     key: 'rtk:boardList',
     storage,
-    whitelist: ['boardLsit'],
+    whitelist: ['boardList'],
   },
   boardListSlice.reducer
 );
