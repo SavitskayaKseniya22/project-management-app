@@ -1,7 +1,7 @@
 import { isRejectedWithValue, Middleware } from '@reduxjs/toolkit';
 import { resetStateAction } from '../actions/resetStateAction';
 
-export const unauthenticatedMiddleware: Middleware =
+const unauthenticatedMiddleware: Middleware =
   ({ dispatch }) =>
   (next) =>
   (action) => {
@@ -11,3 +11,5 @@ export const unauthenticatedMiddleware: Middleware =
 
     return next(action);
   };
+
+export default unauthenticatedMiddleware;

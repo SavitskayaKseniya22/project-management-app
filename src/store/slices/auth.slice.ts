@@ -6,7 +6,7 @@ import { AuthState } from './types';
 const initialState: AuthState = {};
 
 export const authSlice = createSlice({
-  name: 'authSlice',
+  name: 'auth',
   initialState,
   reducers: {
     updateAccessToken(state, action: PayloadAction<string | undefined>) {

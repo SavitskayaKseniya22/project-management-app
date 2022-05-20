@@ -1,17 +1,18 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { RootState, useTypedSelector } from '../../store';
+import { useTypedSelector } from '../../store';
+import { getAccessTokenSelector } from '../../store/selectors';
 
 export type AuthRouteProps = {
   onlyPublic?: boolean;
 };
 
 function ProtectedRoute({ onlyPublic = false }: AuthRouteProps) {
-  const accessToken = useTypedSelector((state: RootState) => state.authSlice.accessToken);
+  const accessToken = useTypedSelector(getAccessTokenSelector);
   const location = useLocation();
 
   if (onlyPublic) {
     if (accessToken) {
-      return <Navigate replace to={{ pathname: '/' }} state={{ from: location }} />;
+      return <Navigate replace to={{ pathname: '/main' }} state={{ from: location }} />;
     }
     return <Outlet />;
   }

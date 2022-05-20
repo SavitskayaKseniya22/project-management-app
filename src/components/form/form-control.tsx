@@ -10,7 +10,7 @@ export interface FormControlProps
   controlKey?: string;
   label?: string;
   placeholder?: string;
-  errorMessage?: string;
+  errorMessage?: string | React.ReactNode;
   className?: string;
   type?: HTMLInputTypeAttribute;
 }

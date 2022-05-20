@@ -1,23 +1,29 @@
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Link, useLocation } from 'react-router-dom';
-import { useTypedSelector, RootState } from '../../store';
+import { useTypedSelector, RootState, useTypedDispatch, authSlice } from '../../store';
+import { getAccessTokenSelector } from '../../store/selectors';
 import LanguagePanel from '../languagePanel/languagePanel';
 import SearchPanel from '../search/searchPanel';
 import './header.scss';
 
 const PageHeader = () => {
   const [scroll, setScroll] = useState(window.pageYOffset);
-  const accessToken = useTypedSelector((state: RootState) => state.authSlice.accessToken);
+  const accessToken = useTypedSelector(getAccessTokenSelector);
   const location = useLocation();
+  const dispatch = useTypedDispatch();
 
   window.onscroll = function () {
     setScroll(window.pageYOffset);
   };
 
+  const logoutHandler = () => {
+    dispatch(authSlice.actions.updateAccessToken(''));
+  };
+
   const headerNormal = (
     <>
-      <SearchPanel />
+      <SearchPanel />s
       <LanguagePanel />
       <button className="header-new-board">
         <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
@@ -25,7 +31,7 @@ const PageHeader = () => {
       <Link to="/profile" className="header-edit">
         <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
       </Link>
-      <button className="header-logout">
+      <button className="header-logout" onClick={logoutHandler}>
         <FormattedMessage id="header_logout" defaultMessage="Log out" />
       </button>
     </>

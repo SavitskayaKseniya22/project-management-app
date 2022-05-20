@@ -9,7 +9,7 @@ export const columnApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://damp-savannah-46887.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).authSlice.accessToken;
+      const token = (getState() as RootState).auth.accessToken;
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }

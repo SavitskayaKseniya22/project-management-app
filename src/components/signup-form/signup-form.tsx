@@ -1,7 +1,10 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { useSignupQuery } from '../../store/services';
+import { errorFormatter } from '../../utits';
+import { useEffect, useState } from 'react';
 import { errorSlice } from '../../store/slices';
 import { useTypedDispatch } from '../../store';
 
@@ -11,12 +14,26 @@ interface UserDataModel {
   password: string;
 }
 
+const schema = yup
+  .object({
+    name: yup.string().required('signup_form__errors__name_required'),
+    login: yup
+      .string()
+      .required('signup_form__errors__login_required')
+      .min(3, 'signup_form__errors__login_min_length'),
+    password: yup.string().required('signin_form__errors__password_required'),
+  })
+  .required();
+
 function SignupForm() {
   const {
     register,
+    getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserDataModel>();
+  } = useForm<UserDataModel>({
+    resolver: yupResolver(schema),
+  });
 
   const [userData, setUserData] = useState<UserDataModel>();
 
@@ -40,22 +57,25 @@ function SignupForm() {
       <Form.Control
         label="User name"
         controlKey="userNameInput"
+        errorMessage={errorFormatter(errors.name)}
         className="form-input-text"
-        errorMessage={errors.name?.message}
         {...register('name', { required: true })}
       />
       <Form.Control
         label="Login"
         controlKey="loginInput"
+        errorMessage={errorFormatter(errors.login, {
+          minLength: 3,
+          currentLength: getValues('login')?.length || 0,
+        })}
         className="form-input-text"
-        errorMessage={errors.login?.message}
         {...register('login', { required: true })}
       />
       <Form.Control
         label="Password"
         controlKey="passwordInput"
+        errorMessage={errorFormatter(errors.password)}
         className="form-input-text"
-        errorMessage={errors.password?.message}
         {...register('password', { required: true })}
       />
       <Form.Group>
