@@ -24,7 +24,7 @@ export const boardListReducer = persistReducer(
   {
     key: 'rtk:boardList',
     storage,
-    whitelist: ['boardLsit'],
+    whitelist: ['boardList'],
   },
   boardListSlice.reducer
 );

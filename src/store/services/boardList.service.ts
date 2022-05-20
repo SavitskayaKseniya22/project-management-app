@@ -42,9 +42,21 @@ export const boardListApi = createApi({
       }),
       invalidatesTags: ['Board'],
     }),
+    getBoard: builder.query<Board, string | undefined>({
+      query: (id: string) => ({
+        url: `/boards/${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Board'],
+    }),
   }),
 });
 
-export const { useBoardListQuery, useCreateBoardMutation, useDeleteBoardMutation } = boardListApi;
+export const {
+  useBoardListQuery,
+  useCreateBoardMutation,
+  useDeleteBoardMutation,
+  useGetBoardQuery,
+} = boardListApi;
 
 export default boardListApi;
