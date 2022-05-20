@@ -19,18 +19,22 @@ export const Column = (props: { column: ColumnResponseAll }) => {
   );
 
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+  const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const [deleteColumn] = useDeleteColumnMutation();
 
-  const toggleForm = () => {
+  const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
   };
 
+  const toggleTaskForm = () => {
+    setTaskFormOpen((taskFormOpen) => !taskFormOpen);
+  };
   const confirmDeletion = async () => {
     setSkip(true);
     await deleteColumn({ id: id, columnId: props.column.id });
-    toggleForm();
+    toggleColumnForm();
   };
 
   const dispatch = useTypedDispatch();
@@ -53,14 +57,14 @@ export const Column = (props: { column: ColumnResponseAll }) => {
         </h3>
       )}
 
-      <button onClick={toggleForm}>delete column</button>
-      <button>add task</button>
+      <button onClick={toggleColumnForm}>delete column</button>
+      <button onClick={toggleTaskForm}>add task</button>
 
       <ul className="task-list">
         {data && data.tasks.length ? (
           <>
             {data.tasks.map((item: ColumnResponseAll, idx) => {
-              return <Task key={idx} />;
+              return <Task key={idx} colId={data.id} task={data.tasks[idx]} />;
             })}
           </>
         ) : null}
@@ -70,9 +74,21 @@ export const Column = (props: { column: ColumnResponseAll }) => {
         <ModalWindow
           reason="delete the column"
           declineFunction={() => {
-            toggleForm();
+            toggleColumnForm();
           }}
           confirmFunction={confirmDeletion}
+        ></ModalWindow>
+      )}
+      {taskFormOpen && data && (
+        <ModalWindow
+          reason="create a task"
+          declineFunction={toggleTaskForm}
+          confirmFunction={() => {
+            return;
+          }}
+          optional={{
+            colId: data.id,
+          }}
         ></ModalWindow>
       )}
     </li>

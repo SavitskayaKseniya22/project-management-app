@@ -25,7 +25,7 @@ export function BoardPage() {
     setData(dataStore);
   }, [dataStore]);
 
-  const toggleForm = () => {
+  const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
   };
 
@@ -79,7 +79,7 @@ export function BoardPage() {
   return (
     <>
       <header>
-        <button onClick={toggleForm}>
+        <button onClick={toggleColumnForm}>
           <FormattedMessage id="header_newColumn" defaultMessage="Create new column" />
         </button>
 
@@ -123,7 +123,7 @@ export function BoardPage() {
       {columnFormOpen && (
         <ModalWindow
           reason="create a column"
-          declineFunction={toggleForm}
+          declineFunction={toggleColumnForm}
           confirmFunction={() => {
             return;
           }}

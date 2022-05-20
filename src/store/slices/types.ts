@@ -34,7 +34,7 @@ export interface ColumnRequest {
 
 export interface Column extends ColumnRequest {
   id: string;
-  tasks: Task[];
+  tasks: TaskResponse[];
 }
 
 export interface ColumnResponseAll {
@@ -50,14 +50,23 @@ export interface ColumnState {
   column?: ColumnResponseAll | null;
 }
 
-export interface Task {
-  id: string;
+export interface TaskFormData {
+  title: string;
+  description: string;
+  done: boolean;
+}
+
+export interface TaskRequest {
   title: string;
   order: number;
   done: boolean;
   description: string;
   userId: string;
-  files: TaskFileItem[];
+  boardId: string;
+  columnId: string;
+}
+export interface TaskResponse extends TaskRequest {
+  id: string;
 }
 
 export interface TaskFileItem {
