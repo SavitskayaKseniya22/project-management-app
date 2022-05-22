@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTypedSelector, RootState, useTypedDispatch, authSlice } from '../../store';
 import { getAccessTokenSelector } from '../../store/selectors';
 import LanguagePanel from '../languagePanel/languagePanel';
+import { ModalWindow } from '../modal-window/modal-window';
 import SearchPanel from '../search/searchPanel';
 import './header.scss';
 
@@ -12,6 +13,11 @@ const PageHeader = () => {
   const accessToken = useTypedSelector(getAccessTokenSelector);
   const location = useLocation();
   const dispatch = useTypedDispatch();
+
+  const [boardFormOpen, setBoardFormOpen] = useState<boolean>(false);
+  const toggleBoardForm = () => {
+    setBoardFormOpen((boardFormOpen) => !boardFormOpen);
+  };
 
   window.onscroll = function () {
     setScroll(window.pageYOffset);
@@ -23,9 +29,9 @@ const PageHeader = () => {
 
   const headerNormal = (
     <>
-      <SearchPanel />s
+      <SearchPanel />
       <LanguagePanel />
-      <button className="header-new-board">
+      <button className="header-new-board" onClick={toggleBoardForm}>
         <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
       </button>
       <Link to="/profile" className="header-edit">
@@ -34,6 +40,15 @@ const PageHeader = () => {
       <button className="header-logout" onClick={logoutHandler}>
         <FormattedMessage id="header_logout" defaultMessage="Log out" />
       </button>
+      {boardFormOpen && (
+        <ModalWindow
+          reason="create a board"
+          declineFunction={toggleBoardForm}
+          confirmFunction={() => {
+            return;
+          }}
+        ></ModalWindow>
+      )}
     </>
   );
 
@@ -41,15 +56,24 @@ const PageHeader = () => {
     <>
       <SearchPanel />
       <LanguagePanel />
-      <button className="header-new-board">
+      <button className="header-new-board" onClick={toggleBoardForm}>
         <i className="fa-solid fa-folder-plus"></i>
       </button>
       <Link to="/profile" className="header-edit">
         <i className="fa-solid fa-user-pen"></i>
       </Link>
-      <button className="header-logout">
+      <button className="header-logout" onClick={logoutHandler}>
         <i className="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
+      {boardFormOpen && (
+        <ModalWindow
+          reason="create a board"
+          declineFunction={toggleBoardForm}
+          confirmFunction={() => {
+            return;
+          }}
+        ></ModalWindow>
+      )}
     </>
   );
 

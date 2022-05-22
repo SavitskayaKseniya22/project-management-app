@@ -89,6 +89,13 @@
   margin-left: auto;
 }
 
+.header-signin {
+  margin-left: unset;
+  @media (min-width: $min-width) {
+    margin-left: auto;
+  }
+}
+
 .header-logout + .header-go-main {
   background-color: $red-color;
   color: $white-color;
