@@ -7,20 +7,22 @@ import { ModalWindow } from '../modal-window/modal-window';
 
 interface TaskProps {
   columnId: string;
-  task: TaskResponse;
+  /*task: TaskResponse;*/
+  taskId: string;
 }
 
 export const Task = (props: TaskProps) => {
   const [taskRemovalToConfirm, setTaskRemovalToConfirm] = useState<boolean>(false);
   const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
-  const { columnId, task } = props;
+  const { columnId, taskId } = props;
+
   const toggleTaskRemoval = () => {
     setTaskRemovalToConfirm(!taskRemovalToConfirm);
   };
   const [skip, setSkip] = useState(false);
 
-  const { data, error } = useGetTaskQuery(
-    { taskId: task.id, columnId, boardId },
+  const { data: task, error } = useGetTaskQuery(
+    { taskId, columnId, boardId },
     {
       skip,
     }
@@ -36,25 +38,26 @@ export const Task = (props: TaskProps) => {
 
   const confirmRemoval = async () => {
     setSkip(true);
-    await deleteTask({ taskId: task.id, boardId, columnId });
+    await deleteTask({ taskId, boardId, columnId });
     toggleTaskRemoval();
   };
 
-  return (
-    <li className="task-item">
-      <h4>{props.task.title}</h4>
-      <p>{props.task.description}</p>
-      <button onClick={toggleTaskRemoval}>Remove</button>
-      <button>Edit</button>
-      {taskRemovalToConfirm && (
-        <ModalWindow
-          reason="delete the column"
-          declineFunction={() => {
-            toggleTaskRemoval();
-          }}
-          confirmFunction={confirmRemoval}
-        ></ModalWindow>
-      )}
-    </li>
-  );
+  if (task)
+    return (
+      <li className="task-item">
+        <h4>{task.title}</h4>
+        <p>{task.description}</p>
+        <button onClick={toggleTaskRemoval}>Remove</button>
+        {taskRemovalToConfirm && (
+          <ModalWindow
+            reason="delete the column"
+            declineFunction={() => {
+              toggleTaskRemoval();
+            }}
+            confirmFunction={confirmRemoval}
+          ></ModalWindow>
+        )}
+      </li>
+    );
+  else return <></>;
 };

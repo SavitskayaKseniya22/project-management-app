@@ -49,6 +49,7 @@ export const store = configureStore({
       authApi.middleware,
       boardListApi.middleware,
       columnApi.middleware,
+      taskApi.middleware,
     ]),
 });
 

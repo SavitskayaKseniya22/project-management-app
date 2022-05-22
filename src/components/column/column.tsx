@@ -12,12 +12,14 @@ import './column.scss';
 export const Column = (props: { column: ColumnResponseAll }) => {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const [skip, setSkip] = useState(false);
+
   const { data, error } = useGetColumnQuery(
     { id: id, columnId: props.column.id },
     {
       skip,
     }
   );
+
   const { data: taskList, error: taskListError } = useGetTaskListQuery(
     { boardId: id, columnId: props.column.id },
     {
@@ -72,7 +74,7 @@ export const Column = (props: { column: ColumnResponseAll }) => {
         {data && taskList && taskList.length ? (
           <>
             {taskList.map((item: TaskResponse, idx) => {
-              return <Task key={idx} columnId={data.id} task={item} />;
+              return <Task key={idx} columnId={data.id} taskId={item.id} />;
             })}
           </>
         ) : null}

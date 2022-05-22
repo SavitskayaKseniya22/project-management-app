@@ -13,6 +13,7 @@ import { useGetColumnQuery } from '../../store/services/column.service';
 export interface TaskFormProps {
   columnId: string;
   tasksAmount: string;
+  closeFormFunction: () => void;
 }
 export interface ParsedToken {
   iat: number;
@@ -42,7 +43,7 @@ function TaskCreationForm(props: TaskFormProps) {
     if (error) dispatch(errorSlice.actions.updateError(error));
   }, [dispatch, error]);
 
-  const onSubmit = (formData: TaskFormData) => {
+  const onSubmit = async (formData: TaskFormData) => {
     const task: TaskRequest = {
       ...formData,
       userId: userId,
@@ -51,7 +52,8 @@ function TaskCreationForm(props: TaskFormProps) {
     if (data && data.tasks.length) {
       task.order = getMaxOrderFromData(data.tasks) + 1;
     }
-    createTask({ task, boardId, columnId });
+    await createTask({ task, boardId, columnId });
+    props.closeFormFunction();
   };
 
   return (

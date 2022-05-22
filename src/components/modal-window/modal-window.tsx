@@ -1,3 +1,4 @@
+import { TaskResponse } from '../../store/slices/types';
 import BoardCreationForm from '../board-creation-form/board-creation-form';
 import ColumnCreationForm from '../column-creation-form/column-creation-form';
 import TaskCreationForm from '../task-creation-form/task-creation-form';
@@ -30,6 +31,7 @@ export function ModalWindow(props: ModalWindowProps) {
           <TaskCreationForm
             columnId={props.optional.columnId}
             tasksAmount={props.optional.tasksAmount}
+            closeFormFunction={props.declineFunction}
           ></TaskCreationForm>
         </div>
       </div>
@@ -52,6 +54,7 @@ export function ModalWindow(props: ModalWindowProps) {
           <TaskCreationForm
             columnId={props.optional.columnId}
             tasksAmount={props.optional.tasksAmount}
+            closeFormFunction={props.declineFunction}
           ></TaskCreationForm>
         </div>
       </div>
