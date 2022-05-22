@@ -62,11 +62,11 @@ export interface TaskRequest {
   done: boolean;
   description: string;
   userId: string;
-  boardId: string;
-  columnId: string;
 }
 export interface TaskResponse extends TaskRequest {
   id: string;
+  boardId: string;
+  columnId: string;
 }
 
 export interface TaskFileItem {

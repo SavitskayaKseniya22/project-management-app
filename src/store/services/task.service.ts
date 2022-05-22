@@ -19,6 +19,20 @@ export const taskApi = createApi({
   }),
   tagTypes: ['Task'],
   endpoints: (builder) => ({
+    getTaskList: builder.query<TaskResponse[], { columnId: string; boardId: string }>({
+      query: ({ boardId, columnId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks`,
+        method: 'GET',
+      }),
+      providesTags: ['Task'],
+    }),
+    getTask: builder.query<TaskResponse, { taskId: string; columnId: string; boardId: string }>({
+      query: ({ taskId, boardId, columnId }) => ({
+        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        method: 'GET',
+      }),
+      providesTags: ['Task'],
+    }),
     createTask: builder.mutation<
       TaskResponse,
       { task: TaskRequest; boardId: string; columnId: string }
@@ -52,6 +66,12 @@ export const taskApi = createApi({
   }),
 });
 
-export const { useCreateTaskMutation, useDeleteTaskMutation, useUpdateTaskMutation } = taskApi;
+export const {
+  useGetTaskListQuery,
+  useGetTaskQuery,
+  useCreateTaskMutation,
+  useDeleteTaskMutation,
+  useUpdateTaskMutation,
+} = taskApi;
 
 export default taskApi;

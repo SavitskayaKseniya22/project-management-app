@@ -2,42 +2,60 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { useSignupQuery } from '../../store/services';
-import { TaskFormData } from '../../store/slices/types';
+import { Column, TaskFormData, TaskRequest, TaskResponse } from '../../store/slices/types';
 import { Form } from '../form';
 import parseJwt from '../../utits/parse-jwt';
+import jwt_decode from 'jwt-decode';
+import { useCreateTaskMutation } from '../../store/services/task.service';
+import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
+import { errorSlice } from '../../store/slices';
+import { useGetColumnQuery } from '../../store/services/column.service';
 export interface TaskFormProps {
-  colId: string;
+  columnId: string;
+  tasksAmount: string;
 }
+export interface ParsedToken {
+  iat: number;
+  login: string;
+  userId: string;
+}
+
 function TaskCreationForm(props: TaskFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TaskFormData>();
-  const { colId } = props;
-  const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id);
+
+  const { columnId } = props;
+
+  const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const userToken = useTypedSelector((state: RootState) => state.authSlice.accessToken);
-  const userId = 'I be a user Id';
-  console.log('user id', userId);
-  /*const [userData, setUserData] = useState<UserDataModel>();*/
+  const { userId } = jwt_decode(userToken as string) as ParsedToken;
+
+  const { data } = useGetColumnQuery({ id: boardId, columnId });
+  const [createTask, { error }] = useCreateTaskMutation();
 
   const dispatch = useTypedDispatch();
+  useEffect(() => {
+    if (!error) return;
+    if (error) dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);
 
-  /*const { error } = useSignupQuery(userData, {
-        skip: !userData,
-      });
-    
-      useEffect(() => {
-        if (!error) return;
-        if (error) dispatch(errorSlice.actions.updateError(error));
-      }, [dispatch, error]);*/
-
-  /*onSubmit={handleSubmit((data: UserDataModel) => {
-        setUserData(data);
-      })}*/
+  const onSubmit = (formData: TaskFormData) => {
+    const task: TaskRequest = {
+      ...formData,
+      userId: userId,
+      order: 1,
+    };
+    if (data && data.tasks.length) {
+      task.order = getMaxOrderFromData(data.tasks) + 1;
+    }
+    createTask({ task, boardId, columnId });
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
         label="Title"
         controlKey="taskTitleInput"

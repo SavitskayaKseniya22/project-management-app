@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
 import { useDeleteColumnMutation, useGetColumnQuery } from '../../store/services/column.service';
+import { useGetTaskListQuery } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
-import { ColumnResponseAll } from '../../store/slices/types';
+import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
@@ -13,6 +14,12 @@ export const Column = (props: { column: ColumnResponseAll }) => {
   const [skip, setSkip] = useState(false);
   const { data, error } = useGetColumnQuery(
     { id: id, columnId: props.column.id },
+    {
+      skip,
+    }
+  );
+  const { data: taskList, error: taskListError } = useGetTaskListQuery(
+    { boardId: id, columnId: props.column.id },
     {
       skip,
     }
@@ -39,9 +46,10 @@ export const Column = (props: { column: ColumnResponseAll }) => {
 
   const dispatch = useTypedDispatch();
   useEffect(() => {
-    if (!error) return;
+    if (!error && !taskListError) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);
+    if (taskListError) dispatch(errorSlice.actions.updateError(taskListError));
+  }, [dispatch, error, taskListError]);
 
   return (
     <li className="board-item">
@@ -61,10 +69,10 @@ export const Column = (props: { column: ColumnResponseAll }) => {
       <button onClick={toggleTaskForm}>add task</button>
 
       <ul className="task-list">
-        {data && data.tasks.length ? (
+        {data && taskList && taskList.length ? (
           <>
-            {data.tasks.map((item: ColumnResponseAll, idx) => {
-              return <Task key={idx} colId={data.id} task={data.tasks[idx]} />;
+            {taskList.map((item: TaskResponse, idx) => {
+              return <Task key={idx} columnId={data.id} task={item} />;
             })}
           </>
         ) : null}
@@ -87,7 +95,8 @@ export const Column = (props: { column: ColumnResponseAll }) => {
             return;
           }}
           optional={{
-            colId: data.id,
+            columnId: data.id,
+            tasksAmount: `${data.tasks.length}`,
           }}
         ></ModalWindow>
       )}

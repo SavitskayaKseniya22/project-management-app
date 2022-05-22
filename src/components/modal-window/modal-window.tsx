@@ -12,7 +12,12 @@ interface ModalWindowProps {
   };
 }
 export function ModalWindow(props: ModalWindowProps) {
-  if (props.reason === 'create a task' && props.optional && props.optional.colId) {
+  if (
+    props.reason === 'create a task' &&
+    props.optional &&
+    props.optional.columnId &&
+    props.optional.tasksAmount
+  ) {
     return (
       <div className="modal-page-overlay">
         <div className="modal-msg">
@@ -22,7 +27,32 @@ export function ModalWindow(props: ModalWindowProps) {
               X
             </button>{' '}
           </div>
-          <TaskCreationForm colId={props.optional.colId}></TaskCreationForm>
+          <TaskCreationForm
+            columnId={props.optional.columnId}
+            tasksAmount={props.optional.tasksAmount}
+          ></TaskCreationForm>
+        </div>
+      </div>
+    );
+  } else if (
+    props.reason === 'edit a task' &&
+    props.optional &&
+    props.optional.columnId &&
+    props.optional.tasksAmount
+  ) {
+    return (
+      <div className="modal-page-overlay">
+        <div className="modal-msg">
+          <div className="modal-form-top">
+            <h2>{props.reason}</h2>{' '}
+            <button className="button-orange" onClick={props.declineFunction}>
+              X
+            </button>{' '}
+          </div>
+          <TaskCreationForm
+            columnId={props.optional.columnId}
+            tasksAmount={props.optional.tasksAmount}
+          ></TaskCreationForm>
         </div>
       </div>
     );
