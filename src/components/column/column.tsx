@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
 import { useDeleteColumnMutation, useGetColumnQuery } from '../../store/services/column.service';
-import { useGetTaskListQuery } from '../../store/services/task.service';
+import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
 import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
+import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
@@ -32,6 +34,7 @@ export const Column = (props: { column: ColumnResponseAll }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const [deleteColumn] = useDeleteColumnMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -53,6 +56,46 @@ export const Column = (props: { column: ColumnResponseAll }) => {
     if (taskListError) dispatch(errorSlice.actions.updateError(taskListError));
   }, [dispatch, error, taskListError]);
 
+  /*DnD functions*/
+  const changeOrder = async (list: TaskResponse[]) => {
+    const maxValue = getMaxOrderFromData(list);
+    const newList = list.map((item: TaskResponse, idx) => {
+      return {
+        task: {
+          ...item,
+          order: idx + 1 + maxValue,
+        },
+        taskId: item.id,
+        boardId: id,
+        columnId: props.column.id,
+      };
+    });
+    Promise.allSettled(
+      newList.map((item) => {
+        return updateTask(item);
+      })
+    );
+  };
+
+  const reorder = (list: TaskResponse[], startIndex: number, endIndex: number) => {
+    const result = list.slice();
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+    const items = reorder(
+      taskList as TaskResponse[],
+      result.source.index,
+      result.destination.index
+    );
+    changeOrder(items);
+  };
+
   return (
     <li className="board-item">
       {editMode ? (
@@ -69,17 +112,19 @@ export const Column = (props: { column: ColumnResponseAll }) => {
 
       <button onClick={toggleColumnForm}>delete column</button>
       <button onClick={toggleTaskForm}>add task</button>
-
-      <ul className="task-list">
-        {data && taskList && taskList.length ? (
-          <>
-            {taskList.map((item: TaskResponse, idx) => {
-              return <Task key={idx} columnId={data.id} taskId={item.id} />;
-            })}
-          </>
-        ) : null}
-      </ul>
-
+      <Droppable droppableId={props.column.id} type="task">
+        {(provided, snapshot) => (
+          <ul className="task-list">
+            {data && taskList && taskList.length ? (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {taskList.map((item: TaskResponse, idx) => {
+                  return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
+                })}
+              </div>
+            ) : null}
+          </ul>
+        )}
+      </Droppable>
       {columnFormOpen && (
         <ModalWindow
           reason="delete the column"

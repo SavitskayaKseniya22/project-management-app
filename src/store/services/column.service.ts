@@ -7,7 +7,7 @@ export const AUTH_API_REDUCER_KEY = 'columnApi';
 export const columnApi = createApi({
   reducerPath: AUTH_API_REDUCER_KEY,
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://damp-savannah-46887.herokuapp.com',
+    baseUrl: 'https://secure-spire-20211.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).authSlice.accessToken;
       if (token) {
