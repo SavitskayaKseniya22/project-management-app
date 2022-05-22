@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { useTypedSelector, RootState, useTypedDispatch, authSlice } from '../../store';
+import { useTypedSelector, useTypedDispatch, authSlice } from '../../store';
 import { getAccessTokenSelector } from '../../store/selectors';
 import LanguagePanel from '../languagePanel/languagePanel';
 import { ModalWindow } from '../modal-window/modal-window';
@@ -13,6 +13,7 @@ const PageHeader = () => {
   const accessToken = useTypedSelector(getAccessTokenSelector);
   const location = useLocation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
 
   const [boardFormOpen, setBoardFormOpen] = useState<boolean>(false);
   const toggleBoardForm = () => {
@@ -32,13 +33,13 @@ const PageHeader = () => {
       <SearchPanel />
       <LanguagePanel />
       <button className="header-new-board" onClick={toggleBoardForm}>
-        <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
+        {t('header.newBoard')}
       </button>
       <Link to="/profile" className="header-edit">
-        <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
+        {t('header.edit')}
       </Link>
       <button className="header-logout" onClick={logoutHandler}>
-        <FormattedMessage id="header_logout" defaultMessage="Log out" />
+        {t('header.logout')}
       </button>
       {boardFormOpen && (
         <ModalWindow
@@ -80,10 +81,10 @@ const PageHeader = () => {
   const headerWelcomeUnlogin = (
     <>
       <Link to="/signin" className="header-signin">
-        <FormattedMessage id="header_signin" defaultMessage="Sign in" />
+        {t('header.signin')}
       </Link>
       <Link to="/signup" className="header-signup">
-        <FormattedMessage id="header_signup" defaultMessage="Sign up" />
+        {t('header.signup')}
       </Link>
     </>
   );
@@ -103,7 +104,7 @@ const PageHeader = () => {
     <>
       {headerNormal}
       <Link to="/main" className="header-go-main">
-        <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
+        {t('header.goMain')}
       </Link>
     </>
   );

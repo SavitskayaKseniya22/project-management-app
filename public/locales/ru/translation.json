@@ -1,0 +1,41 @@
+{
+  "header": {
+    "edit": "Редактировать профиль",
+    "logout": "Выйти",
+    "search": "поиск",
+    "newBoard": "Создать новую доску",
+    "signin": "Войти",
+    "signup": "Зарегистрироваться",
+    "goMain": "Перейти к главной странице",
+    "newColumn": "Создать новую колонку"
+  },
+  "footer": {
+    "nameNikita": "Никита Кравченко",
+    "nameVadim": "Вадим Ильинчик",
+    "nameKseniya": "Ксения Савицкая"
+  },
+  "welcomepage": {
+    "welcome": "Добро пожаловать!"
+  },
+  "signin": {
+    "login": "Логин",
+    "password": "Пароль",
+    "errors__login_required": "Логин обязателен",
+    "errors__password_required": "Пароль обязателен",
+    "errors__login_min_length": "Логин должен быть не менее {{minLength}} символов, вы ввели символов: {{currentLength}}"
+  },
+  "sigup": {
+    "name": "Имя",
+    "login": "Логин",
+    "password": "Пароль",
+    "errors__name_required": "Имя обязательно",
+    "errors__login_required": "Логин обязателен",
+    "errors__password_required": "Пароль обязателен",
+    "errors__login_min_length": "Логин должен быть не менее {{minLength}} символов, вы ввели символов: {{currentLength}}"
+  },
+  "boardpage": {
+    "newTask": "Создать новое задание",
+    "back": "Вернуться к странице с досками",
+    "newColumn": "Создать новую колонку"
+  }
+}

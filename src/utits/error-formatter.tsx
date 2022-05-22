@@ -1,11 +1,14 @@
+import i18next from 'i18next';
 import { FieldError } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
 
 type ErrorFormatterValues = Record<string, string | React.ReactNode>;
 
 function errorFormatter<E extends FieldError | undefined>(error: E, values?: ErrorFormatterValues) {
   if (error) {
-    return <FormattedMessage id={error.message} values={values} />;
+    return i18next.t(`${error.message}`, {
+      minLength: values?.minLength,
+      currentLength: values?.currentLength,
+    });
   }
 }
 

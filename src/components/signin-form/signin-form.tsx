@@ -17,9 +17,9 @@ const schema = yup
   .object({
     login: yup
       .string()
-      .required('signin_form__errors__login_required')
-      .min(3, 'signin_form__errors__login_min_length'),
-    password: yup.string().required('signin_form__errors__password_required'),
+      .required('signin.errors__login_required')
+      .min(3, 'signin.errors__login_min_length'),
+    password: yup.string().required('signin.errors__password_required'),
   })
   .required();
 

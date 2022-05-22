@@ -16,12 +16,12 @@ interface UserDataModel {
 
 const schema = yup
   .object({
-    name: yup.string().required('signup_form__errors__name_required'),
+    name: yup.string().required('signup.errors__name_required'),
     login: yup
       .string()
-      .required('signup_form__errors__login_required')
-      .min(3, 'signup_form__errors__login_min_length'),
-    password: yup.string().required('signin_form__errors__password_required'),
+      .required('signup.errors__login_required')
+      .min(3, 'signup.errors__login_min_length'),
+    password: yup.string().required('signin.errors__password_required'),
   })
   .required();
 

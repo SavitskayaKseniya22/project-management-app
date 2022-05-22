@@ -1,0 +1,41 @@
+{
+  "header": {
+    "edit": "Edit profile",
+    "logout": "Log out",
+    "search": "search",
+    "newBoard": "Create new board",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "goMain": "Go to Main Page",
+    "newColumn": "Create new column"
+  },
+  "footer": {
+    "nameNikita": "Nikita Kravchenko",
+    "nameVadim": "Vadim Ilyinchik",
+    "nameKseniya": "Kseniya Savitskaya"
+  },
+  "welcomepage": {
+    "welcome": "Welcome!"
+  },
+  "signin": {
+    "login": "Login",
+    "password": "Password",
+    "errors__login_required": "Login is required",
+    "errors__password_required": "Password is required",
+    "errors__login_min_length": "Login must be at least {{minLength}} characters, but {{currentLength}} characters given"
+  },
+  "signup": {
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "errors__name_required": "Name is required",
+    "errors__login_required": "Login is required",
+    "errors__password_required": "Password is required",
+    "errors__login_min_length": "Login must be at least {{minLength}} characters, but {{currentLength}} characters given"
+  },
+  "boardpage": {
+    "newTask": "Create new task",
+    "back": "Back to boards list",
+    "newColumn": "Create new column"
+  }
+}

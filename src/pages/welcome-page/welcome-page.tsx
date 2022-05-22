@@ -1,14 +1,13 @@
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { getAccessTokenSelector, useTypedSelector } from '../../store';
 import './welcome-page.scss';
 
 export function WelcomePage() {
   const token = useTypedSelector(getAccessTokenSelector);
+  const { t } = useTranslation();
   return (
     <div className="welcome-page">
-      <h1>
-        <FormattedMessage id="mainpage_welcome" defaultMessage="Welcome!" />
-      </h1>
+      <h1>{t('welcomepage.welcome')}</h1>
       {token ? (
         <div className="buttons">
           <a href="/main" className="button-orange button-big">

@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { ChangeEvent } from 'react';
 import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
 import { langSlice } from '../../store/slices/lang.slice';
@@ -8,7 +9,8 @@ const LanguagePanel = () => {
   const dispatch = useTypedDispatch();
 
   const toggleLanguage = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(langSlice.actions.updateLang(e.target.value));
+    //dispatch(langSlice.actions.updateLang(e.target.value));
+    i18next.language === 'en' ? i18next.changeLanguage('ru') : i18next.changeLanguage('en');
   };
 
   return (
@@ -18,7 +20,7 @@ const LanguagePanel = () => {
         name="language"
         id="language-eng"
         value="ENGLISH"
-        checked={lang === 'ENGLISH'}
+        checked={i18next.language === 'en'}
         onChange={toggleLanguage}
       />
       <label htmlFor="language-eng" className="language-eng">
@@ -29,7 +31,7 @@ const LanguagePanel = () => {
         name="language"
         id="language-ru"
         value="RUSSIAN"
-        checked={lang === 'RUSSIAN'}
+        checked={i18next.language === 'ru'}
         onChange={toggleLanguage}
       />
       <label htmlFor="language-ru" className="language-ru">

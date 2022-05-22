@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Column } from '../../components/column/column';
 import { ModalWindow } from '../../components/modal-window/modal-window';
@@ -13,6 +12,7 @@ import { ColumnResponseAll } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
+import { useTranslation } from 'react-i18next';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
@@ -20,6 +20,7 @@ export function BoardPage() {
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setData(dataStore);
@@ -79,14 +80,10 @@ export function BoardPage() {
   return (
     <>
       <header>
-        <button onClick={toggleForm}>
-          <FormattedMessage id="header_newColumn" defaultMessage="Create new column" />
-        </button>
+        <button onClick={toggleForm}>{t('header.newColumn')}</button>
 
         <Link to="/main">
-          <button>
-            <FormattedMessage id="boardpage_back" defaultMessage="Back to boards list" />
-          </button>
+          <button>{t('boardpage.back')}</button>
         </Link>
       </header>
 
