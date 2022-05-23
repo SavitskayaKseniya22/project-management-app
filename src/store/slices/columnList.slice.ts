@@ -2,8 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import columnApi from '../services/column.service';
-import taskApi from '../services/task.service';
-import { Column, ColumnListState, ColumnResponseAll } from './types';
+import { ColumnListState } from './types';
 
 const initialState: ColumnListState = {};
 

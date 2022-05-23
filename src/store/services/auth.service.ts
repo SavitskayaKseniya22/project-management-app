@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Board, BoardRequest } from '../slices/types';
 import {
   SigninQueryRequest,
   SigninQueryResponse,

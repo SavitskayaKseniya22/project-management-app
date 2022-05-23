@@ -12,7 +12,6 @@ import { errorSlice } from '../../store/slices/error.slice';
 import { ColumnResponseAll } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;

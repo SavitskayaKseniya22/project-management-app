@@ -1,7 +1,7 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { ColumnRequest, ColumnResponseAll } from '../../store/slices/types';
+import { ColumnRequest } from '../../store/slices/types';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { errorSlice } from '../../store/slices';
 

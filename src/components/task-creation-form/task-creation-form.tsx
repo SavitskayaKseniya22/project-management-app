@@ -1,13 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
-import { useSignupQuery } from '../../store/services';
-import { Column, TaskFormData, TaskRequest, TaskResponse } from '../../store/slices/types';
+
+import { TaskFormData, TaskRequest, TaskResponse } from '../../store/slices/types';
 import { Form } from '../form';
-import parseJwt from '../../utits/parse-jwt';
 import jwt_decode from 'jwt-decode';
 import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
-import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
+
 import { errorSlice } from '../../store/slices';
 import { useGetColumnQuery } from '../../store/services/column.service';
 export interface TaskFormProps {
@@ -34,7 +33,6 @@ function TaskCreationForm(props: TaskFormProps) {
   const userToken = useTypedSelector((state: RootState) => state.authSlice.accessToken);
   const { userId } = jwt_decode(userToken as string) as ParsedToken;
 
-  const { data } = useGetColumnQuery({ id: boardId, columnId });
   const [createTask, { error }] = useCreateTaskMutation();
   const [updateTask, { error: updateError }] = useUpdateTaskMutation();
   const dispatch = useTypedDispatch();

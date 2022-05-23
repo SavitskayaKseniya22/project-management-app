@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { useDeleteTaskMutation, useGetTaskQuery } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
-import { TaskResponse } from '../../store/slices/types';
 import { ModalWindow } from '../modal-window/modal-window';
 
 interface TaskProps {
