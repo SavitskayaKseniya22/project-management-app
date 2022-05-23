@@ -1,15 +1,8 @@
 import i18next from 'i18next';
-import { ChangeEvent } from 'react';
-import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
-import { langSlice } from '../../store/slices/lang.slice';
 import './languagePanel.scss';
 
 const LanguagePanel = () => {
-  const lang = useTypedSelector((state: RootState) => state.langSlice.lang);
-  const dispatch = useTypedDispatch();
-
-  const toggleLanguage = (e: ChangeEvent<HTMLInputElement>) => {
-    //dispatch(langSlice.actions.updateLang(e.target.value));
+  const toggleLanguage = () => {
     i18next.language === 'en' ? i18next.changeLanguage('ru') : i18next.changeLanguage('en');
   };
 
