@@ -12,7 +12,6 @@ import { errorSlice } from '../../store/slices/error.slice';
 import { ColumnResponseAll } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
@@ -38,12 +37,11 @@ export function BoardPage() {
   }, [dispatch, error]);
 
   const changeOrder = async (list: ColumnResponseAll[]) => {
-    const maxValue = getMaxOrderFromData(list);
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
         column: {
           title: item.title,
-          order: idx + 1 + maxValue,
+          order: idx + 1,
         },
         id: id as string,
         columnId: item.id,
