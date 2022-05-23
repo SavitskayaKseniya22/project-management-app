@@ -9,7 +9,7 @@ export const taskApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://secure-spire-20211.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).authSlice.accessToken;
+      const token = (getState() as RootState).auth.accessToken;
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
