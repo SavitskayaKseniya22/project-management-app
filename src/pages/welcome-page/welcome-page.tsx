@@ -1,9 +1,9 @@
 import { FormattedMessage } from 'react-intl';
-import { RootState, useTypedSelector } from '../../store';
+import { getAccessTokenSelector, useTypedSelector } from '../../store';
 import './welcome-page.scss';
 
 export function WelcomePage() {
-  const token = useTypedSelector((state: RootState) => state.authSlice.accessToken);
+  const token = useTypedSelector(getAccessTokenSelector);
   return (
     <div className="welcome-page">
       <h1>

@@ -30,7 +30,7 @@ function TaskCreationForm(props: TaskFormProps) {
   const { columnId } = props;
 
   const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
-  const userToken = useTypedSelector((state: RootState) => state.authSlice.accessToken);
+  const userToken = useTypedSelector((state: RootState) => state.auth.accessToken);
   const { userId } = jwt_decode(userToken as string) as ParsedToken;
 
   const [createTask, { error }] = useCreateTaskMutation();

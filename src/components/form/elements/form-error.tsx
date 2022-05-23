@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 import { InnerRef } from '../../../interfaces';
 
 export interface FormErrorProps extends React.HTMLAttributes<HTMLElement>, InnerRef<HTMLElement> {
-  error?: string | null;
+  error?: string | React.ReactNode | null;
 }
 
 function FormError({ error, innerRef, className, ...props }: FormErrorProps) {

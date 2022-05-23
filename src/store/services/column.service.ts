@@ -9,7 +9,7 @@ export const columnApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://secure-spire-20211.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).authSlice.accessToken;
+      const token = (getState() as RootState).auth.accessToken;
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
@@ -33,7 +33,7 @@ export const columnApi = createApi({
       }),
       providesTags: ['Column'],
     }),
-    createColumn: builder.mutation<ColumnResponseAll, { column: ColumnRequest; id: string }>({
+    createColumn: builder.mutation<ColumnResponseAll, { column: { title: string }; id: string }>({
       query: ({ column, id }) => ({
         url: `/boards/${id}/columns`,
         method: 'POST',

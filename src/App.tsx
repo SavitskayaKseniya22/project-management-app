@@ -26,9 +26,11 @@ function App() {
         <PageHeader></PageHeader>
         <main className="main">
           <Routes>
-            <Route path="/" element={<WelcomePage></WelcomePage>} />
-            <Route path="/signin" element={<SigninPage />} />
-            <Route path="/signup" element={<SignupPage />} />
+            <Route element={<ProtectedRoute onlyPublic={true} />}>
+              <Route path="/" element={<WelcomePage></WelcomePage>} />
+              <Route path="/signin" element={<SigninPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+            </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="/main" element={<MainPage></MainPage>} />
               <Route path="/board" element={<BoardPage></BoardPage>} />

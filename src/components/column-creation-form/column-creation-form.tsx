@@ -9,7 +9,6 @@ import {
   useCreateColumnMutation,
   useGetColumnListQuery,
 } from '../../store/services/column.service';
-import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 
 type ColumnDataModel = ColumnRequest;
 
@@ -31,14 +30,7 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   }, [dispatch, error]);
 
   const onSubmit = async (arg: ColumnDataModel) => {
-    /*arg.order = 1;*/
-
-    /*if (data && data.length) {
-      const maxValue = getMaxOrderFromData(data);
-      arg.order = maxValue + 1;
-    }*/
-
-    await createColumn({ column: arg, id: id as string });
+    await createColumn({ column: { title: arg.title }, id: id as string });
     props.declineFunction();
   };
 
