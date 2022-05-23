@@ -38,12 +38,11 @@ export function BoardPage() {
   }, [dispatch, error]);
 
   const changeOrder = async (list: ColumnResponseAll[]) => {
-    const maxValue = getMaxOrderFromData(list);
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
         column: {
           title: item.title,
-          order: idx + 1 + maxValue,
+          order: idx + 1,
         },
         id: id as string,
         columnId: item.id,

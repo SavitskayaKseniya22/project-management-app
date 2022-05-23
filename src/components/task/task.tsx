@@ -15,11 +15,15 @@ interface TaskProps {
 
 export const Task = (props: TaskProps) => {
   const [taskRemovalToConfirm, setTaskRemovalToConfirm] = useState<boolean>(false);
+  const [taskEditToConfirm, setTaskEditToConfirm] = useState<boolean>(false);
   const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const { columnId, taskId, index } = props;
 
   const toggleTaskRemoval = () => {
     setTaskRemovalToConfirm(!taskRemovalToConfirm);
+  };
+  const toggleTaskEdit = () => {
+    setTaskEditToConfirm(!taskEditToConfirm);
   };
   const [skip, setSkip] = useState(false);
 
@@ -46,29 +50,36 @@ export const Task = (props: TaskProps) => {
 
   if (task)
     return (
-      <Draggable draggableId={taskId} index={index}>
-        {(provided, snapshot) => (
-          <li
-            className="task-item"
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            ref={provided.innerRef}
-          >
-            <h4>{task.title}</h4>
-            <p>{task.description}</p>
-            <button onClick={toggleTaskRemoval}>Remove</button>
-            {taskRemovalToConfirm && (
-              <ModalWindow
-                reason="delete the column"
-                declineFunction={() => {
-                  toggleTaskRemoval();
-                }}
-                confirmFunction={confirmRemoval}
-              ></ModalWindow>
-            )}
-          </li>
+      <li className="task-item">
+        <h4>{task.title}</h4>
+        <p>{task.description}</p>
+        <button onClick={toggleTaskRemoval}>Remove</button>
+        <button onClick={toggleTaskEdit}>Edit</button>
+        {taskRemovalToConfirm && (
+          <ModalWindow
+            reason="delete the task"
+            declineFunction={() => {
+              toggleTaskRemoval();
+            }}
+            confirmFunction={confirmRemoval}
+          ></ModalWindow>
         )}
-      </Draggable>
+        {taskEditToConfirm && (
+          <ModalWindow
+            reason="edit the task"
+            declineFunction={() => {
+              toggleTaskEdit();
+            }}
+            confirmFunction={() => {
+              return;
+            }}
+            optional={{
+              columnId: task.columnId,
+            }}
+            task={task}
+          ></ModalWindow>
+        )}
+      </li>
     );
   else return <></>;
 };

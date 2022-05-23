@@ -93,7 +93,7 @@ export const Column = (props: { column: ColumnResponseAll }) => {
       result.source.index,
       result.destination.index
     );
-    changeOrder(items);
+    /*changeOrder(items);*/
   };
 
   return (
@@ -112,19 +112,16 @@ export const Column = (props: { column: ColumnResponseAll }) => {
 
       <button onClick={toggleColumnForm}>delete column</button>
       <button onClick={toggleTaskForm}>add task</button>
-      <Droppable droppableId={props.column.id} type="task">
-        {(provided, snapshot) => (
-          <ul className="task-list">
-            {data && taskList && taskList.length ? (
-              <div ref={provided.innerRef} {...provided.droppableProps}>
-                {taskList.map((item: TaskResponse, idx) => {
-                  return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
-                })}
-              </div>
-            ) : null}
-          </ul>
-        )}
-      </Droppable>
+
+      <ul className="task-list">
+        {data && taskList && taskList.length ? (
+          <div>
+            {taskList.map((item: TaskResponse, idx) => {
+              return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
+            })}
+          </div>
+        ) : null}
+      </ul>
       {columnFormOpen && (
         <ModalWindow
           reason="delete the column"
@@ -143,7 +140,6 @@ export const Column = (props: { column: ColumnResponseAll }) => {
           }}
           optional={{
             columnId: data.id,
-            tasksAmount: `${data.tasks.length}`,
           }}
         ></ModalWindow>
       )}

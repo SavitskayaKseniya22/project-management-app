@@ -31,12 +31,12 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   }, [dispatch, error]);
 
   const onSubmit = async (arg: ColumnDataModel) => {
-    arg.order = 1;
+    /*arg.order = 1;*/
 
-    if (data && data.length) {
+    /*if (data && data.length) {
       const maxValue = getMaxOrderFromData(data);
       arg.order = maxValue + 1;
-    }
+    }*/
 
     await createColumn({ column: arg, id: id as string });
     props.declineFunction();

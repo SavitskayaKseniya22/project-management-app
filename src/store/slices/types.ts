@@ -58,12 +58,13 @@ export interface TaskFormData {
 
 export interface TaskRequest {
   title: string;
-  order: number;
   done: boolean;
   description: string;
   userId: string;
+  order?: number;
 }
 export interface TaskResponse extends TaskRequest {
+  order: number;
   id: string;
   boardId: string;
   columnId: string;

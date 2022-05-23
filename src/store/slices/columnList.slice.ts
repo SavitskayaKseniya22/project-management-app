@@ -16,9 +16,9 @@ export const columnListSlice = createSlice({
       columnApi.endpoints.getColumnList.matchFulfilled,
       (state: ColumnListState, { payload, meta }) => {
         const payloadCopy = payload.slice();
-        payloadCopy.sort(function (a, b) {
+        /*payloadCopy.sort(function (a, b) {
           return a.order - b.order;
-        });
+        });*/
         state[meta.arg.originalArgs as string] = payloadCopy;
       }
     );

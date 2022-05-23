@@ -13,6 +13,7 @@ export interface FormControlProps
   errorMessage?: string;
   className?: string;
   type?: HTMLInputTypeAttribute;
+  defaultValue?: string | number;
 }
 
 function FormControl({
@@ -23,6 +24,7 @@ function FormControl({
   controlKey,
   placeholder,
   errorMessage,
+  defaultValue,
   ...props
 }: FormControlProps) {
   return (
@@ -30,6 +32,7 @@ function FormControl({
       <Form.Label>{label}</Form.Label>
       <Form.Input
         value={value}
+        defaultValue={defaultValue}
         type={type ?? 'text'}
         className={classNames(type === 'file' && 'form__file', className)}
         placeholder={placeholder ?? label}

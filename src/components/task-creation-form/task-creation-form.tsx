@@ -6,14 +6,14 @@ import { Column, TaskFormData, TaskRequest, TaskResponse } from '../../store/sli
 import { Form } from '../form';
 import parseJwt from '../../utits/parse-jwt';
 import jwt_decode from 'jwt-decode';
-import { useCreateTaskMutation } from '../../store/services/task.service';
+import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
 import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 import { errorSlice } from '../../store/slices';
 import { useGetColumnQuery } from '../../store/services/column.service';
 export interface TaskFormProps {
   columnId: string;
-  tasksAmount: string;
   closeFormFunction: () => void;
+  task?: TaskResponse;
 }
 export interface ParsedToken {
   iat: number;
@@ -36,23 +36,25 @@ function TaskCreationForm(props: TaskFormProps) {
 
   const { data } = useGetColumnQuery({ id: boardId, columnId });
   const [createTask, { error }] = useCreateTaskMutation();
-
+  const [updateTask, { error: updateError }] = useUpdateTaskMutation();
   const dispatch = useTypedDispatch();
   useEffect(() => {
-    if (!error) return;
+    if (!error && !updateError) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
+    if (updateError) dispatch(errorSlice.actions.updateError(updateError));
   }, [dispatch, error]);
 
   const onSubmit = async (formData: TaskFormData) => {
     const task: TaskRequest = {
       ...formData,
       userId: userId,
-      order: 1,
     };
-    if (data && data.tasks.length) {
-      task.order = getMaxOrderFromData(data.tasks) + 1;
+    if (props.task) {
+      task.order = props.task.order;
     }
-    await createTask({ task, boardId, columnId });
+    props.task
+      ? await updateTask({ task, taskId: props.task.id, boardId, columnId })
+      : await createTask({ task, boardId, columnId });
     props.closeFormFunction();
   };
 
@@ -62,6 +64,7 @@ function TaskCreationForm(props: TaskFormProps) {
         label="Title"
         controlKey="taskTitleInput"
         className="form-input-text"
+        defaultValue={props.task ? props.task.title : ''}
         errorMessage={errors.title?.message}
         {...register('title', { required: true })}
       />
@@ -69,19 +72,13 @@ function TaskCreationForm(props: TaskFormProps) {
         label="Description"
         controlKey="taskDescriptionInput"
         className="form-input-text"
+        defaultValue={props.task ? props.task.description : ''}
         errorMessage={errors.description?.message}
         {...register('description', { required: true })}
       />
-      <Form.Control
-        label="Mark as done"
-        type="checkbox"
-        controlKey="taskDoneInput"
-        errorMessage={errors.done?.message}
-        {...register('done')}
-      />
       <Form.Group>
         <Form.Button type="submit" className="button-orange button-big">
-          Create Task
+          {props.task ? 'Edit Task' : 'Create Task'}
         </Form.Button>
       </Form.Group>
     </Form>
