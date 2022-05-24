@@ -1,13 +1,10 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-import { useSigninQuery } from '../../store/services';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BoardRequest } from '../../store/slices/types';
 import { useTypedDispatch } from '../../store';
-import { authSlice, errorSlice } from '../../store/slices';
-import { Link } from 'react-router-dom';
+import { errorSlice } from '../../store/slices';
 import { useCreateBoardMutation } from '../../store/services/boardList.service';
-import { boardListSlice } from '../../store/slices/boardList.slice';
 
 type LoginDataModel = BoardRequest;
 

@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction, SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import { ErrorState } from './types';
 
 const initialState: ErrorState = {};
