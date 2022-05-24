@@ -1,7 +1,7 @@
-import { ColumnResponseAll } from '../store/slices/types';
+import { ColumnResponseAll, TaskResponse } from '../store/slices/types';
 
-export const getMaxOrderFromData = (list: ColumnResponseAll[]) => {
-  const values = list.map((item: ColumnResponseAll) => {
+export const getMaxOrderFromData = (list: ColumnResponseAll[] | TaskResponse[]) => {
+  const values = list.map((item: ColumnResponseAll | TaskResponse) => {
     return item.order;
   });
 

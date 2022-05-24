@@ -5,6 +5,7 @@ import { profileRehydrateMiddleware, unauthenticatedMiddleware } from './middlew
 import { authApi } from './services';
 import boardListApi from './services/boardList.service';
 import columnApi from './services/column.service';
+import taskApi from './services/task.service';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 import { boardReducer, boardSlice } from './slices/board.slice';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
@@ -17,6 +18,7 @@ const reducers = {
   [authApi.reducerPath]: authApi.reducer,
   [boardListApi.reducerPath]: boardListApi.reducer,
   [columnApi.reducerPath]: columnApi.reducer,
+  [taskApi.reducerPath]: taskApi.reducer,
   [authSlice.name]: authReducer,
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListReducer,
@@ -52,6 +54,7 @@ export const store = configureStore({
       authApi.middleware,
       boardListApi.middleware,
       columnApi.middleware,
+      taskApi.middleware,
     ]),
 });
 

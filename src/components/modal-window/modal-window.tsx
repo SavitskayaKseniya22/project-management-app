@@ -1,14 +1,60 @@
+import { TaskResponse } from '../../store/slices/types';
 import BoardCreationForm from '../board-creation-form/board-creation-form';
 import ColumnCreationForm from '../column-creation-form/column-creation-form';
+import TaskCreationForm from '../task-creation-form/task-creation-form';
 import './modal-window.scss';
 
 interface ModalWindowProps {
   reason: string;
   confirmFunction: () => void;
   declineFunction: () => void;
+  optional?: {
+    [val: string]: string;
+  };
+  task?: TaskResponse;
 }
 export function ModalWindow(props: ModalWindowProps) {
-  if (props.reason === 'create a board') {
+  if (props.reason === 'create a task' && props.optional && props.optional.columnId) {
+    return (
+      <div className="modal-page-overlay">
+        <div className="modal-msg">
+          <div className="modal-form-top">
+            <h2>{props.reason}</h2>{' '}
+            <button className="button-orange" onClick={props.declineFunction}>
+              X
+            </button>{' '}
+          </div>
+          <TaskCreationForm
+            columnId={props.optional.columnId}
+            closeFormFunction={props.declineFunction}
+          ></TaskCreationForm>
+        </div>
+      </div>
+    );
+  } else if (
+    props.reason === 'edit the task' &&
+    props.optional &&
+    props.optional.columnId &&
+    props.task
+  ) {
+    return (
+      <div className="modal-page-overlay">
+        <div className="modal-msg">
+          <div className="modal-form-top">
+            <h2>{props.reason}</h2>{' '}
+            <button className="button-orange" onClick={props.declineFunction}>
+              X
+            </button>{' '}
+          </div>
+          <TaskCreationForm
+            columnId={props.optional.columnId}
+            closeFormFunction={props.declineFunction}
+            task={props.task}
+          ></TaskCreationForm>
+        </div>
+      </div>
+    );
+  } else if (props.reason === 'create a board') {
     return (
       <div className="modal-page-overlay">
         <div className="modal-msg">
