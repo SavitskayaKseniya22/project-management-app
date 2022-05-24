@@ -17,22 +17,22 @@ function App() {
     <div className="App">
       <ErrorPropmt></ErrorPropmt>
       <PageHeader></PageHeader>
-      <main className="main">
-        <Routes>
-          <Route element={<ProtectedRoute onlyPublic={true} />}>
-            <Route path="/" element={<WelcomePage></WelcomePage>} />
-            <Route path="/signin" element={<SigninPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-          </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/main" element={<MainPage></MainPage>} />
-            <Route path="/board" element={<BoardPage></BoardPage>} />
-            <Route path="/search" element={<BoardPage></BoardPage>} />
-            <Route path="/profile" element={<ProfileEditPage></ProfileEditPage>}></Route>
-          </Route>
-          <Route path="*" element={<NotFoundPage></NotFoundPage>} />
-        </Routes>
-      </main>
+
+      <Routes>
+        <Route element={<ProtectedRoute onlyPublic={true} />}>
+          <Route path="/" element={<WelcomePage></WelcomePage>} />
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/main" element={<MainPage></MainPage>} />
+          <Route path="/board" element={<BoardPage></BoardPage>} />
+          <Route path="/search" element={<BoardPage></BoardPage>} />
+          <Route path="/profile" element={<ProfileEditPage></ProfileEditPage>}></Route>
+        </Route>
+        <Route path="*" element={<NotFoundPage></NotFoundPage>} />
+      </Routes>
+
       <PageFooter></PageFooter>
     </div>
   );
