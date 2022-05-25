@@ -9,9 +9,11 @@ import {
   useUpdateColumnMutation,
 } from '../../store/services/column.service';
 import { errorSlice } from '../../store/slices/error.slice';
-import { ColumnResponseAll } from '../../store/slices/types';
+import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { skipToken } from '@reduxjs/toolkit/dist/query';
+import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
@@ -19,10 +21,15 @@ export function BoardPage() {
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { data: whatevs, error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
-  console.log(whatevs);
-  useEffect(() => {
-    setData(dataStore);
-  }, [dataStore]);
+  const [homeCol, setHomeCol] = useState<{ columnId: string; boardId: string } | typeof skipToken>(
+    skipToken
+  );
+  const [foreignCol, setForeignCol] = useState<
+    { columnId: string; boardId: string } | typeof skipToken
+  >(skipToken);
+
+  const { data: home, error: homeColErr } = useGetTaskListQuery(homeCol);
+  const { data: foreign, error: foreignColErr } = useGetTaskListQuery(foreignCol);
 
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -30,12 +37,19 @@ export function BoardPage() {
 
   const dispatch = useTypedDispatch();
   const [updateColumn] = useUpdateColumnMutation();
+  const [updateTask] = useUpdateTaskMutation();
 
   useEffect(() => {
-    if (!error) return;
+    if (!error && !homeColErr && foreignColErr) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
+    if (homeColErr) dispatch(errorSlice.actions.updateError(homeColErr));
+    if (foreignColErr) dispatch(errorSlice.actions.updateError(foreignColErr));
   }, [dispatch, error]);
 
+  useEffect(() => {
+    setData(dataStore);
+  }, [dataStore]);
+  console.log('data', dataStore);
   const changeOrder = async (list: ColumnResponseAll[]) => {
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
@@ -54,14 +68,39 @@ export function BoardPage() {
     );
   };
 
-  const reorder = (list: ColumnResponseAll[], startIndex: number, endIndex: number) => {
+  const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
+    const newList = list.map((item: TaskResponse, idx) => {
+      return {
+        task: {
+          ...item,
+          order: idx + 1,
+          columnId: colId,
+        },
+        taskId: item.id,
+        boardId: id,
+        columnId: colId,
+      };
+    });
+    Promise.allSettled(
+      newList.map((item) => {
+        return updateTask(item);
+      })
+    );
+  };
+
+  const reorder = (
+    list: ColumnResponseAll[] | TaskResponse[],
+    startIndex: number,
+    endIndex: number
+  ) => {
     const result = list.slice();
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
     return result;
   };
 
-  const onDragEnd = (result: DropResult) => {
+  /*
+  const onDragEnd2 = (result: DropResult) => {
     if (!result.destination) {
       return;
     }
@@ -73,35 +112,55 @@ export function BoardPage() {
     setData(items);
     changeOrder(items);
   };
-
-  /*const onDragEnd2 = (result: DropResult) => {
+*/
+  const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
       return;
     }
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
 
     if (type === 'column') {
+      console.log('drag type detecred: column');
       const items = reorder(
         dataStore as ColumnResponseAll[],
-        source.index,
+        result.source.index,
         destination.index
       );
+      console.log('column items', items);
       setData(items);
-      changeOrder(items);
+      await changeOrder(items);
+      return;
     }
 
-    const home = this.state.columns[source.droppableId];
-    const foreign = this.state.columns[destination.droppableId];
+    /*Dragging inside the column*/
+    console.log('drag type detected: task');
+    if (source.droppableId === destination.droppableId) {
+      console.log('drag inside column detected');
+      await setHomeCol({ columnId: source.droppableId, boardId: id });
+      console.log('dragging insied home', home);
+      const col = reorder(home as TaskResponse[], source.index, destination.index);
+      await changeTaskOrder(col as TaskResponse[], source.droppableId);
+      return;
+    }
+    setHomeCol({ columnId: source.droppableId, boardId: id });
+    setForeignCol({ columnId: destination.droppableId, boardId: id });
+    const newHome = (home as TaskResponse[]).slice();
+    const newForeign = (foreign as TaskResponse[]).slice();
+    const [removed] = newHome.splice(result.source.index, 1);
+    newForeign.splice(destination.index, 0, removed);
+    await changeTaskOrder(newHome as TaskResponse[], source.droppableId);
+    await changeTaskOrder(newForeign as TaskResponse[], source.droppableId);
+    // moving from one list to another
+
+    //const home = this.state.columns[source.droppableId];
+    //const foreign = this.state.columns[destination.droppableId];
     /*Dragging tasks within the columns*/
-  /*if(source.droppableId === destination.droppableId) {
+    /*if (source.droppableId === destination.droppableId) {
       const newTaskIds = Array.from(home.taskIds);
       newTaskIds.splice(source.index, 1);
       newTaskIds.splice(destination.index, 0, draggableId);
@@ -123,9 +182,9 @@ export function BoardPage() {
       return;
     }
 
-    // moving from one list to another
+    // MOVING FROM ONE LIST TO ANOTHER
 
-    /*const homeTaskIds = Array.from(home.taskIds);
+    const homeTaskIds = Array.from(home.taskIds);
     homeTaskIds.splice(source.index, 1);
     const newHome = {
       ...home,
@@ -148,9 +207,8 @@ export function BoardPage() {
       },
     };
     this.setState(newState);
+    */
   };
-
-  */
 
   return (
     <>

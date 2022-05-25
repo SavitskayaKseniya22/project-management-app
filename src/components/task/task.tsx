@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Draggable } from 'react-beautiful-dnd';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { useDeleteTaskMutation, useGetTaskQuery } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
@@ -48,36 +49,45 @@ export const Task = (props: TaskProps) => {
 
   if (task)
     return (
-      <li className="task-item">
-        <h4>{task.title}</h4>
-        <p>{task.description}</p>
-        <button onClick={toggleTaskRemoval}>Remove</button>
-        <button onClick={toggleTaskEdit}>Edit</button>
-        {taskRemovalToConfirm && (
-          <ModalWindow
-            reason="delete the task"
-            declineFunction={() => {
-              toggleTaskRemoval();
-            }}
-            confirmFunction={confirmRemoval}
-          ></ModalWindow>
+      <Draggable draggableId={task.id} index={props.index}>
+        {(provided, snapshot) => (
+          <li
+            className="task-item"
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <h4>{task.title}</h4>
+            <p>{task.description}</p>
+            <button onClick={toggleTaskRemoval}>Remove</button>
+            <button onClick={toggleTaskEdit}>Edit</button>
+            {taskRemovalToConfirm && (
+              <ModalWindow
+                reason="delete the task"
+                declineFunction={() => {
+                  toggleTaskRemoval();
+                }}
+                confirmFunction={confirmRemoval}
+              ></ModalWindow>
+            )}
+            {taskEditToConfirm && (
+              <ModalWindow
+                reason="edit the task"
+                declineFunction={() => {
+                  toggleTaskEdit();
+                }}
+                confirmFunction={() => {
+                  return;
+                }}
+                optional={{
+                  columnId: task.columnId,
+                }}
+                task={task}
+              ></ModalWindow>
+            )}
+          </li>
         )}
-        {taskEditToConfirm && (
-          <ModalWindow
-            reason="edit the task"
-            declineFunction={() => {
-              toggleTaskEdit();
-            }}
-            confirmFunction={() => {
-              return;
-            }}
-            optional={{
-              columnId: task.columnId,
-            }}
-            task={task}
-          ></ModalWindow>
-        )}
-      </li>
+      </Draggable>
     );
   else return <></>;
 };

@@ -10,7 +10,6 @@ import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
 import './column.scss';
-
 export const Column = (props: { column: ColumnResponseAll }) => {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const [skip, setSkip] = useState(false);
@@ -112,16 +111,20 @@ export const Column = (props: { column: ColumnResponseAll }) => {
 
       <button onClick={toggleColumnForm}>delete column</button>
       <button onClick={toggleTaskForm}>add task</button>
+      <Droppable droppableId={props.column.id} direction="vertical" type="task">
+        {(provided, snapshot) => (
+          <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
+            {data && taskList && taskList.length ? (
+              <div>
+                {taskList.map((item: TaskResponse, idx) => {
+                  return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
+                })}
+              </div>
+            ) : null}
+          </ul>
+        )}
+      </Droppable>
 
-      <ul className="task-list">
-        {data && taskList && taskList.length ? (
-          <div>
-            {taskList.map((item: TaskResponse, idx) => {
-              return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
-            })}
-          </div>
-        ) : null}
-      </ul>
       {columnFormOpen && (
         <ModalWindow
           reason="delete the column"

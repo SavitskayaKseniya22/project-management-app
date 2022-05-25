@@ -62,6 +62,15 @@ export interface TaskRequest {
   description: string;
   userId: string;
   order?: number;
+  id?: string;
+  boardId?: string;
+  columnId?: string;
+  files?: [
+    {
+      filename: string;
+      fileSize: number;
+    }
+  ];
 }
 export interface TaskResponse extends TaskRequest {
   order: number;
