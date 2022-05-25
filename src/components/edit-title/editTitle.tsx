@@ -36,9 +36,11 @@ export const EditTitle = (props: {
 
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>
-      <input type="text" {...register('title', { required: true })} />
-      <button type="submit">Confirm</button>
-      <button>Cancel</button>
+      <input type="text" {...register('title', { required: true })} placeholder="Enter the title" />
+      <div className="buttons">
+        <button type="submit">Confirm</button>
+        <button>Cancel</button>
+      </div>
     </form>
   );
 };

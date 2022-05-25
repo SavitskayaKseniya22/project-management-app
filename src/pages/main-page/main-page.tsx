@@ -65,10 +65,6 @@ export function MainPage() {
               }}
             ></ModalWindow>
           )}
-          <div className="board-item-small" onClick={openBoardForm}>
-            {' '}
-            Create a board
-          </div>
         </div>
       </div>
     );
@@ -86,10 +82,6 @@ export function MainPage() {
             }}
           ></ModalWindow>
         )}
-        <div className="board-item-small" onClick={openBoardForm}>
-          {' '}
-          Create a board
-        </div>
       </div>
     </div>
   );

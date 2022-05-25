@@ -110,9 +110,6 @@ export const Column = (props: { column: ColumnResponseAll }) => {
         </h3>
       )}
 
-      <button onClick={toggleColumnForm}>delete column</button>
-      <button onClick={toggleTaskForm}>add task</button>
-
       <ul className="task-list">
         {data && taskList && taskList.length ? (
           <div>
@@ -122,6 +119,10 @@ export const Column = (props: { column: ColumnResponseAll }) => {
           </div>
         ) : null}
       </ul>
+      <div className="buttons">
+        <button onClick={toggleColumnForm}>delete column</button>
+        <button onClick={toggleTaskForm}>add task</button>
+      </div>
       {columnFormOpen && (
         <ModalWindow
           reason="delete the column"

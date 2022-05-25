@@ -1,8 +1,16 @@
 @import '../../variables.scss';
 
-main {
+.board-page {
   padding: $main-padding 0;
   flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  background: url('../../assets/png/d7a8389a8e4a9b5b4a83374ea21f8447.png') no-repeat bottom right /
+    50% scroll;
 
   .board-list {
     padding: 0;
@@ -13,6 +21,12 @@ main {
     row-gap: 1rem;
     padding: $main-padding;
     overflow-x: auto;
+    flex-grow: 1;
+    justify-content: center;
+
+    & > div {
+      display: flex;
+    }
   }
 }
 

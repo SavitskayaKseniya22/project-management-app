@@ -155,7 +155,7 @@ export function BoardPage() {
   */
 
   return (
-    <>
+    <div className="board-page">
       <header>
         <button onClick={toggleColumnForm}>{t('header.newColumn')}</button>
         <Link to="/main">
@@ -202,6 +202,6 @@ export function BoardPage() {
           }}
         ></ModalWindow>
       )}
-    </>
+    </div>
   );
 }

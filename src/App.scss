@@ -58,3 +58,21 @@ h3 {
     font-size: 2em;
   }
 }
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+
+  & > * {
+    @extend %button-default;
+    color: white;
+    background-color: $red-color;
+    flex-grow: 1;
+    &:hover {
+      @extend %button-hover;
+    }
+  }
+}
