@@ -13,13 +13,16 @@ import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
-import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
+import taskApi, {
+  useGetTaskListQuery,
+  useUpdateTaskMutation,
+} from '../../store/services/task.service';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
-  const { data: whatevs, error } = useGetColumnListQuery(id);
+  const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [homeCol, setHomeCol] = useState<{ columnId: string; boardId: string } | typeof skipToken>(
     skipToken
@@ -72,8 +75,11 @@ export function BoardPage() {
     const newList = list.map((item: TaskResponse, idx) => {
       return {
         task: {
-          ...item,
+          title: item.title,
           order: idx + 1,
+          description: item.description,
+          userId: item.userId,
+          boardId: item.boardId,
           columnId: colId,
         },
         taskId: item.id,
@@ -96,6 +102,7 @@ export function BoardPage() {
     const result = list.slice();
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
+    console.log('reordering result', result);
     return result;
   };
 

@@ -53,12 +53,10 @@ export interface ColumnState {
 export interface TaskFormData {
   title: string;
   description: string;
-  done: boolean;
 }
 
 export interface TaskRequest {
   title: string;
-  done: boolean;
   description: string;
   userId: string;
   order?: number;

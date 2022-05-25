@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import columnApi from '../services/column.service';
+import taskApi from '../services/task.service';
 import { ColumnListState } from './types';
 
 const initialState: ColumnListState = {};
@@ -21,6 +22,12 @@ export const columnListSlice = createSlice({
         state[meta.arg.originalArgs as string] = payloadCopy;
       }
     );
+    /*builder.addMatcher(
+      taskApi.endpoints.getTaskList.matchFulfilled,
+      (state: ColumnListState, {payload}) =>{
+        const payloadCopy = payload.slice()
+      }
+    )*/
   },
 });
 

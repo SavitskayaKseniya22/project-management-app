@@ -27,7 +27,7 @@ export const Column = (props: { column: ColumnResponseAll }) => {
       skip,
     }
   );
-
+  console.log(taskList);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -116,9 +116,12 @@ export const Column = (props: { column: ColumnResponseAll }) => {
           <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
             {data && taskList && taskList.length ? (
               <div>
-                {taskList.map((item: TaskResponse, idx) => {
-                  return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
-                })}
+                {taskList
+                  .slice()
+                  .sort((a, b) => a.order - b.order)
+                  .map((item: TaskResponse, idx) => {
+                    return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
+                  })}
               </div>
             ) : null}
           </ul>
