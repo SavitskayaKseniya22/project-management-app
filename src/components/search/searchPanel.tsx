@@ -22,11 +22,9 @@ const SearchPanel = () => {
 
   return (
     <form className="search-panel" onSubmit={handleSubmit}>
-      <Link to="/search">
-        <button type="submit">
-          <i className="fa-solid fa-magnifying-glass" />
-        </button>
-      </Link>
+      <button type="submit">
+        <i className="fa-solid fa-magnifying-glass" />
+      </button>
 
       <input
         type="text"

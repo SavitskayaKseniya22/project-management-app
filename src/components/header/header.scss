@@ -4,7 +4,8 @@
   background-color: $main-bg-color;
   padding: $main-padding;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   row-gap: 1rem;
   column-gap: 1rem;
   color: $white-color;

@@ -5,6 +5,7 @@
   flex-wrap: nowrap;
   position: relative;
   box-sizing: border-box;
+  flex-grow: 1;
 
   @media (min-width: $min-width) {
     width: 100%;
