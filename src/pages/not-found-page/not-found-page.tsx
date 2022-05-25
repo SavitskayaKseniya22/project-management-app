@@ -1,3 +1,10 @@
+import './not-found-page.scss';
+
 export function NotFoundPage() {
-  return <h1>404 : Not found</h1>;
+  return (
+    <div className="notfound-page">
+      <h1>404</h1>
+      <h2>Not found</h2>
+    </div>
+  );
 }

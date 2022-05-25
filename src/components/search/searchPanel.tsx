@@ -9,7 +9,7 @@ import './searchPanel.scss';
 const SearchPanel = () => {
   const searchValue = useTypedSelector((state: RootState) => state.searchSlice.searchValue);
   const dispatch = useTypedDispatch();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const handleChangeSearchValue = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(searchSlice.actions.updateSearchValue(e.target.value));
