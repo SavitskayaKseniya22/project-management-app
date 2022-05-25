@@ -13,25 +13,25 @@ export function WelcomePage() {
   return (
     <div className="welcome-page">
       <section className="welcome-section welcome-screen">
-        <h1>Awesome project management app</h1>
+        <h1>{t('welcomepage.titles.main')}</h1>
       </section>
 
       <section className="welcome-section">
-        <h2>Features</h2>
+        <h2>{t('welcomepage.titles.features')}</h2>
         <div className="feature-list">
           <div className="main-feature">
             <div className="feature-symbol">
               <i className="fa-solid fa-users"></i>
             </div>
 
-            <h3>Organize your team</h3>
+            <h3>{t('welcomepage.features.organize')}</h3>
             <img src={organizePic} alt="Organize your team" width="425" height="320" />
           </div>
           <div className="main-feature">
             <div className="feature-symbol">
               <i className="fa-solid fa-table"></i>
             </div>
-            <h3>Plan projects and assign responsibility</h3>
+            <h3>{t('welcomepage.features.plan')}</h3>
             <img
               src={planPic}
               alt="Plan projects and assign responsibility"
@@ -44,20 +44,20 @@ export function WelcomePage() {
             <div className="feature-symbol">
               <i className="fa-solid fa-music"></i>
             </div>
-            <h3>Collaborate efficiently</h3>
+            <h3>{t('welcomepage.features.collaborate')}</h3>
             <img src={collabPic} alt="Collaborate efficiently" width="425" height="320" />
           </div>
           <div className="main-feature">
             <div className="feature-symbol">
               <i className="fa-solid fa-stopwatch"></i>
             </div>
-            <h3>Track progress and deliver on time</h3>
+            <h3>{t('welcomepage.features.track')}</h3>
             <img src={trackPic} alt="Track progress and deliver on time" width="425" height="320" />
           </div>
         </div>
       </section>
       <section className="welcome-section">
-        <h2> Meet the team</h2>
+        <h2>{t('welcomepage.titles.team')}</h2>
         <div className="team-list">
           <div className="team-member-info">
             <a href="https://github.com/SavitskayaKseniya22" target="_blank" rel="noreferrer">
@@ -72,10 +72,10 @@ export function WelcomePage() {
               height="200"
             />
             <ul>
-              <li>Design</li>
-              <li>Header and footer</li>
-              <li>Localisation</li>
-              <li>Column creation and DND</li>
+              <li>{t('welcomepage.responsibility.kseniya.1')}</li>
+              <li>{t('welcomepage.responsibility.kseniya.2')}</li>
+              <li>{t('welcomepage.responsibility.kseniya.3')}</li>
+              <li>{t('welcomepage.responsibility.kseniya.4')}</li>
             </ul>
           </div>
           <div className="team-member-info">
@@ -92,10 +92,11 @@ export function WelcomePage() {
             />
             <ul>
               <li>
-                <b>Team lead</b>
+                <b>{t('welcomepage.responsibility.nikita.1')}</b>
               </li>
-              <li>Task creation and DND</li>
-              <li>CI/CD</li>
+              <li>{t('welcomepage.responsibility.nikita.2')}</li>
+              <li>{t('welcomepage.responsibility.nikita.3')}</li>
+              <li>{t('welcomepage.responsibility.nikita.4')}</li>
             </ul>
           </div>
           <div className="team-member-info">
@@ -111,10 +112,10 @@ export function WelcomePage() {
               height="200"
             />
             <ul>
-              <li>Global store</li>
-              <li>User creation</li>
-              <li>Signup, signin</li>
-              <li>Logout, login</li>
+              <li>{t('welcomepage.responsibility.vadim.1')}</li>
+              <li>{t('welcomepage.responsibility.vadim.2')}</li>
+              <li>{t('welcomepage.responsibility.vadim.3')}</li>
+              <li>{t('welcomepage.responsibility.vadim.4')}</li>
             </ul>
           </div>
         </div>

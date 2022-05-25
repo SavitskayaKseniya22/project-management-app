@@ -15,7 +15,38 @@
     "nameKseniya": "Kseniya Savitskaya"
   },
   "welcomepage": {
-    "welcome": "Welcome!"
+    "welcome": "Welcome!",
+    "titles": {
+      "main": "Awesome project management app",
+      "features": "Features",
+      "team": "Meet the team"
+    },
+    "features": {
+      "organize": "Organize your team",
+      "plan": "Plan projects and assign responsibility",
+      "collaborate": "Collaborate efficiently",
+      "track": "Track progress and deliver on time"
+    },
+    "responsibility": {
+      "kseniya": {
+        "1": "Design and layout",
+        "2": "Header and footer",
+        "3": "Localisation",
+        "4": "Column creation and DND"
+      },
+      "nikita": {
+        "1": "Team lead",
+        "2": "Task creation and DND",
+        "3": "CI",
+        "4": "Error handling and confirmation window"
+      },
+      "vadim": {
+        "1": "Global store",
+        "2": "User creation",
+        "3": "Signup, signin, logout",
+        "4": "CD"
+      }
+    }
   },
   "signin": {
     "login": "Login",
