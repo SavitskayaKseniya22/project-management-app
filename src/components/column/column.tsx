@@ -4,13 +4,13 @@ import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
 import { useDeleteColumnMutation, useGetColumnQuery } from '../../store/services/column.service';
 import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
-import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
+import { Board, ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
 import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
 import './column.scss';
-export const Column = (props: { column: ColumnResponseAll }) => {
+export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const [skip, setSkip] = useState(false);
 
@@ -27,7 +27,7 @@ export const Column = (props: { column: ColumnResponseAll }) => {
       skip,
     }
   );
-  console.log(taskList);
+
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -55,46 +55,6 @@ export const Column = (props: { column: ColumnResponseAll }) => {
     if (taskListError) dispatch(errorSlice.actions.updateError(taskListError));
   }, [dispatch, error, taskListError]);
 
-  /*DnD functions*/
-  const changeOrder = async (list: TaskResponse[]) => {
-    const maxValue = getMaxOrderFromData(list);
-    const newList = list.map((item: TaskResponse, idx) => {
-      return {
-        task: {
-          ...item,
-          order: idx + 1 + maxValue,
-        },
-        taskId: item.id,
-        boardId: id,
-        columnId: props.column.id,
-      };
-    });
-    Promise.allSettled(
-      newList.map((item) => {
-        return updateTask(item);
-      })
-    );
-  };
-
-  const reorder = (list: TaskResponse[], startIndex: number, endIndex: number) => {
-    const result = list.slice();
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
-
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-    const items = reorder(
-      taskList as TaskResponse[],
-      result.source.index,
-      result.destination.index
-    );
-    /*changeOrder(items);*/
-  };
-
   return (
     <li className="board-item">
       {editMode ? (
@@ -120,10 +80,19 @@ export const Column = (props: { column: ColumnResponseAll }) => {
                   .slice()
                   .sort((a, b) => a.order - b.order)
                   .map((item: TaskResponse, idx) => {
-                    return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
+                    return (
+                      <Task
+                        key={idx}
+                        columnId={data.id}
+                        taskId={item.id}
+                        index={idx}
+                        taskItem={item}
+                      />
+                    );
                   })}
               </div>
             ) : null}
+            {provided.placeholder}
           </ul>
         )}
       </Droppable>

@@ -22,12 +22,6 @@ export const columnListSlice = createSlice({
         state[meta.arg.originalArgs as string] = payloadCopy;
       }
     );
-    /*builder.addMatcher(
-      taskApi.endpoints.getTaskList.matchFulfilled,
-      (state: ColumnListState, {payload}) =>{
-        const payloadCopy = payload.slice()
-      }
-    )*/
   },
 });
 
