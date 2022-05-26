@@ -98,31 +98,37 @@ export const Column = (props: { column: ColumnResponseAll }) => {
 
   return (
     <li className="board-item">
+      <div className="column-buttons">
+        <button onClick={toggleColumnForm} className="column-delete column-button">
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
+
+        <button onClick={toggleTaskForm} className="task-add column-button">
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      </div>
       {editMode ? (
         <EditTitle id={id} column={props.column} setEditMode={setEditMode} />
       ) : (
-        <h3
+        <h4
           onClick={() => {
             setEditMode(true);
           }}
         >
           {props.column.title}
-        </h3>
+        </h4>
       )}
 
       <ul className="task-list">
         {data && taskList && taskList.length ? (
-          <div>
+          <>
             {taskList.map((item: TaskResponse, idx) => {
               return <Task key={idx} columnId={data.id} taskId={item.id} index={idx} />;
             })}
-          </div>
+          </>
         ) : null}
       </ul>
-      <div className="buttons">
-        <button onClick={toggleColumnForm}>delete column</button>
-        <button onClick={toggleTaskForm}>add task</button>
-      </div>
+
       {columnFormOpen && (
         <ModalWindow
           reason="delete the column"

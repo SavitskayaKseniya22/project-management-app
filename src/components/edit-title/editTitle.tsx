@@ -35,12 +35,15 @@ export const EditTitle = (props: {
   }, [dispatch, error]);
 
   return (
-    <form action="" onSubmit={handleSubmit(onSubmit)}>
+    <form action="" onSubmit={handleSubmit(onSubmit)} className="column-edit-title">
       <input type="text" {...register('title', { required: true })} placeholder="Enter the title" />
-      <div className="buttons">
-        <button type="submit">Confirm</button>
-        <button>Cancel</button>
-      </div>
+
+      <button type="submit">
+        <i className="fa-solid fa-check"></i>
+      </button>
+      <button>
+        <i className="fa-solid fa-xmark"></i>
+      </button>
     </form>
   );
 };

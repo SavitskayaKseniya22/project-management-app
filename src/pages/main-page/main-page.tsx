@@ -39,7 +39,10 @@ export function MainPage() {
   if (data && data.length > 0) {
     return (
       <div className="main-page">
-        <div className="board-list">
+        <ul className="board-list">
+          <li className="board-item-small board-item-create" onClick={openBoardForm}>
+            <h3>Create a board</h3>
+          </li>
           {data.map((item: Board, idx) => {
             return (
               <BoardItemSmall
@@ -65,14 +68,17 @@ export function MainPage() {
               }}
             ></ModalWindow>
           )}
-        </div>
+        </ul>
       </div>
     );
   }
   return (
     <div className="main-page">
-      <h1>There are no boards yet. Would you like to create one?</h1>
-      <div className="board-list">
+      <h2>There are no boards yet. Would you like to create one?</h2>
+      <ul className="board-list">
+        <li className="board-item-small board-item-create" onClick={openBoardForm}>
+          <h3>Create a board</h3>
+        </li>
         {boardFormOpen && (
           <ModalWindow
             reason="create a board"
@@ -82,7 +88,7 @@ export function MainPage() {
             }}
           ></ModalWindow>
         )}
-      </div>
+      </ul>
     </div>
   );
 }

@@ -59,20 +59,19 @@ h3 {
   }
 }
 
-.buttons {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+h4 {
+  font-size: 1em;
 
-  & > * {
-    @extend %button-default;
-    color: white;
-    background-color: $red-color;
-    flex-grow: 1;
-    &:hover {
-      @extend %button-hover;
-    }
+  @media (min-width: $medium-width) {
+    font-size: 1.5em;
   }
+}
+
+h5 {
+  font-size: 1em;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }

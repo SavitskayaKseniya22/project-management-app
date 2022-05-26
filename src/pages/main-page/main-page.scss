@@ -22,7 +22,6 @@
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    align-items: center;
     justify-content: center;
     gap: 1rem;
     width: 100%;
@@ -32,14 +31,48 @@
 .board-item-small {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  text-align: center;
   border-radius: $border-radius;
-  border-bottom: #7953f5 5px solid;
   max-width: 15%;
-  min-width: 160px;
+  min-width: 270px;
   flex-grow: 1;
-  height: 300px;
   padding: 1rem;
-  background-color: $gray-color;
+  background-color: hsla(0, 0%, 90%, 0.6);
+  position: relative;
+  cursor: pointer;
+  transition: 1s;
+
+  &:hover {
+    background-color: $gray-color;
+    transition: 1s;
+  }
+
+  &:nth-child(3n) {
+    page-break-after: always;
+  }
+}
+
+.board-delete {
+  color: $main-bg-color;
+  cursor: pointer;
+  padding: $half-padding $main-padding;
+  font-size: 1rem;
+  background-color: transparent;
+  transition: color 1s;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  &:hover {
+    color: $red-color;
+    transition: color 1s;
+  }
+}
+
+.board-item-create {
+  background-color: $red-color;
+  color: white;
 }

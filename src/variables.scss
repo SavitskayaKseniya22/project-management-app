@@ -66,3 +66,17 @@ $maximum-width: 1200px;
   transition: $border-transition;
   border-top: $border;
 }
+
+%button-icon {
+  cursor: pointer;
+  padding: $half-padding $main-padding;
+  font-size: 1rem;
+  background-color: transparent;
+  transition: color 1s;
+  border: none;
+
+  &:hover {
+    color: $red-color;
+    transition: color 1s;
+  }
+}
