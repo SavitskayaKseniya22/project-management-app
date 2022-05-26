@@ -15,5 +15,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "rss-kanban" #Must be unique in Heroku
           heroku_email: "ivp.dev@outlook.com"
-          buildpack: "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+          buildpack: "https://github.com/mars/create-react-app-buildpack.git"
           branch: "develop"
