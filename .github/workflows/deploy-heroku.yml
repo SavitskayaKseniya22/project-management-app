@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: "rss-kanban" #Must be unique in Heroku
           heroku_email: "ivp.dev@outlook.com"
           buildpack: "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+          branch: "develop"
