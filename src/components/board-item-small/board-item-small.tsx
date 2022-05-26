@@ -17,11 +17,14 @@ export function BoardItemSmall(props: BoardItemProps) {
   };
 
   return (
-    <div className="board-item-small" onClick={getActiveBoard}>
+    <div className="board-item-small">
       <h3> {props.board.title} </h3>
       <p>{props.board.description}</p>
       <button onClick={props.openDeleteModal} className="board-delete">
         <i className="fa-solid fa-trash-can"></i>
+      </button>
+      <button onClick={getActiveBoard} className="board-open">
+        <i className="fa-solid fa-up-right-from-square"></i>
       </button>
     </div>
   );

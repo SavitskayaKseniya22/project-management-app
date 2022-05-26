@@ -80,25 +80,25 @@ const PageHeader = () => {
 
   const headerWelcomeUnlogin = (
     <>
-      <LanguagePanel />
       <Link to="/signin" className="header-signin">
         {t('header.signin')}
       </Link>
       <Link to="/signup" className="header-signup">
         {t('header.signup')}
       </Link>
+      <LanguagePanel />
     </>
   );
 
   const headerWelcomeUnloginSticky = (
     <>
-      <LanguagePanel />
       <Link to="/signin" className="header-signin">
         <i className="fa-solid fa-arrow-right-to-bracket"></i>
       </Link>
       <Link to="/signup" className="header-signup">
         <i className="fa-solid fa-user-plus"></i>
       </Link>
+      <LanguagePanel />
     </>
   );
 

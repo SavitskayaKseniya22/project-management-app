@@ -41,38 +41,46 @@
   padding: 1rem;
   background-color: hsla(0, 0%, 90%, 0.6);
   position: relative;
-  cursor: pointer;
-  transition: 1s;
-
-  &:hover {
-    background-color: $gray-color;
-    transition: 1s;
-  }
 
   &:nth-child(3n) {
     page-break-after: always;
   }
 }
 
-.board-delete {
+.board-delete,
+.board-open {
   color: $main-bg-color;
   cursor: pointer;
   padding: $half-padding $main-padding;
   font-size: 1rem;
   background-color: transparent;
-  transition: color 1s;
+
   border: none;
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+}
+
+.board-delete {
+  right: 0.5rem;
+  bottom: 0.5rem;
+  color: $red-color;
+}
+
+.board-open {
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  color: $green-color;
+  opacity: 0.6;
+  transition: opacity 1s;
 
   &:hover {
-    color: $red-color;
-    transition: color 1s;
+    transition: opacity 1s;
+    opacity: 1;
   }
 }
 
 .board-item-create {
   background-color: $red-color;
   color: white;
+  cursor: pointer;
 }

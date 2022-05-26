@@ -28,6 +28,11 @@
   gap: 2rem;
   position: relative;
   z-index: 2;
+  .buttons {
+    button {
+      @extend %button-icon;
+    }
+  }
 }
 
 .modal-msg .form {

@@ -83,7 +83,10 @@
 .header-signup,
 .header-signin,
 .header-go-main {
-  flex-grow: 0;
+  flex-grow: 1;
+  @media (min-width: $min-width) {
+    flex-grow: 0;
+  }
 }
 
 .header-signin,
