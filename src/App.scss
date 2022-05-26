@@ -21,10 +21,13 @@
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5 {
   font-family: $heading-font-family;
   width: 100%;
   text-align: center;
+  font-weight: 700;
 }
 
 h1 {

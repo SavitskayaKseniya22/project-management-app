@@ -1,8 +1,10 @@
 @import '../../variables.scss';
 .signup-page {
-  height: 100%;
-  width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  padding: 1rem;
+  background: url('../../assets/png/image_processing20191121-9190-prly27.png') no-repeat bottom
+    right / 50% scroll;
 }
