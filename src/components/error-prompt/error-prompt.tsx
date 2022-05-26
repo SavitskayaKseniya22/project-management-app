@@ -23,9 +23,7 @@ export function ErrorPropmt() {
         <div className="error-msg">
           <h2>A query error occured : {err.status}</h2>
           <p>{JSON.stringify(err.data.message)}</p>
-          <button onClick={clearError} className="button-orange error-button">
-            Ok
-          </button>
+          <button onClick={clearError}>Ok</button>
         </div>
       </div>
     );

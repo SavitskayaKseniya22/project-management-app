@@ -1,3 +1,4 @@
+import { MouseEventHandler } from 'react';
 import { TaskResponse } from '../../store/slices/types';
 import BoardCreationForm from '../board-creation-form/board-creation-form';
 import ColumnCreationForm from '../column-creation-form/column-creation-form';
@@ -19,10 +20,9 @@ export function ModalWindow(props: ModalWindowProps) {
       <div className="modal-page-overlay">
         <div className="modal-msg">
           <div className="modal-form-top">
-            <h2>{props.reason}</h2>{' '}
-            <button className="button-orange" onClick={props.declineFunction}>
-              X
-            </button>{' '}
+            <button onClick={props.declineFunction}>
+              <i className="fa-solid fa-xmark"></i>
+            </button>
           </div>
           <TaskCreationForm
             columnId={props.optional.columnId}
@@ -41,10 +41,9 @@ export function ModalWindow(props: ModalWindowProps) {
       <div className="modal-page-overlay">
         <div className="modal-msg">
           <div className="modal-form-top">
-            <h2>{props.reason}</h2>{' '}
-            <button className="button-orange" onClick={props.declineFunction}>
-              X
-            </button>{' '}
+            <button onClick={props.declineFunction}>
+              <i className="fa-solid fa-xmark"></i>
+            </button>
           </div>
           <TaskCreationForm
             columnId={props.optional.columnId}
@@ -59,10 +58,9 @@ export function ModalWindow(props: ModalWindowProps) {
       <div className="modal-page-overlay">
         <div className="modal-msg">
           <div className="modal-form-top">
-            <h2>{props.reason}</h2>{' '}
-            <button className="button-orange" onClick={props.declineFunction}>
-              X
-            </button>{' '}
+            <button onClick={props.declineFunction}>
+              <i className="fa-solid fa-xmark"></i>
+            </button>
           </div>
           <BoardCreationForm></BoardCreationForm>
         </div>
@@ -73,9 +71,8 @@ export function ModalWindow(props: ModalWindowProps) {
       <div className="modal-page-overlay">
         <div className="modal-msg">
           <div className="modal-form-top">
-            <h2>{props.reason}</h2>
-            <button className="button-orange" onClick={props.declineFunction}>
-              X
+            <button onClick={props.declineFunction}>
+              <i className="fa-solid fa-xmark"></i>
             </button>
           </div>
           <ColumnCreationForm declineFunction={props.declineFunction}></ColumnCreationForm>
@@ -86,13 +83,13 @@ export function ModalWindow(props: ModalWindowProps) {
   return (
     <div className="modal-page-overlay">
       <div className="modal-msg">
-        <h2>Are you sure you want to {props.reason}</h2>
+        <h3>Are you sure you want to {props.reason}</h3>
         <div className="buttons">
-          <button onClick={props.declineFunction} className="button-orange modal-button">
-            NO
+          <button onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
           </button>
-          <button onClick={props.confirmFunction} className="button-orange modal-button">
-            OK
+          <button onClick={props.confirmFunction}>
+            <i className="fa-solid fa-check"></i>
           </button>
         </div>
       </div>

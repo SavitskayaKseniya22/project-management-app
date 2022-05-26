@@ -47,9 +47,7 @@ function BoardCreationForm() {
         {...register('description', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          Create board
-        </Form.Button>
+        <Form.Button type="submit">Create board</Form.Button>
       </Form.Group>
     </Form>
   );

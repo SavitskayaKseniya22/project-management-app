@@ -37,16 +37,15 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        label="Column Title"
+        label="Title"
         controlKey="ColumnTitleInput"
         className="form-input-text"
         errorMessage={errors.title?.message}
         {...register('title', { required: true })}
       />
-
-      <Form.Button type="submit" className="button-orange button-big">
-        Create column
-      </Form.Button>
+      <Form.Group>
+        <Form.Button type="submit">Create column</Form.Button>
+      </Form.Group>
     </Form>
   );
 }

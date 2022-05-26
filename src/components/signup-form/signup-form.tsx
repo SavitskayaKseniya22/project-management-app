@@ -79,9 +79,7 @@ function SignupForm() {
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          Submit
-        </Form.Button>
+        <Form.Button type="submit">Submit</Form.Button>
       </Form.Group>
     </Form>
   );

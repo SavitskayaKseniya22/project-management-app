@@ -75,9 +75,7 @@ function TaskCreationForm(props: TaskFormProps) {
         {...register('description', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          {props.task ? 'Edit Task' : 'Create Task'}
-        </Form.Button>
+        <Form.Button type="submit">{props.task ? 'Edit Task' : 'Create Task'}</Form.Button>
       </Form.Group>
     </Form>
   );

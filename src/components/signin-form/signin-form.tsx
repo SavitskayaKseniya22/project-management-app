@@ -80,12 +80,8 @@ function SigninForm() {
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          Login
-        </Form.Button>
-        <Link to="/signup" className="button-orange button-big">
-          Signup
-        </Link>
+        <Form.Button type="submit">Login</Form.Button>
+        <Link to="/signup">Signup</Link>
       </Form.Group>
     </Form>
   );
