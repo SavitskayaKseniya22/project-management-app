@@ -62,7 +62,6 @@
 .board-delete {
   right: 0.5rem;
   bottom: 0.5rem;
-  color: $red-color;
 }
 
 .board-open {
@@ -71,16 +70,15 @@
   font-size: 2rem;
   color: $green-color;
   opacity: 0.6;
-  transition: opacity 1s;
+  transition: 0.5s;
 
   &:hover {
-    transition: opacity 1s;
+    transition: 0.5s;
     opacity: 1;
   }
 }
 
 .board-item-create {
-  background-color: $red-color;
-  color: white;
   cursor: pointer;
+  border-top: $border;
 }

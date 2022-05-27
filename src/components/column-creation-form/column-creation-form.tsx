@@ -4,12 +4,10 @@ import { useEffect } from 'react';
 import { ColumnRequest } from '../../store/slices/types';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { errorSlice } from '../../store/slices';
-
 import {
   useCreateColumnMutation,
   useGetColumnListQuery,
 } from '../../store/services/column.service';
-import { t } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 type ColumnDataModel = ColumnRequest;

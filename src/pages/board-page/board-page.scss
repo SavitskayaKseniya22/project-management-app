@@ -10,18 +10,22 @@
   flex-grow: 1;
   background: url('../../assets/png/d7a8389a8e4a9b5b4a83374ea21f8447.png') no-repeat bottom right /
     50% scroll;
+  position: relative;
 
-  .buttons {
-    background-color: $gray-color;
+  .board-page-buttons {
     padding: $half-padding $main-padding;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
 
     & > * {
-      text-decoration: none;
-      @extend %button-default;
-      @extend %button-invert-color;
+      @extend %button-icon;
+      background-color: transparent;
+      font-size: 3rem;
+      color: black;
     }
   }
 
@@ -73,10 +77,6 @@
     text-align: left;
   }
 
-  button {
-    @extend %button-icon;
-  }
-
   .column-buttons {
     width: 100%;
     display: flex;
@@ -84,11 +84,8 @@
     align-items: center;
 
     .column-button {
-      &.column-delete {
-        color: $red-color;
-      }
+      @extend %button-icon;
       &.task-add {
-        color: $green-color;
         font-size: 1.5rem;
       }
     }
@@ -99,6 +96,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    button {
+      @extend %button-icon;
+    }
 
     input {
       padding: $half-padding $main-padding;
@@ -151,14 +152,8 @@
   .task-buttons {
     display: flex;
     flex-direction: column;
-
     .task-button {
-      &.task-delete {
-        color: $red-color;
-      }
-      &.task-edit {
-        color: $green-color;
-      }
+      @extend %button-icon;
     }
   }
 }

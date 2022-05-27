@@ -9,14 +9,6 @@
   padding: 1rem;
   gap: 2rem;
   width: 290px;
-  /*
-  input:invalid {
-    border: 1px solid $red-color;
-  }
-
-  input:valid {
-    border: 1px solid $green-color;
-  }*/
 }
 
 .form > * {
@@ -33,13 +25,10 @@
 
   &:last-child {
     flex-direction: row;
+
     & > * {
       @extend %button-default;
       @extend %button-invert-color;
-      text-decoration: none;
-      &:hover {
-        @extend %button-hover;
-      }
     }
   }
 }

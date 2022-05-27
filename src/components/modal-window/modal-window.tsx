@@ -30,12 +30,11 @@ export function ModalWindow(props: ModalWindowProps) {
   if (reason === 'create a task' && props.optional && props.optional.columnId) {
     return (
       <div className="modal-page-overlay">
-        <div className="modal-msg">
-          <div className="modal-form-top">
-            <button onClick={props.declineFunction}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-          </div>
+        <div className="modal-msg modal-msg-form">
+          <button className="modal-msg-button-close" onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+
           <TaskCreationForm
             columnId={props.optional.columnId}
             closeFormFunction={props.declineFunction}
@@ -51,12 +50,11 @@ export function ModalWindow(props: ModalWindowProps) {
   ) {
     return (
       <div className="modal-page-overlay">
-        <div className="modal-msg">
-          <div className="modal-form-top">
-            <button onClick={props.declineFunction}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-          </div>
+        <div className="modal-msg modal-msg-form">
+          <button className="modal-msg-button-close" onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+
           <TaskCreationForm
             columnId={props.optional.columnId}
             closeFormFunction={props.declineFunction}
@@ -68,12 +66,11 @@ export function ModalWindow(props: ModalWindowProps) {
   } else if (reason === 'create a board') {
     return (
       <div className="modal-page-overlay">
-        <div className="modal-msg">
-          <div className="modal-form-top">
-            <button onClick={props.declineFunction}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-          </div>
+        <div className="modal-msg modal-msg-form">
+          <button className="modal-msg-button-close" onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+
           <BoardCreationForm declineFunction={props.declineFunction}></BoardCreationForm>
         </div>
       </div>
@@ -81,12 +78,11 @@ export function ModalWindow(props: ModalWindowProps) {
   } else if (reason === 'create a column') {
     return (
       <div className="modal-page-overlay">
-        <div className="modal-msg">
-          <div className="modal-form-top">
-            <button onClick={props.declineFunction}>
-              <i className="fa-solid fa-xmark"></i>
-            </button>
-          </div>
+        <div className="modal-msg modal-msg-form">
+          <button className="modal-msg-button-close" onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
+          </button>
+
           <ColumnCreationForm declineFunction={props.declineFunction}></ColumnCreationForm>
         </div>
       </div>
@@ -94,14 +90,14 @@ export function ModalWindow(props: ModalWindowProps) {
   }
   return (
     <div className="modal-page-overlay">
-      <div className="modal-msg">
+      <div className="modal-msg modal-msg-confirmation">
         <h3>{t('modal.sure', { reason: reasonKey })}</h3>
-        <div className="buttons">
-          <button onClick={props.declineFunction}>
-            <i className="fa-solid fa-xmark"></i>
-          </button>
+        <div className="modal-msg-confirmation-buttons">
           <button onClick={props.confirmFunction}>
             <i className="fa-solid fa-check"></i>
+          </button>
+          <button className="modal-msg-button-close" onClick={props.declineFunction}>
+            <i className="fa-solid fa-xmark"></i>
           </button>
         </div>
       </div>

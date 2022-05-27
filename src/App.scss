@@ -78,3 +78,24 @@ ul {
   margin: 0;
   padding: 0;
 }
+
+.fa-plus,
+.fa-pen {
+  color: $green-color;
+}
+
+.fa-trash-can {
+  color: $red-color;
+  transition: $transition;
+}
+
+.fa-plus,
+.fa-pen,
+.fa-trash-can {
+  transition: color $transition;
+
+  &:hover {
+    color: $emphasis-color;
+    transition: color $transition;
+  }
+}

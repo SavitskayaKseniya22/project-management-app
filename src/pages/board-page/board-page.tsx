@@ -156,9 +156,13 @@ export function BoardPage() {
 
   return (
     <div className="board-page">
-      <div className="buttons">
-        <Link to="/main">{t('boardpage.back')}</Link>
-        <button onClick={toggleColumnForm}>{t('header.newColumn')}</button>
+      <div className="board-page-buttons">
+        <Link to="/main" className="board-back">
+          <i className="fa-solid fa-arrow-left"></i>
+        </Link>
+        <button onClick={toggleColumnForm} className="board-new-column">
+          <i className="fa-solid fa-plus"></i>
+        </button>
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>

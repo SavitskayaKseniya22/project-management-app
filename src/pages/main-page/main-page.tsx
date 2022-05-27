@@ -44,7 +44,7 @@ export function MainPage() {
       {data && !data.length ? <h2>{t('mainpage.suggestion')}</h2> : null}
       <ul className="board-list">
         <li className="board-item-small board-item-create" onClick={openBoardForm}>
-          <h3>{t('boardpage.newColumn')}</h3>
+          <h3>{t('header.newBoard')}</h3>
         </li>
         {data &&
           data.map((item: Board, idx) => {

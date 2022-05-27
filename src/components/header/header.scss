@@ -61,18 +61,12 @@
 .header-signin,
 .header-signup,
 .header-logout + .header-go-main {
-  box-sizing: border-box;
-  text-decoration: none;
   text-align: center;
   font-weight: 400;
   @extend %button-default;
   @extend %button-color;
-  transition: 0.3s;
+  transition: $transition;
   flex-grow: 1;
-
-  &:hover {
-    @extend %button-hover;
-  }
 
   @media (min-width: $maximum-width) {
     flex-grow: 0;

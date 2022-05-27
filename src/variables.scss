@@ -20,7 +20,7 @@ $border-width: 2px;
 $border: $border-width solid $emphasis-color;
 $border-transparent: $border-width solid transparent;
 $border-radius: 0.4rem;
-$border-transition: border 1s;
+$transition: 0.5s;
 
 $main-padding: 1rem;
 $half-padding: $main-padding * 0.5;
@@ -35,21 +35,27 @@ $maximum-width: 1200px;
   color: $white-color;
   text-decoration: none;
   border: $border-transparent;
-  transition: $border-transition;
+  transition: $transition;
   padding: $half-padding;
-}
 
-%anchor-hover {
-  border-top: $border;
-  transition: $border-transition;
+  &:hover {
+    color: $emphasis-color;
+    transition: $transition;
+  }
 }
 
 %button-default {
   cursor: pointer;
   padding: $half-padding $main-padding;
   font-size: 1rem;
-  transition: $border-transition;
+  transition: $transition;
   border: $border-transparent;
+  text-decoration: none;
+
+  &:hover {
+    transition: $transition;
+    border-top: $border;
+  }
 }
 
 %button-color {
@@ -62,21 +68,16 @@ $maximum-width: 1200px;
   color: $white-color;
 }
 
-%button-hover {
-  transition: $border-transition;
-  border-top: $border;
-}
-
 %button-icon {
   cursor: pointer;
   padding: $half-padding $main-padding;
   font-size: 1rem;
   background-color: transparent;
-  transition: color 1s;
+  transition: color $transition;
   border: none;
 
   &:hover {
-    color: $red-color;
-    transition: color 1s;
+    color: $emphasis-color;
+    transition: $transition;
   }
 }
