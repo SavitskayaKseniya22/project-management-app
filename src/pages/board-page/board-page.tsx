@@ -30,7 +30,7 @@ export function BoardPage() {
   const { data: boardStore, error: boardError } = useGetBoardQuery(id);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
-  const [boardState, setBoardState] = useState<Board | undefined | null>(boardStore);
+  /*const [boardState, setBoardState] = useState<Board | undefined | null>(boardStore);*/
 
   const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
   console.log('board-data', board);
@@ -53,10 +53,12 @@ export function BoardPage() {
     setData(dataStore);
   }, [dataStore]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     setBoardState(boardStore);
-  }, [dataStore]);
+  }, [boardStore]);*/
+
   /*unused older order changing functions (that caused the bug)*/
+  /*
   const changeOrder = async (list: ColumnResponseAll[]) => {
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
@@ -97,7 +99,7 @@ export function BoardPage() {
       })
     );
   };
-
+*/
   const reorder = (
     list: ColumnResponseAll[] | TaskResponse[],
     startIndex: number,
@@ -171,10 +173,16 @@ export function BoardPage() {
       const home = (board as Board).columns.find(
         (col: ColInt) => col.id == source.droppableId
       ) as ColInt;
-      const col = reorder(home.tasks as TaskResponse[], result.source.index, destination.index);
+      const col = reorder(
+        home.tasks as TaskResponse[],
+        result.source.index,
+        destination.index
+      ) as TaskResponse[];
+
       dispatch(
         boardSlice.actions.updateColumnTasks({ taskList: col as TaskResponse[], colId: home.id })
       );
+
       await updateTaskOrder((col as TaskResponse[])[destination.index], destination.index);
       return;
     }
