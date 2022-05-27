@@ -11,14 +11,15 @@
   background: url('../../assets/png/d7a8389a8e4a9b5b4a83374ea21f8447.png') no-repeat bottom right /
     50% scroll;
 
-  header {
+  .buttons {
     background-color: $gray-color;
     padding: $half-padding $main-padding;
     display: flex;
     justify-content: space-between;
     gap: 1rem;
 
-    button {
+    & > * {
+      text-decoration: none;
       @extend %button-default;
       @extend %button-invert-color;
     }

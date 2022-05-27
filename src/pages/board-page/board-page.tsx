@@ -156,12 +156,10 @@ export function BoardPage() {
 
   return (
     <div className="board-page">
-      <header>
+      <div className="buttons">
+        <Link to="/main">{t('boardpage.back')}</Link>
         <button onClick={toggleColumnForm}>{t('header.newColumn')}</button>
-        <Link to="/main">
-          <button>{t('boardpage.back')}</button>
-        </Link>
-      </header>
+      </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal" type="column">

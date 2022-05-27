@@ -1,6 +1,5 @@
 import { ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
 import { searchSlice } from '../../store/slices/search.slice';
 

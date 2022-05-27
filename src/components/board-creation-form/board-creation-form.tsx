@@ -5,11 +5,11 @@ import { BoardRequest } from '../../store/slices/types';
 import { useTypedDispatch } from '../../store';
 import { errorSlice } from '../../store/slices';
 import { useCreateBoardMutation } from '../../store/services/boardList.service';
-
-type LoginDataModel = BoardRequest;
+import { useNavigate } from 'react-router-dom';
 
 type BoardDataModel = BoardRequest;
-function BoardCreationForm() {
+
+function BoardCreationForm(props: { declineFunction: () => void }) {
   const {
     register,
     handleSubmit,
@@ -17,6 +17,7 @@ function BoardCreationForm() {
   } = useForm<BoardDataModel>();
 
   const dispatch = useTypedDispatch();
+  const navigate = useNavigate();
 
   const [triggerBoardMutation, { error }] = useCreateBoardMutation();
 
@@ -29,6 +30,8 @@ function BoardCreationForm() {
     <Form
       onSubmit={handleSubmit((data: BoardDataModel) => {
         triggerBoardMutation(data);
+        props.declineFunction();
+        navigate('/main', { replace: true });
       })}
     >
       <Form.Control
