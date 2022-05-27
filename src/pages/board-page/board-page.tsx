@@ -27,21 +27,11 @@ export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
   const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
+  const { data: boardStore, error: boardError } = useGetBoardQuery(id);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+  const [boardState, setBoardState] = useState<Board | undefined | null>(boardStore);
 
-  /* const [homeCol, setHomeCol] = useState<{ columnId: string; boardId: string } | typeof skipToken>(
-    skipToken
-  );
-  const [foreignCol, setForeignCol] = useState<
-    { columnId: string; boardId: string } | typeof skipToken
-  >(skipToken);
-  */
-
-  /*const { data: home, error: homeColErr } = useGetTaskListQuery(homeCol);
-  const { data: foreign, error: foreignColErr } = useGetTaskListQuery(foreignCol);
-  */
-  const { data: boardStore, error: boardError } = useGetBoardQuery(id);
   const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
   console.log('board-data', board);
   const toggleColumnForm = () => {
@@ -55,15 +45,18 @@ export function BoardPage() {
   const [createTask] = useCreateTaskMutation();
 
   useEffect(() => {
-    if (!error) return; //&& !homeColErr && foreignColErr
+    if (!error) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
-    //if (homeColErr) dispatch(errorSlice.actions.updateError(homeColErr));
-    //if (foreignColErr) dispatch(errorSlice.actions.updateError(foreignColErr));
   }, [dispatch, error]);
 
   useEffect(() => {
     setData(dataStore);
   }, [dataStore]);
+
+  useEffect(() => {
+    setBoardState(boardStore);
+  }, [dataStore]);
+  /*unused older order changing functions (that caused the bug)*/
   const changeOrder = async (list: ColumnResponseAll[]) => {
     const newList = list.map((item: ColumnResponseAll, idx) => {
       return {
@@ -82,7 +75,7 @@ export function BoardPage() {
     );
   };
 
-  /*const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
+  const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
     const newList = list.map((item: TaskResponse, idx) => {
       return {
         task: {
@@ -103,7 +96,7 @@ export function BoardPage() {
         return updateTask(item);
       })
     );
-  };*/
+  };
 
   const reorder = (
     list: ColumnResponseAll[] | TaskResponse[],
@@ -120,21 +113,6 @@ export function BoardPage() {
     /*return result;*/
     return result;
   };
-
-  /*
-  const onDragEnd2 = (result: DropResult) => {
-    if (!result.destination) {
-      return;
-    }
-    const items = reorder(
-      dataStore as ColumnResponseAll[],
-      result.source.index,
-      result.destination.index
-    );
-    setData(items);
-    changeOrder(items);
-  };
-*/
 
   const updateTaskOrder = async (item: TaskResponse, idx: number) => {
     console.log('updating task');
@@ -188,6 +166,7 @@ export function BoardPage() {
     }
 
     /*Dragging inside the column*/
+
     if (source.droppableId === destination.droppableId) {
       const home = (board as Board).columns.find(
         (col: ColInt) => col.id == source.droppableId
@@ -199,8 +178,10 @@ export function BoardPage() {
       await updateTaskOrder((col as TaskResponse[])[destination.index], destination.index);
       return;
     }
+
     /*Dragging outside the column*/
-    console.log('ATTENTION IT IS DRAGGED OUTSIDE');
+    console.log('ATTENTION THE ITEM IS DRAGGED OUTSIDE');
+
     const home = (board as Board).columns.find(
       (col: ColInt) => col.id == source.droppableId
     ) as ColInt;
@@ -212,7 +193,6 @@ export function BoardPage() {
     const [removed] = newHome.splice(source.index, 1);
     console.log('removed item is ', removed.title);
     newForeign.splice(destination.index, 0, removed);
-    /*await updateTaskOrder((newForeign as TaskResponse[])[destination.index], destination.index);*/
     /*dispatch(
       boardSlice.actions.updateColumnTasks({
         taskList: newForeign as TaskResponse[],
@@ -236,61 +216,6 @@ export function BoardPage() {
     });
 
     return;
-    /* await changeTaskOrder(newHome as TaskResponse[], source.droppableId);
-    await changeTaskOrder(newForeign as TaskResponse[], source.droppableId);*/
-    // moving from one list to another
-
-    //const home = this.state.columns[source.droppableId];
-    //const foreign = this.state.columns[destination.droppableId];
-    /*Dragging tasks within the columns*/
-    /*if (source.droppableId === destination.droppableId) {
-      const newTaskIds = Array.from(home.taskIds);
-      newTaskIds.splice(source.index, 1);
-      newTaskIds.splice(destination.index, 0, draggableId);
-
-      const newHome = {
-        ...home,
-        taskIds: newTaskIds,
-      };
-
-      const newState = {
-        ...this.state,
-        columns: {
-          ...this.state.columns,
-          [newHome.id]: newHome,
-        },
-      };
-
-      this.setState(newState);
-      return;
-    }
-
-    // MOVING FROM ONE LIST TO ANOTHER
-
-    const homeTaskIds = Array.from(home.taskIds);
-    homeTaskIds.splice(source.index, 1);
-    const newHome = {
-      ...home,
-      taskIds: homeTaskIds,
-    };
-
-    const foreignTaskIds = Array.from(foreign.taskIds);
-    foreignTaskIds.splice(destination.index, 0, draggableId);
-    const newForeign = {
-      ...foreign,
-      taskIds: foreignTaskIds,
-    };
-
-    const newState = {
-      ...this.state,
-      columns: {
-        ...this.state.columns,
-        [newHome.id]: newHome,
-        [newForeign.id]: newForeign,
-      },
-    };
-    this.setState(newState);
-    */
   };
 
   return (
