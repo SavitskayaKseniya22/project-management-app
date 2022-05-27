@@ -27,7 +27,7 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
       skip,
     }
   );
-
+  console.log('task list that column sees', taskList);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -75,22 +75,26 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
         {(provided, snapshot) => (
           <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
             {data && taskList && taskList.length ? (
-              <div>
+              <>
                 {taskList
                   .slice()
                   .sort((a, b) => a.order - b.order)
                   .map((item: TaskResponse, idx) => {
                     return (
-                      <Task
-                        key={idx}
-                        columnId={data.id}
-                        taskId={item.id}
-                        index={idx}
-                        taskItem={item}
-                      />
+                      <Draggable key={item.id} draggableId={item.id} index={idx}>
+                        {(provided, snapshot) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <Task columnId={data.id} taskId={item.id} index={idx} taskItem={item} />
+                          </div>
+                        )}
+                      </Draggable>
                     );
                   })}
-              </div>
+              </>
             ) : null}
             {provided.placeholder}
           </ul>

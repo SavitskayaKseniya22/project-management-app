@@ -39,45 +39,36 @@ export const Task = (props: TaskProps) => {
   };
 
   return (
-    <Draggable draggableId={id} index={props.index}>
-      {(provided, snapshot) => (
-        <li
-          className="task-item"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <h4>{title}</h4>
-          <p>{description}</p>
-          <button onClick={toggleTaskRemoval}>Remove</button>
-          <button onClick={toggleTaskEdit}>Edit</button>
-          {taskRemovalToConfirm && (
-            <ModalWindow
-              reason="delete the task"
-              declineFunction={() => {
-                toggleTaskRemoval();
-              }}
-              confirmFunction={confirmRemoval}
-            ></ModalWindow>
-          )}
-          {taskEditToConfirm && (
-            <ModalWindow
-              reason="edit the task"
-              declineFunction={() => {
-                toggleTaskEdit();
-              }}
-              confirmFunction={() => {
-                return;
-              }}
-              optional={{
-                columnId: columnId,
-              }}
-              task={props.taskItem}
-            ></ModalWindow>
-          )}
-        </li>
+    <li className="task-item">
+      <h4>{title}</h4>
+      <p>{description}</p>
+      <button onClick={toggleTaskRemoval}>Remove</button>
+      <button onClick={toggleTaskEdit}>Edit</button>
+      {taskRemovalToConfirm && (
+        <ModalWindow
+          reason="delete the task"
+          declineFunction={() => {
+            toggleTaskRemoval();
+          }}
+          confirmFunction={confirmRemoval}
+        ></ModalWindow>
       )}
-    </Draggable>
+      {taskEditToConfirm && (
+        <ModalWindow
+          reason="edit the task"
+          declineFunction={() => {
+            toggleTaskEdit();
+          }}
+          confirmFunction={() => {
+            return;
+          }}
+          optional={{
+            columnId: columnId,
+          }}
+          task={props.taskItem}
+        ></ModalWindow>
+      )}
+    </li>
   );
 };
 

@@ -14,10 +14,14 @@ import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import taskApi, {
+  useCreateTaskMutation,
+  useDeleteTaskMutation,
   useGetTaskListQuery,
   useUpdateTaskMutation,
 } from '../../store/services/task.service';
 import { useGetBoardQuery } from '../../store/services/boardList.service';
+import { boardSlice } from '../../store/slices/board.slice';
+import { isConstructorDeclaration } from 'typescript';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
@@ -25,6 +29,7 @@ export function BoardPage() {
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+
   /* const [homeCol, setHomeCol] = useState<{ columnId: string; boardId: string } | typeof skipToken>(
     skipToken
   );
@@ -36,7 +41,8 @@ export function BoardPage() {
   /*const { data: home, error: homeColErr } = useGetTaskListQuery(homeCol);
   const { data: foreign, error: foreignColErr } = useGetTaskListQuery(foreignCol);
   */
-  const { data: board, error: boardError } = useGetBoardQuery(id);
+  const { data: boardStore, error: boardError } = useGetBoardQuery(id);
+  const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
   console.log('board-data', board);
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -45,6 +51,8 @@ export function BoardPage() {
   const dispatch = useTypedDispatch();
   const [updateColumn] = useUpdateColumnMutation();
   const [updateTask] = useUpdateTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [createTask] = useCreateTaskMutation();
 
   useEffect(() => {
     if (!error) return; //&& !homeColErr && foreignColErr
@@ -74,10 +82,8 @@ export function BoardPage() {
     );
   };
 
-  const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
-    /*console.log('changing task order of ', list);*/
+  /*const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
     const newList = list.map((item: TaskResponse, idx) => {
-      console.log('item and index', item);
       return {
         task: {
           title: item.title,
@@ -97,7 +103,7 @@ export function BoardPage() {
         return updateTask(item);
       })
     );
-  };
+  };*/
 
   const reorder = (
     list: ColumnResponseAll[] | TaskResponse[],
@@ -111,6 +117,7 @@ export function BoardPage() {
     console.log('removed', removed);
     result.splice(endIndex, 0, removed);
     console.log('reordering result', result);
+    /*return result;*/
     return result;
   };
 
@@ -128,6 +135,35 @@ export function BoardPage() {
     changeOrder(items);
   };
 */
+
+  const updateTaskOrder = async (item: TaskResponse, idx: number) => {
+    console.log('updating task');
+    return updateTask({
+      task: {
+        title: item.title,
+        order: idx + 1,
+        description: item.description,
+        userId: item.userId,
+        boardId: (board as Board).id,
+        columnId: item.columnId,
+      },
+      taskId: item.id,
+      boardId: id,
+      columnId: item.columnId,
+    });
+  };
+
+  const updateColumnOrder = async (item: ColumnResponseAll, idx: number) => {
+    return updateColumn({
+      column: {
+        title: item.title,
+        order: idx + 1,
+      },
+      id: id as string,
+      columnId: item.id,
+    });
+  };
+
   const onDragEnd = async (result: DropResult) => {
     const { destination, source, draggableId, type } = result;
 
@@ -140,45 +176,68 @@ export function BoardPage() {
     }
 
     if (type === 'column') {
-      console.log('drag type detecred: column');
       const items = reorder(
         dataStore as ColumnResponseAll[],
         result.source.index,
         destination.index
       );
-      console.log('column items', items);
       setData(items);
-      await changeOrder(items);
+      /*await changeOrder(items);*/
+      await updateColumnOrder(items[destination.index], destination.index);
       return;
     }
 
     /*Dragging inside the column*/
-    console.log('drag type detected: task');
     if (source.droppableId === destination.droppableId) {
-      console.log('drag inside column detected');
-      /*await setHomeCol({ columnId: source.droppableId, boardId: id });*/
-      const home = (
-        (board as Board).columns.find((col: ColInt) => col.id == source.droppableId) as ColInt
-      ).tasks;
-      console.log('dragging insied home', home);
-      const col = reorder(home as TaskResponse[], result.source.index, destination.index);
-      await changeTaskOrder(col as TaskResponse[], source.droppableId);
+      const home = (board as Board).columns.find(
+        (col: ColInt) => col.id == source.droppableId
+      ) as ColInt;
+      const col = reorder(home.tasks as TaskResponse[], result.source.index, destination.index);
+      dispatch(
+        boardSlice.actions.updateColumnTasks({ taskList: col as TaskResponse[], colId: home.id })
+      );
+      await updateTaskOrder((col as TaskResponse[])[destination.index], destination.index);
       return;
     }
-    //setHomeCol({ columnId: source.droppableId, boardId: id });
-    //setForeignCol({ columnId: destination.droppableId, boardId: id });
-    const home = (
-      (board as Board).columns.find((col: ColInt) => col.id == source.droppableId) as ColInt
-    ).tasks;
-    const foreign = (
-      (board as Board).columns.find((col: ColInt) => col.id == destination.droppableId) as ColInt
-    ).tasks;
-    const newHome = (home as TaskResponse[]).slice();
-    const newForeign = (foreign as TaskResponse[]).slice();
-    const [removed] = newHome.splice(result.source.index, 1);
+    /*Dragging outside the column*/
+    console.log('ATTENTION IT IS DRAGGED OUTSIDE');
+    const home = (board as Board).columns.find(
+      (col: ColInt) => col.id == source.droppableId
+    ) as ColInt;
+    const foreign = (board as Board).columns.find(
+      (col: ColInt) => col.id == destination.droppableId
+    ) as ColInt;
+    const newHome = (home.tasks as TaskResponse[]).slice();
+    const newForeign = (foreign.tasks as TaskResponse[]).slice();
+    const [removed] = newHome.splice(source.index, 1);
+    console.log('removed item is ', removed.title);
     newForeign.splice(destination.index, 0, removed);
-    await changeTaskOrder(newHome as TaskResponse[], source.droppableId);
-    await changeTaskOrder(newForeign as TaskResponse[], source.droppableId);
+    /*await updateTaskOrder((newForeign as TaskResponse[])[destination.index], destination.index);*/
+    /*dispatch(
+      boardSlice.actions.updateColumnTasks({
+        taskList: newForeign as TaskResponse[],
+        colId: foreign.id,
+      })
+    );
+    dispatch(
+      boardSlice.actions.updateColumnTasks({ taskList: newHome as TaskResponse[], colId: home.id })
+    );*/
+
+    await deleteTask({ taskId: removed.id, columnId: removed.columnId, boardId: removed.boardId });
+
+    await createTask({
+      task: {
+        title: removed.title,
+        description: removed.description,
+        userId: removed.userId,
+      },
+      boardId: id,
+      columnId: destination.droppableId,
+    });
+
+    return;
+    /* await changeTaskOrder(newHome as TaskResponse[], source.droppableId);
+    await changeTaskOrder(newForeign as TaskResponse[], source.droppableId);*/
     // moving from one list to another
 
     //const home = this.state.columns[source.droppableId];

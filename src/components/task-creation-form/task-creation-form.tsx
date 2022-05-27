@@ -10,6 +10,7 @@ import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/servic
 import { errorSlice } from '../../store/slices';
 import { useGetColumnQuery } from '../../store/services/column.service';
 import { isConstructorDeclaration } from 'typescript';
+import { boardSlice } from '../../store/slices/board.slice';
 export interface TaskFormProps {
   columnId: string;
   closeFormFunction: () => void;

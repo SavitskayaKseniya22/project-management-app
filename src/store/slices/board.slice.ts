@@ -15,7 +15,15 @@ export const boardSlice = createSlice({
     updateActiveBoard(state, action: PayloadAction<Board>) {
       state.board = action.payload;
     },
-    updateTask(state, action: PayloadAction<TaskResponse>) {
+    updateColumnTasks(state, action: PayloadAction<{ taskList: TaskResponse[]; colId: string }>) {
+      const colToUpdate = state.board?.columns.find(
+        (col: Column) => col.id === action.payload.colId
+      );
+      if (colToUpdate) {
+        colToUpdate.tasks = action.payload.taskList;
+      }
+    },
+    /*updateTask(state, action: PayloadAction<TaskResponse>) {
       const columnToModify = state.board?.columns.find(
         (col: Column) => col.id === action.payload.columnId
       );
@@ -46,27 +54,67 @@ export const boardSlice = createSlice({
         columnToModify.tasks = newTaskList;
       }
     },
+    */
   },
   extraReducers: (builder) => {
+    builder.addMatcher(
+      columnApi.endpoints.getColumn.matchFulfilled,
+      (state: BoardState, { payload }) => {
+        if (!state.board?.columns.find((col: Column) => col.id === payload.id))
+          state.board?.columns.push(payload);
+      }
+    );
     builder.addMatcher(
       boardListApi.endpoints.getBoard.matchFulfilled,
       (state: BoardState, { payload }) => {
         state.board = payload;
       }
     );
-    /*builder.addMatcher(
+    builder.addMatcher(
       taskApi.endpoints.createTask.matchFulfilled,
       (state: BoardState, { payload, meta }) => {
         //[meta.arg.originalArgs.columnId]
+
+        const columnToModify = (state.board as Board).columns.find(
+          (col: Column) => col.id === meta.arg.originalArgs.columnId
+        ) as Column;
+        if (!columnToModify.tasks.find((task: TaskResponse) => task.id === payload.id)) {
+          columnToModify.tasks.push(payload);
+        }
+      }
+    );
+    builder.addMatcher(
+      taskApi.endpoints.updateTask.matchFulfilled,
+      (state: BoardState, { payload, meta }) => {
+        const columnToModify = state.board?.columns.find(
+          (col: Column) => col.id === meta.arg.originalArgs.columnId
+        );
+        if (columnToModify) {
+          const taskToModify = columnToModify.tasks.find(
+            (task: TaskResponse) => task.id === payload.id
+          ) as TaskResponse;
+          const newTaskList = [...columnToModify.tasks];
+          newTaskList[taskToModify.order - 1] = payload;
+          columnToModify.tasks = newTaskList;
+        }
+      }
+    );
+    builder.addMatcher(
+      taskApi.endpoints.deleteTask.matchFulfilled,
+      (state: BoardState, { payload, meta }) => {
         const columnToModify = state.board?.columns.find(
           (col: Column) => col.id === meta.arg.originalArgs.columnId
         );
         if (columnToModify && columnToModify.tasks) {
-          console.log('col modifued');
-          columnToModify.tasks.push();
+          const taskToModify = columnToModify.tasks.find(
+            (task: TaskResponse) => task.id === meta.arg.originalArgs.taskId
+          ) as TaskResponse;
+          const newTaskList: TaskResponse[] = [...columnToModify.tasks];
+          const udpdatedTaskList = newTaskList.splice(taskToModify.order - 1, 1);
+          columnToModify.tasks = udpdatedTaskList;
         }
       }
-    );*/
+    );
   },
 });
 
