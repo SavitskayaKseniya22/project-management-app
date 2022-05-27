@@ -54,6 +54,13 @@
       height: 100vh;
       background: url('../../assets/webp/main-pic.webp') no-repeat center top / contain scroll;
     }
+
+    h1 {
+      margin: 0;
+      padding: 2rem;
+      border-radius: $border-radius;
+      background-color: rgba(230, 230, 230, 0.6);
+    }
   }
 }
 
