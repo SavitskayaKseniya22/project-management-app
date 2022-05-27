@@ -45,7 +45,7 @@ function SigninForm() {
 
   useEffect(() => {
     if (!data) return;
-    console.log(data);
+
     const { token } = data;
     const jwtPayload = jwt_decode<{ login: string }>(token);
     dispatch(authSlice.actions.updateAccessToken(token));
@@ -54,7 +54,7 @@ function SigninForm() {
 
   useEffect(() => {
     if (!error) return;
-    console.log(error);
+
     dispatch(errorSlice.actions.updateError(error));
   }, [dispatch, error]);
 

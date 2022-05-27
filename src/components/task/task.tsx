@@ -50,7 +50,7 @@ export const Task = (props: TaskProps) => {
     return (
       <li className="task-item">
         <div className="task-content">
-          <h5>{task.title}</h5>
+          <h4>{task.title}</h4>
           <p className="task-description">{task.description}</p>
         </div>
 

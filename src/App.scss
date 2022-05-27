@@ -6,8 +6,11 @@
   box-sizing: border-box;
 }
 
-.App {
+html {
   font-size: $main-font-size;
+}
+
+.App {
   font-family: $main-font-family;
   font-weight: $main-font-weight;
   color: $black-color;
@@ -22,8 +25,7 @@
 h1,
 h2,
 h3,
-h4,
-h5 {
+h4 {
   font-family: $heading-font-family;
   width: 100%;
   text-align: center;
@@ -44,10 +46,6 @@ h3 {
 
 h4 {
   font-size: 1rem;
-}
-
-h5 {
-  font-size: 1em;
 }
 
 ul {

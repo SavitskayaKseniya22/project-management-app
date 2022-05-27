@@ -110,13 +110,13 @@ export const Column = (props: { column: ColumnResponseAll }) => {
       {editMode ? (
         <EditTitle id={id} column={props.column} setEditMode={setEditMode} />
       ) : (
-        <h4
+        <h3
           onClick={() => {
             setEditMode(true);
           }}
         >
           {props.column.title}
-        </h4>
+        </h3>
       )}
 
       <ul className="task-list">

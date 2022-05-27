@@ -48,7 +48,6 @@
   color: $main-bg-color;
   cursor: pointer;
   padding: $half-padding $main-padding;
-  font-size: 1rem;
   background-color: transparent;
   border: none;
   position: absolute;
@@ -57,6 +56,7 @@
 .board-delete {
   right: 0.5rem;
   bottom: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .board-open {

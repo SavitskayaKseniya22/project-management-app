@@ -72,12 +72,12 @@
   padding: 1rem;
   background-color: rgba(230, 230, 230, 0.6);
 
-  h4 {
+  h3 {
     cursor: text;
     margin: 0;
   }
 
-  h5 {
+  h4 {
     width: 100%;
     margin: 0.5rem;
     cursor: pointer;
@@ -92,6 +92,9 @@
 
     .column-button {
       @extend %button-icon;
+      &.column-delete {
+        font-size: 1.2rem;
+      }
       &.task-add {
         font-size: 1.5rem;
       }
@@ -110,7 +113,7 @@
 
     input {
       padding: $half-padding $main-padding;
-      font-size: 1rem;
+
       border: none;
       height: 100%;
       min-width: 100px;
