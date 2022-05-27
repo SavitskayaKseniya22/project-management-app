@@ -12,7 +12,6 @@
 
   @media (min-width: $maximum-width) {
     break-after: auto;
-    //margin-left: 10%;
   }
 
   input {
@@ -28,7 +27,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     position: relative;
     overflow: visible;
     font-weight: 400;
@@ -66,11 +64,7 @@
 
 .header-signup + .language-panel {
   order: -1;
-  break-after: always;
-  margin-right: auto;
-  @media (min-width: $min-width) {
-    break-after: auto;
-  }
+  break-after: auto;
 }
 
 .header-sticky {

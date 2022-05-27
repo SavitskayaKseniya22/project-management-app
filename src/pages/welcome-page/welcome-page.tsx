@@ -19,7 +19,7 @@ export function WelcomePage() {
       <section className="welcome-section">
         <h2>{t('welcomepage.titles.features')}</h2>
         <div className="feature-list">
-          <div className="main-feature">
+          <div className="feature-item">
             <div className="feature-symbol">
               <i className="fa-solid fa-users"></i>
             </div>
@@ -27,7 +27,7 @@ export function WelcomePage() {
             <h3>{t('welcomepage.features.organize')}</h3>
             <img src={organizePic} alt="Organize your team" width="425" height="320" />
           </div>
-          <div className="main-feature">
+          <div className="feature-item">
             <div className="feature-symbol">
               <i className="fa-solid fa-table"></i>
             </div>
@@ -40,14 +40,14 @@ export function WelcomePage() {
             />
           </div>
 
-          <div className="main-feature">
+          <div className="feature-item">
             <div className="feature-symbol">
               <i className="fa-solid fa-music"></i>
             </div>
             <h3>{t('welcomepage.features.collaborate')}</h3>
             <img src={collabPic} alt="Collaborate efficiently" width="425" height="320" />
           </div>
-          <div className="main-feature">
+          <div className="feature-item">
             <div className="feature-symbol">
               <i className="fa-solid fa-stopwatch"></i>
             </div>
@@ -59,7 +59,7 @@ export function WelcomePage() {
       <section className="welcome-section">
         <h2>{t('welcomepage.titles.team')}</h2>
         <div className="team-list">
-          <div className="team-member-info">
+          <div className="team-member">
             <a href="https://github.com/SavitskayaKseniya22" target="_blank" rel="noreferrer">
               <h3>{t('footer.nameKseniya')}</h3>
             </a>
@@ -71,14 +71,14 @@ export function WelcomePage() {
               width="200"
               height="200"
             />
-            <ul>
+            <ul className="team-member-responsibilities">
               <li>{t('welcomepage.responsibility.kseniya.1')}</li>
               <li>{t('welcomepage.responsibility.kseniya.2')}</li>
               <li>{t('welcomepage.responsibility.kseniya.3')}</li>
               <li>{t('welcomepage.responsibility.kseniya.4')}</li>
             </ul>
           </div>
-          <div className="team-member-info">
+          <div className="team-member">
             <a href="https://github.com/Nikita1814" target="_blank" rel="noreferrer">
               <h3>{t('footer.nameNikita')}</h3>
             </a>
@@ -90,7 +90,7 @@ export function WelcomePage() {
               width="200"
               height="200"
             />
-            <ul>
+            <ul className="team-member-responsibilities">
               <li>
                 <b>{t('welcomepage.responsibility.nikita.1')}</b>
               </li>
@@ -99,7 +99,7 @@ export function WelcomePage() {
               <li>{t('welcomepage.responsibility.nikita.4')}</li>
             </ul>
           </div>
-          <div className="team-member-info">
+          <div className="team-member">
             <a href="https://github.com/ivp-dev" target="_blank" rel="noreferrer">
               <h3>{t('footer.nameVadim')}</h3>
             </a>
@@ -111,7 +111,7 @@ export function WelcomePage() {
               width="200"
               height="200"
             />
-            <ul>
+            <ul className="team-member-responsibilities">
               <li>{t('welcomepage.responsibility.vadim.1')}</li>
               <li>{t('welcomepage.responsibility.vadim.2')}</li>
               <li>{t('welcomepage.responsibility.vadim.3')}</li>

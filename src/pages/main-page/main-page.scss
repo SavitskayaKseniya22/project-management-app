@@ -10,14 +10,8 @@
   flex-grow: 1;
   background: url('../../assets/png/d7a8389a8e4a9b5b4a83374ea21f8447.png') no-repeat bottom right /
     50% scroll;
-  padding: 1rem;
+  padding: 2rem;
 
-  @media (min-width: $medium-width) {
-    padding: 2rem;
-  }
-  @media (min-width: $maximum-width) {
-    padding: 3rem;
-  }
   .board-list {
     display: flex;
     flex-wrap: wrap;
@@ -43,7 +37,9 @@
   position: relative;
 
   &:nth-child(3n) {
-    page-break-after: always;
+    @media (min-width: $maximum-width) {
+      page-break-after: always;
+    }
   }
 }
 
@@ -54,7 +50,6 @@
   padding: $half-padding $main-padding;
   font-size: 1rem;
   background-color: transparent;
-
   border: none;
   position: absolute;
 }
