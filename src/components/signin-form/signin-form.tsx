@@ -10,6 +10,7 @@ import { useTypedDispatch } from '../../store';
 import { authSlice, updateUserNameActionCreator, errorSlice } from '../../store/slices';
 import { errorFormatter } from '../../utits';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type LoginDataModel = SigninQueryRequest;
 
@@ -36,6 +37,7 @@ function SigninForm() {
   const dispatch = useTypedDispatch();
 
   const [credentials, setCredentials] = useState<LoginDataModel>();
+  const { t } = useTranslation();
 
   const { data, error } = useSigninQuery(credentials, {
     skip: !credentials,
@@ -63,7 +65,7 @@ function SigninForm() {
       })}
     >
       <Form.Control
-        label="Login"
+        label={t('signin.login')}
         controlKey="loginInput"
         errorMessage={errorFormatter(errors.login, {
           minLength: 3,
@@ -73,15 +75,15 @@ function SigninForm() {
         {...register('login', { required: true })}
       />
       <Form.Control
-        label="Password"
+        label={t('signin.password')}
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
         className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Login</Form.Button>
-        <Link to="/signup">Signup</Link>
+        <Form.Button type="submit">{t('header.signin')}</Form.Button>
+        <Link to="/signup">{t('header.signup')}</Link>
       </Form.Group>
     </Form>
   );

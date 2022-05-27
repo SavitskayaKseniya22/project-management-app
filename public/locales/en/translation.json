@@ -68,5 +68,21 @@
     "newTask": "Create new task",
     "back": "Back to boards list",
     "newColumn": "Create new column"
+  },
+  "modal": {
+    "sure": "Are you sure you want to {{reason}}",
+    "task": "delete the task",
+    "column": "delete the column",
+    "board": "delete this board"
+  },
+  "editTitle": {
+    "mainInput": "Enter the title"
+  },
+  "error": {
+    "title": "A query error occured:",
+    "confirm": "Ok"
+  },
+  "mainpage": {
+    "suggestion": "There are no boards yet. Would you like to create one?"
   }
 }

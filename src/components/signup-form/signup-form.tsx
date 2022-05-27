@@ -7,6 +7,7 @@ import { errorFormatter } from '../../utits';
 import { useEffect, useState } from 'react';
 import { errorSlice } from '../../store/slices';
 import { useTypedDispatch } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 interface UserDataModel {
   name: string;
@@ -36,6 +37,7 @@ function SignupForm() {
   });
 
   const [userData, setUserData] = useState<UserDataModel>();
+  const { t } = useTranslation();
 
   const dispatch = useTypedDispatch();
 
@@ -55,14 +57,14 @@ function SignupForm() {
       })}
     >
       <Form.Control
-        label="User name"
+        label={t('signup.name')}
         controlKey="userNameInput"
         errorMessage={errorFormatter(errors.name)}
         className="form-input-text"
         {...register('name', { required: true })}
       />
       <Form.Control
-        label="Login"
+        label={t('signup.login')}
         controlKey="loginInput"
         errorMessage={errorFormatter(errors.login, {
           minLength: 3,
@@ -72,14 +74,14 @@ function SignupForm() {
         {...register('login', { required: true })}
       />
       <Form.Control
-        label="Password"
+        label={t('signup.password')}
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
         className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Submit</Form.Button>
+        <Form.Button type="submit">{t('header.signup')}</Form.Button>
       </Form.Group>
     </Form>
   );

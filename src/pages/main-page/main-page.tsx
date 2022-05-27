@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { t } from 'i18next';
+import { Suspense, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BoardItemSmall } from '../../components/board-item-small/board-item-small';
 import { ModalWindow } from '../../components/modal-window/modal-window';
+import { Spinner } from '../../components/spinner/spinner';
 import { useTypedDispatch } from '../../store';
 import { useBoardListQuery, useDeleteBoardMutation } from '../../store/services/boardList.service';
 import { errorSlice } from '../../store/slices';
@@ -14,6 +17,7 @@ export function MainPage() {
 
   const [triggerDelete] = useDeleteBoardMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!error) return;
@@ -23,6 +27,7 @@ export function MainPage() {
   const openBoardForm = () => {
     setBoardFormOpen(true);
   };
+
   const closeBoardForm = () => {
     setBoardFormOpen(false);
   };
@@ -36,14 +41,15 @@ export function MainPage() {
     setBoardToDelete(null);
   };
 
-  if (data && data.length > 0) {
-    return (
-      <div className="main-page">
-        <ul className="board-list">
-          <li className="board-item-small board-item-create" onClick={openBoardForm}>
-            <h3>Create a board</h3>
-          </li>
-          {data.map((item: Board, idx) => {
+  return (
+    <div className="main-page">
+      {data && !data.length ? <h2>{t('mainpage.suggestion')}</h2> : null}
+      <ul className="board-list">
+        <li className="board-item-small board-item-create" onClick={openBoardForm}>
+          <h3>Create a board</h3>
+        </li>
+        {data &&
+          data.map((item: Board, idx) => {
             return (
               <BoardItemSmall
                 board={item}
@@ -52,33 +58,14 @@ export function MainPage() {
               ></BoardItemSmall>
             );
           })}
-          {boardToDelete && (
-            <ModalWindow
-              reason="delete this board"
-              declineFunction={closeDeleteModal}
-              confirmFunction={deleteBoard}
-            ></ModalWindow>
-          )}
-          {boardFormOpen && (
-            <ModalWindow
-              reason="create a board"
-              declineFunction={closeBoardForm}
-              confirmFunction={() => {
-                return;
-              }}
-            ></ModalWindow>
-          )}
-        </ul>
-      </div>
-    );
-  }
-  return (
-    <div className="main-page">
-      <h2>There are no boards yet. Would you like to create one?</h2>
-      <ul className="board-list">
-        <li className="board-item-small board-item-create" onClick={openBoardForm}>
-          <h3>Create a board</h3>
-        </li>
+
+        {boardToDelete && (
+          <ModalWindow
+            reason="delete this board"
+            declineFunction={closeDeleteModal}
+            confirmFunction={deleteBoard}
+          ></ModalWindow>
+        )}
         {boardFormOpen && (
           <ModalWindow
             reason="create a board"
