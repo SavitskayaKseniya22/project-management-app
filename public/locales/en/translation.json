@@ -87,5 +87,6 @@
   },
   "mainpage": {
     "suggestion": "There are no boards yet. Would you like to create one?"
-  }
+  },
+  "404": "This page does not exist"
 }

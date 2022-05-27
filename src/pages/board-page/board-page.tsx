@@ -11,7 +11,6 @@ import { errorSlice } from '../../store/slices/error.slice';
 import { ColumnResponseAll } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { useTranslation } from 'react-i18next';
 
 export function BoardPage() {
   const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
@@ -19,8 +18,6 @@ export function BoardPage() {
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { data: whatevs, error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
-
-  const { t } = useTranslation();
 
   useEffect(() => {
     setData(dataStore);
