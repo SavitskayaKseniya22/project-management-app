@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import columnApi from '../services/column.service';
+import taskApi from '../services/task.service';
 import { ColumnListState } from './types';
 
 const initialState: ColumnListState = {};
@@ -15,9 +16,9 @@ export const columnListSlice = createSlice({
       columnApi.endpoints.getColumnList.matchFulfilled,
       (state: ColumnListState, { payload, meta }) => {
         const payloadCopy = payload.slice();
-        /*payloadCopy.sort(function (a, b) {
+        payloadCopy.sort(function (a, b) {
           return a.order - b.order;
-        });*/
+        });
         state[meta.arg.originalArgs as string] = payloadCopy;
       }
     );

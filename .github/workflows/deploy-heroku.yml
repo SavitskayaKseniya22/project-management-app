@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.15'
+      - name: install dependencies
+        run: |
+          npm ci
+      - name: test
+        run: |
+          npm test
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "rss-kanban" #Must be unique in Heroku
+          heroku_email: "ivp.dev@outlook.com"
+          buildpack: "https://github.com/mars/create-react-app-buildpack.git"
+          branch: "main"
