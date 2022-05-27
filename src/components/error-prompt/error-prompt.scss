@@ -10,28 +10,21 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgb(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   z-index: 9999999;
+  background-color: rgba(230, 230, 230, 0.3);
 }
 
 .error-msg {
-  background-color: white;
+  background-color: $red-color;
+  color: white;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 300px;
-  max-width: 600px;
-  padding: 2rem;
-  position: relative;
+  padding: 1rem;
+  position: absolute;
+  top: 20%;
+  right: 1rem;
   z-index: 99999999999;
   gap: 1rem;
-
-  .error-msg-button-confirm {
-    @extend %button-default;
-    @extend %button-invert-color;
-  }
+  font-size: 1.2rem;
 }

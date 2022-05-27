@@ -11,22 +11,16 @@ export function ErrorPropmt() {
   const err = useTypedSelector((state: RootState) => state.errorSlice.error) as QueryError | null;
 
   const dispatch = useTypedDispatch();
-  const { t } = useTranslation();
+
   const clearError = () => {
     dispatch(errorSlice.actions.updateError(null));
   };
 
   if (err && err.data) {
     return (
-      <div className="page-overlay">
+      <div className="page-overlay" onClick={clearError}>
         <div className="error-msg">
-          <h2>
-            {t('error.title')} {err.status}
-          </h2>
-          <p>{JSON.stringify(err.data.message)}</p>
-          <button className="error-msg-button-confirm" onClick={clearError}>
-            {t('error.confirm')}
-          </button>
+          <b>{err.status}:</b> {JSON.stringify(err.data.message)}
         </div>
       </div>
     );
