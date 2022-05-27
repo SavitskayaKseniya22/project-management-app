@@ -73,7 +73,10 @@
     "sure": "Are you sure you want to {{reason}}",
     "task": "delete the task",
     "column": "delete the column",
-    "board": "delete this board"
+    "board": "delete this board",
+    "editTask": "Edit task",
+    "title": "Title",
+    "description": "Description"
   },
   "editTitle": {
     "mainInput": "Enter the title"

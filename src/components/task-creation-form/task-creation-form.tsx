@@ -6,9 +6,8 @@ import { TaskFormData, TaskRequest, TaskResponse } from '../../store/slices/type
 import { Form } from '../form';
 import jwt_decode from 'jwt-decode';
 import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
-
 import { errorSlice } from '../../store/slices';
-import { useGetColumnQuery } from '../../store/services/column.service';
+import { useTranslation } from 'react-i18next';
 export interface TaskFormProps {
   columnId: string;
   closeFormFunction: () => void;
@@ -36,6 +35,8 @@ function TaskCreationForm(props: TaskFormProps) {
   const [createTask, { error }] = useCreateTaskMutation();
   const [updateTask, { error: updateError }] = useUpdateTaskMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (!error && !updateError) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
@@ -59,7 +60,7 @@ function TaskCreationForm(props: TaskFormProps) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        label="Title"
+        label={t('modal.title')}
         controlKey="taskTitleInput"
         className="form-input-text"
         defaultValue={props.task ? props.task.title : ''}
@@ -67,7 +68,7 @@ function TaskCreationForm(props: TaskFormProps) {
         {...register('title', { required: true })}
       />
       <Form.Control
-        label="Description"
+        label={t('modal.description')}
         controlKey="taskDescriptionInput"
         className="form-input-text"
         defaultValue={props.task ? props.task.description : ''}
@@ -75,7 +76,9 @@ function TaskCreationForm(props: TaskFormProps) {
         {...register('description', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">{props.task ? 'Edit task' : 'Create task'}</Form.Button>
+        <Form.Button type="submit">
+          {props.task ? t('modal.editTask') : t('boardpage.newTask')}
+        </Form.Button>
       </Form.Group>
     </Form>
   );
@@ -86,4 +89,7 @@ export default TaskCreationForm;
   "done": false,
   "order": 1,
   "description": "Domestic cat needs to be stroked gently",
-  "userId": "40af606c-c0bb-47d1-bc20-a2857242cde3"*/
+  "userId": "40af606c-c0bb-47d1-bc20-a2857242cde3"
+  
+  
+  */

@@ -6,6 +6,7 @@ import { useTypedDispatch } from '../../store';
 import { errorSlice } from '../../store/slices';
 import { useCreateBoardMutation } from '../../store/services/boardList.service';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type BoardDataModel = BoardRequest;
 
@@ -18,6 +19,7 @@ function BoardCreationForm(props: { declineFunction: () => void }) {
 
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [triggerBoardMutation, { error }] = useCreateBoardMutation();
 
@@ -35,14 +37,14 @@ function BoardCreationForm(props: { declineFunction: () => void }) {
       })}
     >
       <Form.Control
-        label="Board Title"
+        label={t('modal.title')}
         controlKey="BoardTitleInput"
         className="form-input-text"
         errorMessage={errors.title?.message}
         {...register('title', { required: true })}
       />
       <Form.Control
-        label="Description"
+        label={t('modal.description')}
         controlKey="boardDescriptionInput"
         type="textarea"
         className="form-input-text"
@@ -50,7 +52,7 @@ function BoardCreationForm(props: { declineFunction: () => void }) {
         {...register('description', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Create board</Form.Button>
+        <Form.Button type="submit">{t('header.newBoard')}</Form.Button>
       </Form.Group>
     </Form>
   );

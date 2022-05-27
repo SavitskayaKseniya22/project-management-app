@@ -9,6 +9,8 @@ import {
   useCreateColumnMutation,
   useGetColumnListQuery,
 } from '../../store/services/column.service';
+import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 type ColumnDataModel = ColumnRequest;
 
@@ -17,6 +19,7 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   const { data } = useGetColumnListQuery(id);
   const [createColumn, { error }] = useCreateColumnMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -37,14 +40,14 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        label="Title"
+        label={t('modal.title')}
         controlKey="ColumnTitleInput"
         className="form-input-text"
         errorMessage={errors.title?.message}
         {...register('title', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">Create column</Form.Button>
+        <Form.Button type="submit">{t('boardpage.newColumn')}</Form.Button>
       </Form.Group>
     </Form>
   );

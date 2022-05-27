@@ -1,9 +1,7 @@
-import { t } from 'i18next';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BoardItemSmall } from '../../components/board-item-small/board-item-small';
 import { ModalWindow } from '../../components/modal-window/modal-window';
-import { Spinner } from '../../components/spinner/spinner';
 import { useTypedDispatch } from '../../store';
 import { useBoardListQuery, useDeleteBoardMutation } from '../../store/services/boardList.service';
 import { errorSlice } from '../../store/slices';
@@ -46,7 +44,7 @@ export function MainPage() {
       {data && !data.length ? <h2>{t('mainpage.suggestion')}</h2> : null}
       <ul className="board-list">
         <li className="board-item-small board-item-create" onClick={openBoardForm}>
-          <h3>Create a board</h3>
+          <h3>{t('boardpage.newColumn')}</h3>
         </li>
         {data &&
           data.map((item: Board, idx) => {

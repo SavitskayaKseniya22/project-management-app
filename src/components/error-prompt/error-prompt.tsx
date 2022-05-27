@@ -1,5 +1,3 @@
-import { SerializedError } from '@reduxjs/toolkit';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useTranslation } from 'react-i18next';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { errorSlice } from '../../store/slices';
@@ -26,7 +24,9 @@ export function ErrorPropmt() {
             {t('error.title')} {err.status}
           </h2>
           <p>{JSON.stringify(err.data.message)}</p>
-          <button onClick={clearError}>{t('error.confirm')}</button>
+          <button className="error-msg-button-confirm" onClick={clearError}>
+            {t('error.confirm')}
+          </button>
         </div>
       </div>
     );
