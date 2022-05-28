@@ -78,8 +78,6 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
         </h3>
       )}
 
-      <button onClick={toggleColumnForm}>delete column</button>
-      <button onClick={toggleTaskForm}>add task</button>
       <Droppable droppableId={props.column.id} direction="vertical" type="task">
         {(provided, snapshot) => (
           <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>

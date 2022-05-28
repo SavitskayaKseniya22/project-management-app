@@ -7,9 +7,7 @@ import { Form } from '../form';
 import jwt_decode from 'jwt-decode';
 import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
-
 import { useTranslation } from 'react-i18next';
-
 import { useGetColumnQuery } from '../../store/services/column.service';
 import { isConstructorDeclaration } from 'typescript';
 import { boardSlice } from '../../store/slices/board.slice';
