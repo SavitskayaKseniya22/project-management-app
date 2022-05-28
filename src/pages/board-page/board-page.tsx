@@ -16,12 +16,13 @@ import {
   useDeleteTaskMutation,
   useUpdateTaskMutation,
 } from '../../store/services/task.service';
-import { useGetBoardQuery } from '../../store/services/boardList.service';
+import { useGetBoardQuery } from '../../store/services/boards.service.new';
 import { boardSlice } from '../../store/slices/board.slice';
 
 function BoardPane({ boardId }: { boardId: string }) {
   const { error } = useGetColumnListQuery(boardId);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+
   const { data: board } = useGetBoardQuery(boardId);
 
   const toggleColumnForm = () => {
@@ -29,6 +30,7 @@ function BoardPane({ boardId }: { boardId: string }) {
   };
 
   const dispatch = useTypedDispatch();
+
   const [updateColumn] = useUpdateColumnMutation();
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
@@ -103,7 +105,7 @@ function BoardPane({ boardId }: { boardId: string }) {
     /*Dragging inside the column*/
 
     if (source.droppableId === destination.droppableId) {
-      const home = board.columns.find((col: ColInt) => col.id == source.droppableId);
+      const home = board.columns.find((col) => col.id == source.droppableId);
 
       if (!home) {
         return;
@@ -118,8 +120,8 @@ function BoardPane({ boardId }: { boardId: string }) {
       return;
     }
 
-    const home = board.columns.find((col: ColInt) => col.id == source.droppableId);
-    const foreign = board.columns.find((col: ColInt) => col.id == destination.droppableId);
+    const home = board.columns.find((col) => col.id == source.droppableId);
+    const foreign = board.columns.find((col) => col.id == destination.droppableId);
 
     if (!home || !foreign) {
       return;

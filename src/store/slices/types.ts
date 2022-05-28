@@ -1,6 +1,29 @@
 import { SerializedError } from '@reduxjs/toolkit';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 
+export interface BoardNew {
+  id: string;
+  title: string;
+  description: string;
+  columns: Column[];
+}
+
+export interface TaskNew {
+  id: string;
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+  files: File[];
+}
+
+export interface ColumnNew {
+  id: string;
+  title: string;
+  order: number;
+  tasks: TaskNew[];
+}
+
 export interface AuthState {
   accessToken?: string;
 }

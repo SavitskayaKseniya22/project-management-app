@@ -6,6 +6,7 @@ import { authApi } from './services';
 import boardListApi from './services/boardList.service';
 import columnApi from './services/column.service';
 import taskApi from './services/task.service';
+import { boardsApi } from './services/boards.service.new';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 import { boardReducer, boardSlice } from './slices/board.slice';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
@@ -15,6 +16,7 @@ import { searchSlice, searchReducer } from './slices/search.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
+  [boardsApi.reducerPath]: boardsApi.reducer,
   [boardListApi.reducerPath]: boardListApi.reducer,
   [columnApi.reducerPath]: columnApi.reducer,
   [taskApi.reducerPath]: taskApi.reducer,
@@ -48,6 +50,7 @@ export const store = configureStore({
       unauthenticatedMiddleware,
       profileRehydrateMiddleware,
       authApi.middleware,
+      boardsApi.middleware,
       boardListApi.middleware,
       authApi.middleware,
       boardListApi.middleware,
