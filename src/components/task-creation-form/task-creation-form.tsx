@@ -7,7 +7,13 @@ import { Form } from '../form';
 import jwt_decode from 'jwt-decode';
 import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
+
 import { useTranslation } from 'react-i18next';
+
+import { useGetColumnQuery } from '../../store/services/column.service';
+import { isConstructorDeclaration } from 'typescript';
+import { boardSlice } from '../../store/slices/board.slice';
+
 export interface TaskFormProps {
   columnId: string;
   closeFormFunction: () => void;
@@ -50,9 +56,12 @@ function TaskCreationForm(props: TaskFormProps) {
     };
     if (props.task) {
       task.order = props.task.order;
+      task.boardId = props.task.boardId;
+      task.columnId = props.task.columnId;
     }
+    console.log('task update', task);
     props.task
-      ? await updateTask({ task, taskId: props.task.id, boardId, columnId })
+      ? await updateTask({ task, taskId: props.task.id, boardId: boardId, columnId: columnId })
       : await createTask({ task, boardId, columnId });
     props.closeFormFunction();
   };
@@ -84,12 +93,3 @@ function TaskCreationForm(props: TaskFormProps) {
   );
 }
 export default TaskCreationForm;
-
-/*  "title": "Task: pet the cat",
-  "done": false,
-  "order": 1,
-  "description": "Domestic cat needs to be stroked gently",
-  "userId": "40af606c-c0bb-47d1-bc20-a2857242cde3"
-  
-  
-  */

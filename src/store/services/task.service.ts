@@ -44,17 +44,16 @@ export const taskApi = createApi({
       }),
       invalidatesTags: ['Task'],
     }),
-    deleteTask: builder.mutation<undefined, { taskId: string; boardId: string; columnId: string }>({
-      query: ({ taskId, boardId, columnId }) => ({
+    deleteTask: builder.mutation<undefined, { taskId: string; columnId: string; boardId: string }>({
+      query: ({ taskId, columnId, boardId }) => ({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Task'],
     }),
-
     updateTask: builder.mutation<
       TaskResponse,
-      { task: TaskRequest; taskId: string; boardId: string; columnId: string }
+      { task: TaskRequest; taskId: string; columnId: string; boardId: string }
     >({
       query: ({ task, taskId, columnId, boardId }) => ({
         url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
