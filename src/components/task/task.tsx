@@ -54,6 +54,7 @@ export const Task = (props: TaskProps) => {
           <i className="fa-solid fa-trash-can"></i>
         </button>
       </div>
+
       {taskRemovalToConfirm && (
         <ModalWindow
           reason="delete the task"
