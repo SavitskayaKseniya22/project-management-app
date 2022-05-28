@@ -71,8 +71,8 @@ export interface TaskRequest {
   ];
 }
 export interface TaskResponse extends TaskRequest {
-  order: number;
   id: string;
+  order: number;
   boardId: string;
   columnId: string;
 }

@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import boardListApi from '../services/boardList.service';
 import columnApi from '../services/column.service';
 import taskApi from '../services/task.service';
@@ -23,38 +21,6 @@ export const boardSlice = createSlice({
         colToUpdate.tasks = action.payload.taskList;
       }
     },
-    /*updateTask(state, action: PayloadAction<TaskResponse>) {
-      const columnToModify = state.board?.columns.find(
-        (col: Column) => col.id === action.payload.columnId
-      );
-      if (columnToModify) {
-        const taskToModify = columnToModify.tasks.find(
-          (task: TaskResponse) => task.id === action.payload.id
-        );
-        if (taskToModify) {
-          const newTaskList = [...columnToModify.tasks];
-          newTaskList[taskToModify.order - 1] = action.payload;
-          console.log('task modified');
-          columnToModify.tasks = [...newTaskList];
-        } else {
-          columnToModify.tasks = [...columnToModify.tasks, action.payload];
-        }
-      }
-    },
-    deleteTask(state, action: PayloadAction<TaskResponse>) {
-      const columnToModify = state.board?.columns.find(
-        (col: Column) => col.id === action.payload.columnId
-      );
-      if (columnToModify) {
-        const taskToModify = columnToModify.tasks.find(
-          (task: TaskResponse) => task.id === action.payload.id
-        ) as TaskResponse;
-        const newTaskList = [...columnToModify.tasks];
-        const removed = newTaskList.splice(taskToModify.order - 1, 1);
-        columnToModify.tasks = newTaskList;
-      }
-    },
-    */
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -118,11 +84,4 @@ export const boardSlice = createSlice({
   },
 });
 
-export const boardReducer = persistReducer(
-  {
-    key: 'rtk:board',
-    storage,
-    whitelist: ['board'],
-  },
-  boardSlice.reducer
-);
+export const boardReducer = boardSlice.reducer;

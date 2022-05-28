@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import { SearchState } from './types';
 
 const initialState: SearchState = { searchValue: '' };
@@ -15,11 +13,4 @@ export const searchSlice = createSlice({
   },
 });
 
-export const searchReducer = persistReducer(
-  {
-    key: 'rtk:searchValue',
-    storage,
-    whitelist: ['searchValue'],
-  },
-  searchSlice.reducer
-);
+export const searchReducer = searchSlice.reducer;

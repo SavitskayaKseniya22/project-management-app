@@ -1,6 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import boardListApi from '../services/boardList.service';
 import { BoardListState } from './types';
 
@@ -20,11 +18,4 @@ export const boardListSlice = createSlice({
   },
 });
 
-export const boardListReducer = persistReducer(
-  {
-    key: 'rtk:boardList',
-    storage,
-    whitelist: ['boardList'],
-  },
-  boardListSlice.reducer
-);
+export const boardListReducer = boardListSlice.reducer;

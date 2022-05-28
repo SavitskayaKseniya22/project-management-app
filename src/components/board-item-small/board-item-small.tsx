@@ -13,7 +13,7 @@ export function BoardItemSmall(props: BoardItemProps) {
   const dispatch = useTypedDispatch();
   const getActiveBoard = () => {
     dispatch(boardSlice.actions.updateActiveBoard(props.board));
-    navigate('/board', { replace: true });
+    navigate(`/board/${props.board.id}`, { replace: true });
   };
 
   return (

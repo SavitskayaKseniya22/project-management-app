@@ -2,10 +2,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TaskRequest, TaskResponse } from '../slices/types';
 import { RootState } from '../store';
 
-export const AUTH_API_REDUCER_KEY = 'taskApi';
+export const TASK_API_REDUCER_PATH = 'taskApi';
 
 export const taskApi = createApi({
-  reducerPath: AUTH_API_REDUCER_KEY,
+  reducerPath: TASK_API_REDUCER_PATH,
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://secure-spire-20211.herokuapp.com',
     prepareHeaders: (headers, { getState }) => {

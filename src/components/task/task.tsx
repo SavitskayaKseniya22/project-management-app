@@ -40,6 +40,7 @@ export const Task = (props: TaskProps) => {
 
   return (
     <li className="task-item">
+      {props.taskItem.id}
       <div className="task-content">
         <h4>{title}</h4>
         <p className="task-description">{description}</p>

@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 import columnApi from '../services/column.service';
-import taskApi from '../services/task.service';
 import { ColumnListState } from './types';
 
 const initialState: ColumnListState = {};
@@ -25,28 +22,4 @@ export const columnListSlice = createSlice({
   },
 });
 
-export const columnListReducer = persistReducer(
-  {
-    key: 'rtk:columnList',
-    storage,
-    whitelist: ['columnList'],
-  },
-  columnListSlice.reducer
-);
-
-/*
- builder.addMatcher(
-      taskApi.endpoints.getTaskList.matchFulfilled,
-      (state: ColumnListState, { payload, meta }) => {
-        const payloadCopy = payload.slice();
-        payloadCopy.sort(function (a, b) {
-          return a.order - b.order;
-        });
-        const boardToModify: ColumnResponseAll[] | null =  state[meta.arg.originalArgs.boardId as string]
-        if(boardToModify){
-        const colToModify = boardToModify.find((col:ColumnResponseAll) => col.id === meta.arg.originalArgs.columnId)
-        if(colToModify)
-        colToModify.
-        }
-      }
-    );*/
+export const columnListReducer = columnListSlice.reducer;

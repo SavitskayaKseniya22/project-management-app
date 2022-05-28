@@ -27,7 +27,7 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
       skip,
     }
   );
-  console.log('task list that column sees', taskList);
+
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -80,31 +80,39 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
 
       <Droppable droppableId={props.column.id} direction="vertical" type="task">
         {(provided, snapshot) => (
-          <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
-            {data && taskList && taskList.length ? (
-              <>
-                {taskList
-                  .slice()
-                  .sort((a, b) => a.order - b.order)
-                  .map((item: TaskResponse, idx) => {
-                    return (
-                      <Draggable key={item.id} draggableId={item.id} index={idx}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <Task columnId={data.id} taskId={item.id} index={idx} taskItem={item} />
-                          </div>
-                        )}
-                      </Draggable>
-                    );
-                  })}
-              </>
-            ) : null}
-            {provided.placeholder}
-          </ul>
+          <>
+            {props.column.id}
+            <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
+              {data && taskList && taskList.length ? (
+                <>
+                  {taskList
+                    .slice()
+                    .sort((a, b) => a.order - b.order)
+                    .map((item: TaskResponse, idx) => {
+                      return (
+                        <Draggable key={item.id} draggableId={item.id} index={idx}>
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <Task
+                                columnId={data.id}
+                                taskId={item.id}
+                                index={idx}
+                                taskItem={item}
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      );
+                    })}
+                </>
+              ) : null}
+              {provided.placeholder}
+            </ul>
+          </>
         )}
       </Droppable>
 
