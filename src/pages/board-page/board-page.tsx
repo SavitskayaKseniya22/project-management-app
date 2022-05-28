@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { Column } from '../../components/column/column';
 import { ModalWindow } from '../../components/modal-window/modal-window';
@@ -30,6 +29,7 @@ export function BoardPage() {
   const { data: boardStore, error: boardError } = useGetBoardQuery(id);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
+
   /*const [boardState, setBoardState] = useState<Board | undefined | null>(boardStore);*/
 
   const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
@@ -227,18 +227,15 @@ export function BoardPage() {
   };
 
   return (
-    <>
-      <header>
-        <button onClick={toggleColumnForm}>
-          <FormattedMessage id="header_newColumn" defaultMessage="Create new column" />
-        </button>
-
-        <Link to="/main">
-          <button>
-            <FormattedMessage id="boardpage_back" defaultMessage="Back to boards list" />
-          </button>
+    <div className="board-page">
+      <div className="board-page-buttons">
+        <Link to="/main" className="board-back">
+          <i className="fa-solid fa-arrow-left"></i>
         </Link>
-      </header>
+        <button onClick={toggleColumnForm} className="board-new-column">
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal" type="column">
@@ -279,6 +276,6 @@ export function BoardPage() {
           }}
         ></ModalWindow>
       )}
-    </>
+    </div>
   );
 }

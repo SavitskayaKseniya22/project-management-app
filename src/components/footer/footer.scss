@@ -4,15 +4,16 @@ footer {
   background-color: $main-bg-color;
   padding: $main-padding;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
   row-gap: 1rem;
   column-gap: 2rem;
   color: $white-color;
+  flex-direction: row;
 
-  @media (min-width: $min-width) {
-    flex-direction: row;
+  @media (min-width: $medium-width) {
+    justify-content: space-between;
   }
 }
 
@@ -20,25 +21,34 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  column-gap: 1rem;
-  row-gap: 0.5rem;
-  flex-direction: column;
+  gap: 0.5rem;
   align-items: center;
+  page-break-after: always;
+  flex-grow: 1;
 
-  @media (min-width: $min-width) {
-    flex-direction: row;
+  @media (min-width: $medium-width) {
+    page-break-after: auto;
   }
 }
 
 .footer-git-link {
   white-space: nowrap;
   @extend %anchor-default;
-
-  &:hover {
-    @extend %anchor-hover;
-  }
 }
 
 .footer-copyright {
   white-space: nowrap;
+  order: 3;
+
+  @media (min-width: $medium-width) {
+    order: 1;
+  }
+}
+
+.footer-course-logo {
+  order: 2;
+
+  @media (min-width: $medium-width) {
+    order: -1;
+  }
 }

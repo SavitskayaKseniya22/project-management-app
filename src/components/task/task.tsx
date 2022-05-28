@@ -40,10 +40,21 @@ export const Task = (props: TaskProps) => {
 
   return (
     <li className="task-item">
-      <h4>{title}</h4>
-      <p>{description}</p>
-      <button onClick={toggleTaskRemoval}>Remove</button>
-      <button onClick={toggleTaskEdit}>Edit</button>
+      <div className="task-content">
+        <h4>{title}</h4>
+        <p className="task-description">{description}</p>
+      </div>
+
+      <div className="task-buttons">
+        <button onClick={toggleTaskEdit} className="task-button task-edit">
+          <i className="fa-solid fa-pen"></i>
+        </button>
+
+        <button onClick={toggleTaskRemoval} className="task-button task-delete">
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+
       {taskRemovalToConfirm && (
         <ModalWindow
           reason="delete the task"

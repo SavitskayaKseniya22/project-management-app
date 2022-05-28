@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
-import { useTypedSelector, RootState, useTypedDispatch, authSlice } from '../../store';
+import { useTypedSelector, useTypedDispatch, authSlice } from '../../store';
 import { getAccessTokenSelector } from '../../store/selectors';
 import LanguagePanel from '../languagePanel/languagePanel';
+import { ModalWindow } from '../modal-window/modal-window';
 import SearchPanel from '../search/searchPanel';
 import './header.scss';
 
@@ -12,6 +13,12 @@ const PageHeader = () => {
   const accessToken = useTypedSelector(getAccessTokenSelector);
   const location = useLocation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
+
+  const [boardFormOpen, setBoardFormOpen] = useState<boolean>(false);
+  const toggleBoardForm = () => {
+    setBoardFormOpen((boardFormOpen) => !boardFormOpen);
+  };
 
   window.onscroll = function () {
     setScroll(window.pageYOffset);
@@ -23,17 +30,26 @@ const PageHeader = () => {
 
   const headerNormal = (
     <>
-      <SearchPanel />s
+      <SearchPanel />
       <LanguagePanel />
-      <button className="header-new-board">
-        <FormattedMessage id="header_newBoard" defaultMessage="Create new board" />
+      <button className="header-new-board" onClick={toggleBoardForm}>
+        {t('header.newBoard')}
       </button>
       <Link to="/profile" className="header-edit">
-        <FormattedMessage id="header_edit" defaultMessage="Edit profile" />
+        {t('header.edit')}
       </Link>
       <button className="header-logout" onClick={logoutHandler}>
-        <FormattedMessage id="header_logout" defaultMessage="Log out" />
+        {t('header.logout')}
       </button>
+      {boardFormOpen && (
+        <ModalWindow
+          reason="create a board"
+          declineFunction={toggleBoardForm}
+          confirmFunction={() => {
+            return;
+          }}
+        ></ModalWindow>
+      )}
     </>
   );
 
@@ -41,26 +57,36 @@ const PageHeader = () => {
     <>
       <SearchPanel />
       <LanguagePanel />
-      <button className="header-new-board">
+      <button className="header-new-board" onClick={toggleBoardForm}>
         <i className="fa-solid fa-folder-plus"></i>
       </button>
       <Link to="/profile" className="header-edit">
         <i className="fa-solid fa-user-pen"></i>
       </Link>
-      <button className="header-logout">
+      <button className="header-logout" onClick={logoutHandler}>
         <i className="fa-solid fa-arrow-right-from-bracket"></i>
       </button>
+      {boardFormOpen && (
+        <ModalWindow
+          reason="create a board"
+          declineFunction={toggleBoardForm}
+          confirmFunction={() => {
+            return;
+          }}
+        ></ModalWindow>
+      )}
     </>
   );
 
   const headerWelcomeUnlogin = (
     <>
       <Link to="/signin" className="header-signin">
-        <FormattedMessage id="header_signin" defaultMessage="Sign in" />
+        {t('header.signin')}
       </Link>
       <Link to="/signup" className="header-signup">
-        <FormattedMessage id="header_signup" defaultMessage="Sign up" />
+        {t('header.signup')}
       </Link>
+      <LanguagePanel />
     </>
   );
 
@@ -72,6 +98,7 @@ const PageHeader = () => {
       <Link to="/signup" className="header-signup">
         <i className="fa-solid fa-user-plus"></i>
       </Link>
+      <LanguagePanel />
     </>
   );
 
@@ -79,7 +106,7 @@ const PageHeader = () => {
     <>
       {headerNormal}
       <Link to="/main" className="header-go-main">
-        <FormattedMessage id="header_goMain" defaultMessage="Go to Main Page" />
+        {t('header.goMain')}
       </Link>
     </>
   );

@@ -10,7 +10,6 @@ import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 import { boardReducer, boardSlice } from './slices/board.slice';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
 import { columnListReducer, columnListSlice } from './slices/columnList.slice';
-import { langReducer, langSlice } from './slices/lang.slice';
 import { profileSlice, profileReducer } from './slices';
 import { searchSlice, searchReducer } from './slices/search.slice';
 
@@ -22,7 +21,6 @@ const reducers = {
   [authSlice.name]: authReducer,
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListReducer,
-  [langSlice.name]: langReducer,
   [searchSlice.name]: searchReducer,
   [profileSlice.name]: profileReducer,
   [boardSlice.name]: boardReducer,

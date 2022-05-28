@@ -4,11 +4,11 @@ import { useEffect } from 'react';
 import { ColumnRequest } from '../../store/slices/types';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { errorSlice } from '../../store/slices';
-
 import {
   useCreateColumnMutation,
   useGetColumnListQuery,
 } from '../../store/services/column.service';
+import { useTranslation } from 'react-i18next';
 
 type ColumnDataModel = ColumnRequest;
 
@@ -17,6 +17,7 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   const { data } = useGetColumnListQuery(id);
   const [createColumn, { error }] = useCreateColumnMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
 
   const {
     register,
@@ -37,16 +38,15 @@ function ColumnCreationForm(props: { declineFunction: () => void }) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        label="Column Title"
+        label={t('modal.title')}
         controlKey="ColumnTitleInput"
         className="form-input-text"
         errorMessage={errors.title?.message}
         {...register('title', { required: true })}
       />
-
-      <Form.Button type="submit" className="button-orange button-big">
-        Create column
-      </Form.Button>
+      <Form.Group>
+        <Form.Button type="submit">{t('boardpage.newColumn')}</Form.Button>
+      </Form.Group>
     </Form>
   );
 }

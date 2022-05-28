@@ -4,38 +4,55 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 10rem;
-  width: 40%;
-  background-color: $violet-color;
-  padding: 1%;
+  background-color: rgba(230, 230, 230, 0.6);
+  border-radius: $border-radius;
+  padding: 1rem;
+  gap: 2rem;
+  width: 290px;
 }
 
 .form > * {
   width: 100%;
 }
+
 .form__group {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  row-gap: 10px;
+  gap: 1rem;
   align-items: center;
-}
-.form__group label {
-  color: white;
-  font-size: 2em;
-}
-.form-input-text {
-  color: black;
-  padding: 0;
-  box-sizing: border-box;
-  height: 50px;
-  width: 100%;
-  border-color: $violet-color;
-}
-input:invalid {
-  border: 2px solid $red-color;
+  flex-wrap: wrap;
+
+  &:last-child {
+    flex-direction: row;
+
+    & > * {
+      @extend %button-default;
+      @extend %button-invert-color;
+    }
+  }
 }
 
-input:valid {
-  border: 2px solid $violet-color;
+.form__group label {
+  font-size: 1.5em;
+  font-family: $heading-font-family;
+  font-weight: 700;
+  margin: 1rem;
+  @media (min-width: $maximum-width) {
+    font-size: 2em;
+  }
+}
+
+.form-input-text {
+  border: none;
+  color: black;
+  padding: 0.5rem;
+  text-align: center;
+
+  width: 100%;
+  border-radius: 0.4rem;
+}
+
+.form__error {
+  text-align: center;
 }

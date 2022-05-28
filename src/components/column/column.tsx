@@ -57,6 +57,15 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
 
   return (
     <li className="board-item">
+      <div className="column-buttons">
+        <button onClick={toggleColumnForm} className="column-delete column-button">
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
+
+        <button onClick={toggleTaskForm} className="task-add column-button">
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      </div>
       {editMode ? (
         <EditTitle id={id} column={props.column} setEditMode={setEditMode} />
       ) : (
@@ -69,8 +78,6 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
         </h3>
       )}
 
-      <button onClick={toggleColumnForm}>delete column</button>
-      <button onClick={toggleTaskForm}>add task</button>
       <Droppable droppableId={props.column.id} direction="vertical" type="task">
         {(provided, snapshot) => (
           <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>

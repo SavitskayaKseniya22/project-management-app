@@ -6,11 +6,13 @@ import { TaskFormData, TaskRequest, TaskResponse } from '../../store/slices/type
 import { Form } from '../form';
 import jwt_decode from 'jwt-decode';
 import { useCreateTaskMutation, useUpdateTaskMutation } from '../../store/services/task.service';
-
 import { errorSlice } from '../../store/slices';
+
+import { useTranslation } from 'react-i18next';
 import { useGetColumnQuery } from '../../store/services/column.service';
 import { isConstructorDeclaration } from 'typescript';
 import { boardSlice } from '../../store/slices/board.slice';
+
 export interface TaskFormProps {
   columnId: string;
   closeFormFunction: () => void;
@@ -38,6 +40,8 @@ function TaskCreationForm(props: TaskFormProps) {
   const [createTask, { error }] = useCreateTaskMutation();
   const [updateTask, { error: updateError }] = useUpdateTaskMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (!error && !updateError) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
@@ -64,7 +68,7 @@ function TaskCreationForm(props: TaskFormProps) {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        label="Title"
+        label={t('modal.title')}
         controlKey="taskTitleInput"
         className="form-input-text"
         defaultValue={props.task ? props.task.title : ''}
@@ -72,7 +76,7 @@ function TaskCreationForm(props: TaskFormProps) {
         {...register('title', { required: true })}
       />
       <Form.Control
-        label="Description"
+        label={t('modal.description')}
         controlKey="taskDescriptionInput"
         className="form-input-text"
         defaultValue={props.task ? props.task.description : ''}
@@ -80,27 +84,11 @@ function TaskCreationForm(props: TaskFormProps) {
         {...register('description', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          {props.task ? 'Edit Task' : 'Create Task'}
+        <Form.Button type="submit">
+          {props.task ? t('modal.editTask') : t('boardpage.newTask')}
         </Form.Button>
       </Form.Group>
     </Form>
   );
 }
 export default TaskCreationForm;
-
-/*  "title": "Task: pet the cat",
-  "done": false,
-  "order": 1,
-  "description": "Domestic cat needs to be stroked gently",
-  "userId": "40af606c-c0bb-47d1-bc20-a2857242cde3"*/
-/*
-
-  "title": "Task: pet the cat",
-  "order": 1,
-  "description": "Domestic cat needs to be stroked gently",
-  "userId": "40af606c-c0bb-47d1-bc20-a2857242cde3",
-  "boardId": "8d3bad56-ad8a-495d-9500-18ae4d1de8dc",
-  "columnId": "41344d09-b995-451f-93dc-2f17ae13a4a9"
-}
-*/

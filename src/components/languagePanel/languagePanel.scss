@@ -12,7 +12,6 @@
 
   @media (min-width: $maximum-width) {
     break-after: auto;
-    margin-left: auto;
   }
 
   input {
@@ -28,12 +27,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-sizing: border-box;
     position: relative;
     overflow: visible;
     font-weight: 400;
     min-height: 37px;
-    transition: 0.3s;
+    transition: $transition;
   }
 
   .language-eng::after {
@@ -46,7 +44,7 @@
     left: 4rem;
     background-color: $red-color;
     color: white;
-    transition: left 0.5s;
+    transition: $transition;
     z-index: 1;
     min-height: 38px;
     display: flex;
@@ -62,6 +60,11 @@
     content: 'En';
     left: 0;
   }
+}
+
+.header-signup + .language-panel {
+  order: -1;
+  break-after: auto;
 }
 
 .header-sticky {

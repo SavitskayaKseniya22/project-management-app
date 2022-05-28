@@ -7,6 +7,7 @@ import { errorFormatter } from '../../utits';
 import { useEffect, useState } from 'react';
 import { errorSlice } from '../../store/slices';
 import { useTypedDispatch } from '../../store';
+import { useTranslation } from 'react-i18next';
 
 interface UserDataModel {
   name: string;
@@ -16,12 +17,12 @@ interface UserDataModel {
 
 const schema = yup
   .object({
-    name: yup.string().required('signup_form__errors__name_required'),
+    name: yup.string().required('signup.errors__name_required'),
     login: yup
       .string()
-      .required('signup_form__errors__login_required')
-      .min(3, 'signup_form__errors__login_min_length'),
-    password: yup.string().required('signin_form__errors__password_required'),
+      .required('signup.errors__login_required')
+      .min(3, 'signup.errors__login_min_length'),
+    password: yup.string().required('signin.errors__password_required'),
   })
   .required();
 
@@ -36,6 +37,7 @@ function SignupForm() {
   });
 
   const [userData, setUserData] = useState<UserDataModel>();
+  const { t } = useTranslation();
 
   const dispatch = useTypedDispatch();
 
@@ -55,14 +57,14 @@ function SignupForm() {
       })}
     >
       <Form.Control
-        label="User name"
+        label={t('signup.name')}
         controlKey="userNameInput"
         errorMessage={errorFormatter(errors.name)}
         className="form-input-text"
         {...register('name', { required: true })}
       />
       <Form.Control
-        label="Login"
+        label={t('signup.login')}
         controlKey="loginInput"
         errorMessage={errorFormatter(errors.login, {
           minLength: 3,
@@ -72,16 +74,14 @@ function SignupForm() {
         {...register('login', { required: true })}
       />
       <Form.Control
-        label="Password"
+        label={t('signup.password')}
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
         className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          Submit
-        </Form.Button>
+        <Form.Button type="submit">{t('header.signup')}</Form.Button>
       </Form.Group>
     </Form>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BoardItemSmall } from '../../components/board-item-small/board-item-small';
 import { ModalWindow } from '../../components/modal-window/modal-window';
 import { useTypedDispatch } from '../../store';
@@ -14,6 +15,7 @@ export function MainPage() {
 
   const [triggerDelete] = useDeleteBoardMutation();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!error) return;
@@ -23,6 +25,7 @@ export function MainPage() {
   const openBoardForm = () => {
     setBoardFormOpen(true);
   };
+
   const closeBoardForm = () => {
     setBoardFormOpen(false);
   };
@@ -36,11 +39,15 @@ export function MainPage() {
     setBoardToDelete(null);
   };
 
-  if (data && data.length > 0) {
-    return (
-      <div className="main-page">
-        <div className="board-list">
-          {data.map((item: Board, idx) => {
+  return (
+    <div className="main-page">
+      {data && !data.length ? <h2>{t('mainpage.suggestion')}</h2> : null}
+      <ul className="board-list">
+        <li className="board-item-small board-item-create" onClick={openBoardForm}>
+          <h3>{t('header.newBoard')}</h3>
+        </li>
+        {data &&
+          data.map((item: Board, idx) => {
             return (
               <BoardItemSmall
                 board={item}
@@ -49,34 +56,14 @@ export function MainPage() {
               ></BoardItemSmall>
             );
           })}
-          {boardToDelete && (
-            <ModalWindow
-              reason="delete this board"
-              declineFunction={closeDeleteModal}
-              confirmFunction={deleteBoard}
-            ></ModalWindow>
-          )}
-          {boardFormOpen && (
-            <ModalWindow
-              reason="create a board"
-              declineFunction={closeBoardForm}
-              confirmFunction={() => {
-                return;
-              }}
-            ></ModalWindow>
-          )}
-          <div className="board-item-small" onClick={openBoardForm}>
-            {' '}
-            Create a board
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div className="main-page">
-      <h1>There are no boards yet. Would you like to create one?</h1>
-      <div className="board-list">
+
+        {boardToDelete && (
+          <ModalWindow
+            reason="delete this board"
+            declineFunction={closeDeleteModal}
+            confirmFunction={deleteBoard}
+          ></ModalWindow>
+        )}
         {boardFormOpen && (
           <ModalWindow
             reason="create a board"
@@ -86,11 +73,7 @@ export function MainPage() {
             }}
           ></ModalWindow>
         )}
-        <div className="board-item-small" onClick={openBoardForm}>
-          {' '}
-          Create a board
-        </div>
-      </div>
+      </ul>
     </div>
   );
 }

@@ -1,0 +1,92 @@
+{
+  "header": {
+    "edit": "Edit profile",
+    "logout": "Log out",
+    "search": "search",
+    "newBoard": "Create new board",
+    "signin": "Sign in",
+    "signup": "Sign up",
+    "goMain": "Go to Main Page",
+    "newColumn": "Create new column"
+  },
+  "footer": {
+    "nameNikita": "Nikita Kravchenko",
+    "nameVadim": "Vadim Ilyinchik",
+    "nameKseniya": "Kseniya Savitskaya"
+  },
+  "welcomepage": {
+    "welcome": "Welcome!",
+    "titles": {
+      "main": "Awesome project management app",
+      "features": "Features",
+      "team": "Meet the team"
+    },
+    "features": {
+      "organize": "Organize your team",
+      "plan": "Plan projects and assign responsibility",
+      "collaborate": "Collaborate efficiently",
+      "track": "Track progress and deliver on time"
+    },
+    "responsibility": {
+      "kseniya": {
+        "1": "Design and layout",
+        "2": "Header and footer",
+        "3": "Localisation",
+        "4": "Column creation and DND"
+      },
+      "nikita": {
+        "1": "Team lead",
+        "2": "Task creation and DND",
+        "3": "CI",
+        "4": "Error handling and confirmation window"
+      },
+      "vadim": {
+        "1": "Global store",
+        "2": "User creation",
+        "3": "Signup, signin, logout",
+        "4": "CD"
+      }
+    }
+  },
+  "signin": {
+    "login": "Login",
+    "password": "Password",
+    "errors__login_required": "Login is required",
+    "errors__password_required": "Password is required",
+    "errors__login_min_length": "Login must be at least {{minLength}} characters, but {{currentLength}} characters given"
+  },
+  "signup": {
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "errors__name_required": "Name is required",
+    "errors__login_required": "Login is required",
+    "errors__password_required": "Password is required",
+    "errors__login_min_length": "Login must be at least {{minLength}} characters, but {{currentLength}} characters given"
+  },
+  "boardpage": {
+    "newTask": "Create new task",
+    "back": "Back to boards list",
+    "newColumn": "Create new column"
+  },
+  "modal": {
+    "sure": "Are you sure you want to {{reason}}",
+    "task": "delete the task",
+    "column": "delete the column",
+    "board": "delete this board",
+    "editTask": "Edit task",
+    "title": "Title",
+    "description": "Description"
+  },
+  "editTitle": {
+    "mainInput": "Enter the title"
+  },
+  "error": {
+    "title": "A query error occured:",
+    "confirm": "Ok"
+  },
+  "mainpage": {
+    "suggestion": "There are no boards yet. Would you like to create one?"
+  },
+  "404": "This page does not exist"
+}

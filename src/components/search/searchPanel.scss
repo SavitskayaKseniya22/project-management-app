@@ -4,7 +4,7 @@
   display: flex;
   flex-wrap: nowrap;
   position: relative;
-  box-sizing: border-box;
+  flex-grow: 1;
 
   @media (min-width: $min-width) {
     width: 100%;
@@ -22,7 +22,7 @@
 
   input {
     padding: $half-padding $main-padding;
-    font-size: 1rem;
+
     order: -1;
     flex-grow: 1;
     border: none;
@@ -38,11 +38,6 @@
     font-weight: 400;
     @extend %button-default;
     @extend %button-color;
-    transition: 0.3s;
-
-    &:hover {
-      @extend %button-hover;
-    }
   }
 }
 

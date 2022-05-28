@@ -4,12 +4,13 @@
   background-color: $main-bg-color;
   padding: $main-padding;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   row-gap: 1rem;
   column-gap: 1rem;
-  color: $white-color;
   position: sticky;
   top: 0;
+  z-index: 9999;
 
   a,
   button {
@@ -60,18 +61,12 @@
 .header-signin,
 .header-signup,
 .header-logout + .header-go-main {
-  box-sizing: border-box;
-  text-decoration: none;
   text-align: center;
   font-weight: 400;
   @extend %button-default;
   @extend %button-color;
-  transition: 0.3s;
+  transition: $transition;
   flex-grow: 1;
-
-  &:hover {
-    @extend %button-hover;
-  }
 
   @media (min-width: $maximum-width) {
     flex-grow: 0;
@@ -81,12 +76,22 @@
 .header-signup,
 .header-signin,
 .header-go-main {
-  flex-grow: 0;
+  flex-grow: 1;
+  @media (min-width: $min-width) {
+    flex-grow: 0;
+  }
 }
 
 .header-signin,
 .header-go-main {
   margin-left: auto;
+}
+
+.header-signin {
+  margin-left: unset;
+  @media (min-width: $min-width) {
+    margin-left: auto;
+  }
 }
 
 .header-logout + .header-go-main {

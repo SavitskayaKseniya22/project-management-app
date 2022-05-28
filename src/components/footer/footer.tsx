@@ -1,8 +1,9 @@
 import './footer.scss';
 import logo from '../../assets/svg/rs-school-js.svg';
-import { FormattedMessage } from 'react-intl';
+import { useTranslation } from 'react-i18next';
 
 const PageFooter = () => {
+  const { t } = useTranslation();
   return (
     <footer className="footer" data-testid="footer">
       <div className="footer-course-logo">
@@ -17,7 +18,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FormattedMessage id="footer_nameNikita" defaultMessage="Nikita Kravchenko" />
+          {t('footer.nameNikita')}
         </a>
         <a
           className="footer-git-link"
@@ -25,7 +26,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FormattedMessage id="footer_nameVadim" defaultMessage="Vadim Ilyinchik" />
+          {t('footer.nameVadim')}
         </a>
         <a
           className="footer-git-link"
@@ -33,7 +34,7 @@ const PageFooter = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <FormattedMessage id="footer_nameKseniya" defaultMessage="Kseniya Savitskaya" />
+          {t('footer.nameKseniya')}
         </a>
       </div>
       <span className="footer-copyright">&#169; 2022</span>

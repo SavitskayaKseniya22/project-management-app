@@ -13,6 +13,4 @@ test('renders learn react link', () => {
       </MemoryRouter>
     </Provider>
   );
-  const linkElements = getAllByText('Sign in');
-  linkElements.forEach((linkElement) => expect(linkElement).toBeInTheDocument());
 });

@@ -10,6 +10,7 @@ import { useTypedDispatch } from '../../store';
 import { authSlice, updateUserNameActionCreator, errorSlice } from '../../store/slices';
 import { errorFormatter } from '../../utits';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 type LoginDataModel = SigninQueryRequest;
 
@@ -17,9 +18,9 @@ const schema = yup
   .object({
     login: yup
       .string()
-      .required('signin_form__errors__login_required')
-      .min(3, 'signin_form__errors__login_min_length'),
-    password: yup.string().required('signin_form__errors__password_required'),
+      .required('signin.errors__login_required')
+      .min(3, 'signin.errors__login_min_length'),
+    password: yup.string().required('signin.errors__password_required'),
   })
   .required();
 
@@ -36,6 +37,7 @@ function SigninForm() {
   const dispatch = useTypedDispatch();
 
   const [credentials, setCredentials] = useState<LoginDataModel>();
+  const { t } = useTranslation();
 
   const { data, error } = useSigninQuery(credentials, {
     skip: !credentials,
@@ -43,7 +45,7 @@ function SigninForm() {
 
   useEffect(() => {
     if (!data) return;
-    console.log(data);
+
     const { token } = data;
     const jwtPayload = jwt_decode<{ login: string }>(token);
     dispatch(authSlice.actions.updateAccessToken(token));
@@ -52,7 +54,7 @@ function SigninForm() {
 
   useEffect(() => {
     if (!error) return;
-    console.log(error);
+
     dispatch(errorSlice.actions.updateError(error));
   }, [dispatch, error]);
 
@@ -63,7 +65,7 @@ function SigninForm() {
       })}
     >
       <Form.Control
-        label="Login"
+        label={t('signin.login')}
         controlKey="loginInput"
         errorMessage={errorFormatter(errors.login, {
           minLength: 3,
@@ -73,19 +75,15 @@ function SigninForm() {
         {...register('login', { required: true })}
       />
       <Form.Control
-        label="Password"
+        label={t('signin.password')}
         controlKey="passwordInput"
         errorMessage={errorFormatter(errors.password)}
         className="form-input-text"
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit" className="button-orange button-big">
-          Login
-        </Form.Button>
-        <Link to="/signup" className="button-orange button-big">
-          Signup
-        </Link>
+        <Form.Button type="submit">{t('header.signin')}</Form.Button>
+        <Link to="/signup">{t('header.signup')}</Link>
       </Form.Group>
     </Form>
   );

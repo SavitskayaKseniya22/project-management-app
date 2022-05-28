@@ -1,28 +1,79 @@
-.board-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-}
-.board-item-small {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5%;
-  border-bottom: #7953f5 5px solid;
-  width: 263px;
-  height: 327px;
-  padding: 10px;
-  background-color: #e5e5e5;
-}
+@import '../src/variables.scss';
+
 .main-page {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  background: url('../../assets/png/d7a8389a8e4a9b5b4a83374ea21f8447.png') no-repeat bottom right /
+    50% scroll;
+  padding: 2rem;
+
+  .board-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+  }
+}
+
+.board-item-small {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: $border-radius;
+  max-width: 15%;
+  min-width: 270px;
+  flex-grow: 1;
+  padding: 1rem;
+  background-color: hsla(0, 0%, 90%, 0.6);
+  position: relative;
+
+  &:nth-child(3n) {
+    @media (min-width: $maximum-width) {
+      page-break-after: always;
+    }
+  }
+}
+
+.board-delete,
+.board-open {
+  color: $main-bg-color;
+  cursor: pointer;
+  padding: $half-padding $main-padding;
+  background-color: transparent;
+  border: none;
+  position: absolute;
+}
+
+.board-delete {
+  right: 0.5rem;
+  bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.board-open {
+  top: 0;
+  right: 0;
+  font-size: 2rem;
+  color: $green-color;
+  opacity: 0.6;
+  transition: 0.5s;
+
+  &:hover {
+    transition: 0.5s;
+    opacity: 1;
+  }
+}
+
+.board-item-create {
+  cursor: pointer;
+  border-top: $border;
 }
