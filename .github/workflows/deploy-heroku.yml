@@ -19,10 +19,10 @@ jobs:
           npm ci
       - name: Lint
         run: |
-          npm lint
+          npm run lint
       - name: test
         run: |
-          npm test
+          npm run test
   build:
     runs-on: ubuntu-latest
     needs: test
