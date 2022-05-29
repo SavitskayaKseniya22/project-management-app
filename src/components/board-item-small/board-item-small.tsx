@@ -1,6 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { useTypedDispatch } from '../../store';
-import { boardSlice } from '../../store/slices/board.slice';
+import { Link } from 'react-router-dom';
 import { Board } from '../../store/slices/types';
 
 interface BoardItemProps {
@@ -9,13 +7,6 @@ interface BoardItemProps {
 }
 
 export function BoardItemSmall(props: BoardItemProps) {
-  const navigate = useNavigate();
-  const dispatch = useTypedDispatch();
-  const getActiveBoard = () => {
-    dispatch(boardSlice.actions.updateActiveBoard(props.board));
-    navigate('/board', { replace: true });
-  };
-
   return (
     <div className="board-item-small">
       <h3> {props.board.title} </h3>
@@ -23,9 +14,9 @@ export function BoardItemSmall(props: BoardItemProps) {
       <button onClick={props.openDeleteModal} className="board-delete">
         <i className="fa-solid fa-trash-can"></i>
       </button>
-      <button onClick={getActiveBoard} className="board-open">
+      <Link to={`/${props.board.id}`} className="board-open">
         <i className="fa-solid fa-up-right-from-square"></i>
-      </button>
+      </Link>
     </div>
   );
 }

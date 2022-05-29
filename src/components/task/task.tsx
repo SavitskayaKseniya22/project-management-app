@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { useLocation } from 'react-router-dom';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
 import { useDeleteTaskMutation, useGetTaskQuery } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
@@ -16,7 +17,9 @@ interface TaskProps {
 export const Task = (props: TaskProps) => {
   const [taskRemovalToConfirm, setTaskRemovalToConfirm] = useState<boolean>(false);
   const [taskEditToConfirm, setTaskEditToConfirm] = useState<boolean>(false);
-  const boardId = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
+  const location = useLocation();
+  const boardId = location.pathname.slice(1);
+
   const { columnId, id, title, description } = props.taskItem;
   const toggleTaskRemoval = () => {
     setTaskRemovalToConfirm(!taskRemovalToConfirm);

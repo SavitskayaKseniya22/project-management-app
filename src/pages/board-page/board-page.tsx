@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Column } from '../../components/column/column';
 import { ModalWindow } from '../../components/modal-window/modal-window';
 import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
@@ -11,7 +11,7 @@ import { errorSlice } from '../../store/slices/error.slice';
 import { Board, ColumnResponseAll, TaskResponse, Column as ColInt } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { skipToken } from '@reduxjs/toolkit/dist/query';
+
 import taskApi, {
   useCreateTaskMutation,
   useDeleteTaskMutation,
@@ -20,10 +20,11 @@ import taskApi, {
 } from '../../store/services/task.service';
 import { useGetBoardQuery } from '../../store/services/boardList.service';
 import { boardSlice } from '../../store/slices/board.slice';
-import { isConstructorDeclaration } from 'typescript';
 
 export function BoardPage() {
-  const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
+  const location = useLocation();
+  const id = location.pathname.slice(1);
+
   const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { data: boardStore, error: boardError } = useGetBoardQuery(id);

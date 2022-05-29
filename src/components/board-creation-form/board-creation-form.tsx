@@ -20,7 +20,6 @@ function BoardCreationForm(props: { declineFunction: () => void }) {
   const dispatch = useTypedDispatch();
   const navigate = useNavigate();
   const { t } = useTranslation();
-
   const [triggerBoardMutation, { error }] = useCreateBoardMutation();
 
   useEffect(() => {
@@ -30,8 +29,8 @@ function BoardCreationForm(props: { declineFunction: () => void }) {
 
   return (
     <Form
-      onSubmit={handleSubmit((data: BoardDataModel) => {
-        triggerBoardMutation(data);
+      onSubmit={handleSubmit(async (data: BoardDataModel) => {
+        await triggerBoardMutation(data);
         props.declineFunction();
         navigate('/main', { replace: true });
       })}

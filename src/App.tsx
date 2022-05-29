@@ -26,7 +26,7 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/main" element={<MainPage></MainPage>} />
-          <Route path="/board" element={<BoardPage></BoardPage>} />
+          <Route path="/:id" element={<BoardPage></BoardPage>} />
           <Route path="/search" element={<BoardPage></BoardPage>} />
           <Route path="/profile" element={<ProfileEditPage></ProfileEditPage>}></Route>
         </Route>

@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { useTypedSelector, RootState, useTypedDispatch } from '../../store';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { useLocation } from 'react-router-dom';
+import { useTypedDispatch } from '../../store';
 import { useDeleteColumnMutation, useGetColumnQuery } from '../../store/services/column.service';
 import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
 import { Board, ColumnResponseAll, TaskResponse } from '../../store/slices/types';
-import { getMaxOrderFromData } from '../../utits/getMaxOrderFromData';
+
 import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
 import './column.scss';
+
 export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
-  const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id) as string;
+  const location = useLocation();
+  const id = location.pathname.slice(1);
+
   const [skip, setSkip] = useState(false);
 
   const { data, error } = useGetColumnQuery(

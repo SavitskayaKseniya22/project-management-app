@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+
 import boardListApi from '../services/boardList.service';
 import columnApi from '../services/column.service';
 import taskApi from '../services/task.service';
@@ -12,9 +11,6 @@ export const boardSlice = createSlice({
   name: 'boardSlice',
   initialState,
   reducers: {
-    updateActiveBoard(state, action: PayloadAction<Board>) {
-      state.board = action.payload;
-    },
     updateColumnTasks(state, action: PayloadAction<{ taskList: TaskResponse[]; colId: string }>) {
       const colToUpdate = state.board?.columns.find(
         (col: Column) => col.id === action.payload.colId
@@ -117,12 +113,3 @@ export const boardSlice = createSlice({
     );
   },
 });
-
-export const boardReducer = persistReducer(
-  {
-    key: 'rtk:board',
-    storage,
-    whitelist: ['board'],
-  },
-  boardSlice.reducer
-);
