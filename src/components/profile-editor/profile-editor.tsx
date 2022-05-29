@@ -82,7 +82,6 @@ function ProfileEditor({ profileId }: { profileId: string }) {
       />
       <Form.Group>
         <Form.Button type="submit">{t('profileEditor.update')}</Form.Button>
-        <Form.Button onClick={deleteProfileHandler}>{t('profileEditor.delete')}</Form.Button>
       </Form.Group>
     </Form>
   );
