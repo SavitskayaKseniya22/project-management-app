@@ -1,22 +1,23 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-import { profileRehydrateMiddleware, unauthenticatedMiddleware } from './middlewares';
+import { unauthenticatedMiddleware } from './middlewares';
 import { authApi } from './services';
 import boardListApi from './services/boardList.service';
 import columnApi from './services/column.service';
 import taskApi from './services/task.service';
+import profileApi from './services/profile.service';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 
-import { profileSlice, profileReducer } from './slices';
+import { searchSlice, searchReducer } from './slices/search.slice';
+import { taskListSlice } from './slices/taskList.slice';
 import { boardSlice } from './slices/board.slice';
 import { boardListSlice } from './slices/boardList.slice';
 import { columnListSlice } from './slices/columnList.slice';
-import { searchSlice, searchReducer } from './slices/search.slice';
-import { taskListSlice } from './slices/taskList.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
+  [profileApi.reducerPath]: profileApi.reducer,
   [boardListApi.reducerPath]: boardListApi.reducer,
   [columnApi.reducerPath]: columnApi.reducer,
   [taskApi.reducerPath]: taskApi.reducer,
@@ -24,7 +25,6 @@ const reducers = {
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListSlice.reducer,
   [searchSlice.name]: searchReducer,
-  [profileSlice.name]: profileReducer,
   [boardSlice.name]: boardSlice.reducer,
   [columnListSlice.name]: columnListSlice.reducer,
   [taskListSlice.name]: taskListSlice.reducer,
@@ -49,13 +49,11 @@ export const store = configureStore({
       },
     }).concat([
       unauthenticatedMiddleware,
-      profileRehydrateMiddleware,
-      authApi.middleware,
-      boardListApi.middleware,
       authApi.middleware,
       boardListApi.middleware,
       columnApi.middleware,
       taskApi.middleware,
+      boardListApi.middleware,
     ]),
 });
 

@@ -3,7 +3,7 @@ name: Deploy
 on:
   push:
     branches:
-      - main
+      - develop
 
 jobs:
   test:
@@ -17,9 +17,12 @@ jobs:
       - name: install dependencies
         run: |
           npm ci
+      - name: Lint
+        run: |
+          npm run lint
       - name: test
         run: |
-          npm test
+          npm run test
   build:
     runs-on: ubuntu-latest
     needs: test
@@ -31,4 +34,4 @@ jobs:
           heroku_app_name: 'rss-kanban' #Must be unique in Heroku
           heroku_email: 'ivp.dev@outlook.com'
           buildpack: 'https://github.com/mars/create-react-app-buildpack.git'
-          branch: 'main'
+          branch: 'develop'
