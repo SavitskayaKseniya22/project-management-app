@@ -1,23 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAccessTokenSelector } from '../selectors';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import fetchBaseQuery from './utils/fetch-base-query';
 import { Board, BoardRequest } from '../slices/types';
-import { RootState } from '../store';
 
 export const AUTH_API_REDUCER_KEY = 'boardListApi';
 
 export const boardListApi = createApi({
   reducerPath: AUTH_API_REDUCER_KEY,
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://secure-spire-20211.herokuapp.com',
-    prepareHeaders: (headers, { getState }) => {
-      const token = getAccessTokenSelector(getState() as RootState);
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: fetchBaseQuery,
   tagTypes: ['Board'],
   endpoints: (builder) => ({
     boardList: builder.query<Board[], undefined>({

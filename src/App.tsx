@@ -5,12 +5,12 @@ import { MainPage } from './pages/main-page/main-page';
 import { WelcomePage } from './pages/welcome-page/welcome-page';
 import { BoardPage } from './pages/board-page/board-page';
 import { NotFoundPage } from './pages/not-found-page/not-found-page';
-import { ProfileEditPage } from './pages/profile-edit-page/profile-edit-page';
 import { ProtectedRoute } from './components/protected-route';
 import './App.scss';
 import { SigninPage } from './pages/signin';
 import { SignupPage } from './pages/signup';
 import { ErrorPropmt } from './components/error-prompt/error-prompt';
+import { ProfilePage } from './pages/profile-page';
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
           <Route path="/main" element={<MainPage></MainPage>} />
           <Route path="/board" element={<BoardPage></BoardPage>} />
           <Route path="/search" element={<BoardPage></BoardPage>} />
-          <Route path="/profile" element={<ProfileEditPage></ProfileEditPage>}></Route>
+          <Route path="/profile" element={<ProfilePage />}></Route>
         </Route>
         <Route path="*" element={<NotFoundPage></NotFoundPage>} />
       </Routes>

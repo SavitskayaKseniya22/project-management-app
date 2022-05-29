@@ -4,7 +4,7 @@ import { InnerRef } from '../../interfaces';
 import Form from './form';
 
 export interface FormControlProps
-  extends React.HTMLAttributes<HTMLInputElement>,
+  extends React.InputHTMLAttributes<HTMLInputElement>,
     InnerRef<HTMLInputElement> {
   value?: string | number;
   controlKey?: string;
