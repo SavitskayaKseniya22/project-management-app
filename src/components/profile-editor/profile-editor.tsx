@@ -1,72 +1,88 @@
 import { Form } from '../form';
 import { useForm } from 'react-hook-form';
-import jwt_decode from 'jwt-decode';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useSigninQuery } from '../../store/services';
-import { useEffect, useState } from 'react';
-import { SigninQueryRequest } from '../../store/services/types';
-import { useTypedDispatch } from '../../store';
-import { authSlice, updateUserNameActionCreator, errorSlice } from '../../store/slices';
 import { errorFormatter } from '../../utits';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useGetProfileQuery } from '../../store/services/profile.service';
-
-type LoginDataModel = SigninQueryRequest;
+import {
+  useDeleteProfileMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+} from '../../store/services/profile.service';
+import { Spinner } from '../spinner/spinner';
+import { UserDataModel } from '../../interfaces';
 
 const schema = yup
   .object({
-    login: yup
-      .string()
-      .required('signin.errors__login_required')
-      .min(3, 'signin.errors__login_min_length'),
-    password: yup.string().required('signin.errors__password_required'),
+    name: yup.string().required('profileEditor.errors.name_required'),
+    login: yup.string().required(),
+    password: yup.string().required('profileEditor.errors.password_required'),
   })
   .required();
 
 function ProfileEditor({ profileId }: { profileId: string }) {
+  const { data: profile } = useGetProfileQuery(profileId);
+  const [deleteProfile] = useDeleteProfileMutation();
+  const [updateProfile] = useUpdateProfileMutation();
+
   const {
     register,
-    getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginDataModel>({
+  } = useForm<UserDataModel>({
     resolver: yupResolver(schema),
   });
 
-  const profile = useGetProfileQuery(profileId);
-
-  console.log(profile);
+  const deleteProfileHandler = async () => {
+    await deleteProfile(profileId);
+  };
 
   const { t } = useTranslation();
 
+  if (!profile) return <Spinner />;
+
   return (
     <Form
-      onSubmit={handleSubmit((data) => {
-        /**/
+      onSubmit={handleSubmit((data: UserDataModel) => {
+        updateProfile({
+          userId: profileId,
+          userData: data,
+        });
       })}
     >
       <Form.Control
-        label={t('signin.login')}
-        controlKey="loginInput"
-        errorMessage={errorFormatter(errors.login, {
-          minLength: 3,
-          currentLength: getValues('login')?.length || 0,
-        })}
+        readOnly
+        label={t('profileEditor.id')}
+        controlKey="profileIdInput"
         className="form-input-text"
+        defaultValue={profile.id}
+      />
+      <Form.Control
+        label={t('profileEditor.name')}
+        controlKey="nameInput"
+        className="form-input-text"
+        errorMessage={errorFormatter(errors.name)}
+        defaultValue={profile.name}
+        {...register('name', { required: true })}
+      />
+      <Form.Control
+        readOnly
+        label={t('profileEditor.login')}
+        controlKey="loginInput"
+        className="form-input-text"
+        defaultValue={profile.login}
         {...register('login', { required: true })}
       />
       <Form.Control
-        label={t('signin.password')}
-        controlKey="passwordInput"
-        errorMessage={errorFormatter(errors.password)}
+        label={t('profileEditor.password')}
+        controlKey="profilePasswordInput"
         className="form-input-text"
+        errorMessage={errorFormatter(errors.password)}
         {...register('password', { required: true })}
       />
       <Form.Group>
-        <Form.Button type="submit">{t('header.signin')}</Form.Button>
-        <Link to="/signup">{t('header.signup')}</Link>
+        <Form.Button type="submit">{t('profileEditor.update')}</Form.Button>
+        <Form.Button onClick={deleteProfileHandler}>{t('profileEditor.delete')}</Form.Button>
       </Form.Group>
     </Form>
   );

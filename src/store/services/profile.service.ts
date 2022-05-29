@@ -1,7 +1,8 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { RootState } from '../store';
+import { createApi } from '@reduxjs/toolkit/query/react';
+import { UserDataModel } from '../../interfaces';
+import fetchBaseQuery from './utils/fetch-base-query';
 
-interface Profile {
+interface ProfileDataModel {
   id: string;
   name: string;
   login: string;
@@ -9,30 +10,21 @@ interface Profile {
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://secure-spire-20211.herokuapp.com',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.accessToken;
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: fetchBaseQuery,
   tagTypes: ['Profile'],
   endpoints: (builder) => ({
-    getProfile: builder.query<Profile, string>({
+    getProfile: builder.query<ProfileDataModel, string>({
       query: (id) => ({
         url: `/users/${id}`,
         method: 'GET',
       }),
       providesTags: ['Profile'],
     }),
-    updateProfile: builder.mutation<Profile, Profile>({
-      query: (profile) => ({
-        url: `/users/${profile.id}`,
+    updateProfile: builder.mutation<ProfileDataModel, { userId: string; userData: UserDataModel }>({
+      query: ({ userId, userData }) => ({
+        url: `/users/${userId}`,
         method: 'PUT',
-        body: profile,
+        body: userData,
       }),
       invalidatesTags: ['Profile'],
     }),

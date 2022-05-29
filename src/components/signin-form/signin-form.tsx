@@ -7,7 +7,7 @@ import { useSigninQuery } from '../../store/services';
 import { useEffect, useState } from 'react';
 import { SigninQueryRequest } from '../../store/services/types';
 import { useTypedDispatch } from '../../store';
-import { authSlice, updateUserNameActionCreator, errorSlice } from '../../store/slices';
+import { authSlice, errorSlice } from '../../store/slices';
 import { errorFormatter } from '../../utits';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -45,11 +45,8 @@ function SigninForm() {
 
   useEffect(() => {
     if (!data) return;
-
     const { token } = data;
-    const jwtPayload = jwt_decode<{ login: string }>(token);
     dispatch(authSlice.actions.updateAccessToken(token));
-    dispatch(updateUserNameActionCreator(jwtPayload.login));
   }, [dispatch, data]);
 
   useEffect(() => {

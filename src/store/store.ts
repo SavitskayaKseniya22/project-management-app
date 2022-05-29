@@ -1,7 +1,7 @@
 import { combineReducers, configureStore, Reducer } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-import { profileRehydrateMiddleware, unauthenticatedMiddleware } from './middlewares';
+import { unauthenticatedMiddleware } from './middlewares';
 import { authApi } from './services';
 import boardListApi from './services/boardList.service';
 import columnApi from './services/column.service';
@@ -11,7 +11,6 @@ import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
 import { boardReducer, boardSlice } from './slices/board.slice';
 import { boardListReducer, boardListSlice } from './slices/boardList.slice';
 import { columnListReducer, columnListSlice } from './slices/columnList.slice';
-import { profileSlice, profileReducer } from './slices';
 import { searchSlice, searchReducer } from './slices/search.slice';
 
 const reducers = {
@@ -24,7 +23,6 @@ const reducers = {
   [errorSlice.name]: errorReducer,
   [boardListSlice.name]: boardListReducer,
   [searchSlice.name]: searchReducer,
-  [profileSlice.name]: profileReducer,
   [boardSlice.name]: boardReducer,
   [columnListSlice.name]: columnListReducer,
 };
@@ -48,9 +46,6 @@ export const store = configureStore({
       },
     }).concat([
       unauthenticatedMiddleware,
-      profileRehydrateMiddleware,
-      authApi.middleware,
-      boardListApi.middleware,
       authApi.middleware,
       boardListApi.middleware,
       columnApi.middleware,

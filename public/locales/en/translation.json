@@ -88,5 +88,17 @@
   "mainpage": {
     "suggestion": "There are no boards yet. Would you like to create one?"
   },
-  "404": "This page does not exist"
+  "404": "This page does not exist",
+  "profileEditor": {
+    "id": "User ID",
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "update": "Update",
+    "delete": "Delete",
+    "errors": {
+      "name_required": "Name is required",
+      "password_required": "Password is required"
+    }
+  }
 }

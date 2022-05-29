@@ -8,12 +8,7 @@ import { useEffect, useState } from 'react';
 import { errorSlice } from '../../store/slices';
 import { useTypedDispatch } from '../../store';
 import { useTranslation } from 'react-i18next';
-
-interface UserDataModel {
-  name: string;
-  login: string;
-  password: string;
-}
+import { UserDataModel } from '../../interfaces';
 
 const schema = yup
   .object({
