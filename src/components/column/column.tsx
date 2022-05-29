@@ -2,42 +2,36 @@ import { useEffect, useState } from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { useLocation } from 'react-router-dom';
 import { useTypedDispatch } from '../../store';
-import { useDeleteColumnMutation, useGetColumnQuery } from '../../store/services/column.service';
-import { useGetTaskListQuery, useUpdateTaskMutation } from '../../store/services/task.service';
+import { useDeleteColumnMutation } from '../../store/services/column.service';
+import { useGetTaskListQuery } from '../../store/services/task.service';
 import { errorSlice } from '../../store/slices';
-import { Board, ColumnResponseAll, TaskResponse } from '../../store/slices/types';
-
+import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import { EditTitle } from '../edit-title/editTitle';
 import { ModalWindow } from '../modal-window/modal-window';
 import { Task } from '../task/task';
 import './column.scss';
 
-export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
+export const Column = (props: {
+  column: ColumnResponseAll;
+  tasks:
+    | {
+        [id: string]: TaskResponse[];
+      }
+    | undefined;
+}) => {
   const location = useLocation();
   const id = location.pathname.slice(1);
 
-  const [skip, setSkip] = useState(false);
+  const { data, error } = useGetTaskListQuery({
+    boardId: id,
+    columnId: props.column.id,
+  });
 
-  const { data, error } = useGetColumnQuery(
-    { id: id, columnId: props.column.id },
-    {
-      skip,
-    }
-  );
-
-  const { data: taskList, error: taskListError } = useGetTaskListQuery(
-    { boardId: id, columnId: props.column.id },
-    {
-      skip,
-    }
-  );
-  console.log('task list that column sees', taskList);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
   const [deleteColumn] = useDeleteColumnMutation();
-  const [updateTask] = useUpdateTaskMutation();
 
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -46,18 +40,18 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
   const toggleTaskForm = () => {
     setTaskFormOpen((taskFormOpen) => !taskFormOpen);
   };
+
   const confirmDeletion = async () => {
-    setSkip(true);
     await deleteColumn({ id: id, columnId: props.column.id });
     toggleColumnForm();
   };
 
   const dispatch = useTypedDispatch();
   useEffect(() => {
-    if (!error && !taskListError) return;
+    if (!error) return;
     if (error) dispatch(errorSlice.actions.updateError(error));
-    if (taskListError) dispatch(errorSlice.actions.updateError(taskListError));
-  }, [dispatch, error, taskListError]);
+    if (error) dispatch(errorSlice.actions.updateError(error));
+  }, [dispatch, error]);
 
   return (
     <li className="board-item">
@@ -83,28 +77,30 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
       )}
 
       <Droppable droppableId={props.column.id} direction="vertical" type="task">
-        {(provided, snapshot) => (
+        {(provided) => (
           <ul className="task-list" ref={provided.innerRef} {...provided.droppableProps}>
-            {data && taskList && taskList.length ? (
+            {data && props.tasks && props.tasks[props.column.id] ? (
               <>
-                {taskList
-                  .slice()
-                  .sort((a, b) => a.order - b.order)
-                  .map((item: TaskResponse, idx) => {
-                    return (
-                      <Draggable key={item.id} draggableId={item.id} index={idx}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <Task columnId={data.id} taskId={item.id} index={idx} taskItem={item} />
-                          </div>
-                        )}
-                      </Draggable>
-                    );
-                  })}
+                {props.tasks[props.column.id].map((item: TaskResponse, idx) => {
+                  return (
+                    <Draggable key={item.id} draggableId={item.id} index={idx}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          <Task
+                            columnId={props.column.id}
+                            taskId={item.id}
+                            index={idx}
+                            taskItem={item}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
               </>
             ) : null}
             {provided.placeholder}
@@ -129,7 +125,7 @@ export const Column = (props: { column: ColumnResponseAll; board: Board }) => {
             return;
           }}
           optional={{
-            columnId: data.id,
+            columnId: props.column.id,
           }}
         ></ModalWindow>
       )}

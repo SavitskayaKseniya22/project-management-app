@@ -13,6 +13,7 @@ import { boardSlice } from './slices/board.slice';
 import { boardListSlice } from './slices/boardList.slice';
 import { columnListSlice } from './slices/columnList.slice';
 import { searchSlice, searchReducer } from './slices/search.slice';
+import { taskListSlice } from './slices/taskList.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
@@ -26,6 +27,7 @@ const reducers = {
   [profileSlice.name]: profileReducer,
   [boardSlice.name]: boardSlice.reducer,
   [columnListSlice.name]: columnListSlice.reducer,
+  [taskListSlice.name]: taskListSlice.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

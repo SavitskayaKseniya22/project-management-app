@@ -21,20 +21,3 @@ export const columnListSlice = createSlice({
     );
   },
 });
-
-/*
- builder.addMatcher(
-      taskApi.endpoints.getTaskList.matchFulfilled,
-      (state: ColumnListState, { payload, meta }) => {
-        const payloadCopy = payload.slice();
-        payloadCopy.sort(function (a, b) {
-          return a.order - b.order;
-        });
-        const boardToModify: ColumnResponseAll[] | null =  state[meta.arg.originalArgs.boardId as string]
-        if(boardToModify){
-        const colToModify = boardToModify.find((col:ColumnResponseAll) => col.id === meta.arg.originalArgs.columnId)
-        if(colToModify)
-        colToModify.
-        }
-      }
-    );*/

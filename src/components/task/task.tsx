@@ -1,9 +1,6 @@
-import { useEffect, useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
-import { useDeleteTaskMutation, useGetTaskQuery } from '../../store/services/task.service';
-import { errorSlice } from '../../store/slices';
+import { useDeleteTaskMutation } from '../../store/services/task.service';
 import { TaskResponse } from '../../store/slices/types';
 import { ModalWindow } from '../modal-window/modal-window';
 
@@ -23,20 +20,14 @@ export const Task = (props: TaskProps) => {
   const { columnId, id, title, description } = props.taskItem;
   const toggleTaskRemoval = () => {
     setTaskRemovalToConfirm(!taskRemovalToConfirm);
-    console.log('task that will be removed', props.taskItem.title, props.taskItem.id);
   };
   const toggleTaskEdit = () => {
     setTaskEditToConfirm(!taskEditToConfirm);
   };
-  const [skip, setSkip] = useState(false);
 
   const [deleteTask] = useDeleteTaskMutation();
 
-  const dispatch = useTypedDispatch();
-
   const confirmRemoval = async () => {
-    setSkip(true);
-    console.log('task being deleted', props.taskItem.title, props.taskItem.id);
     await deleteTask({ taskId: id, boardId, columnId });
     toggleTaskRemoval();
   };

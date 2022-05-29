@@ -54,7 +54,7 @@ function TaskCreationForm(props: TaskFormProps) {
       task.boardId = props.task.boardId;
       task.columnId = props.task.columnId;
     }
-    console.log('task update', task);
+
     props.task
       ? await updateTask({ task, taskId: props.task.id, boardId: boardId, columnId: columnId })
       : await createTask({ task, boardId, columnId });

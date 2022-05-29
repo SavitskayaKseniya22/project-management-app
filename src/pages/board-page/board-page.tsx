@@ -8,18 +8,15 @@ import {
   useUpdateColumnMutation,
 } from '../../store/services/column.service';
 import { errorSlice } from '../../store/slices/error.slice';
-import { Board, ColumnResponseAll, TaskResponse, Column as ColInt } from '../../store/slices/types';
+import { Board, ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
-import taskApi, {
+import {
   useCreateTaskMutation,
   useDeleteTaskMutation,
-  useGetTaskListQuery,
   useUpdateTaskMutation,
 } from '../../store/services/task.service';
-import { useGetBoardQuery } from '../../store/services/boardList.service';
-import { boardSlice } from '../../store/slices/board.slice';
 
 export function BoardPage() {
   const location = useLocation();
@@ -27,14 +24,10 @@ export function BoardPage() {
 
   const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
-  const { data: boardStore, error: boardError } = useGetBoardQuery(id);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
-
-  /*const [boardState, setBoardState] = useState<Board | undefined | null>(boardStore);*/
-
   const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
-  console.log('board-data', board);
+
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
   };
@@ -54,71 +47,29 @@ export function BoardPage() {
     setData(dataStore);
   }, [dataStore]);
 
-  /*useEffect(() => {
-    setBoardState(boardStore);
-  }, [boardStore]);*/
+  const [taskData, setTaskData] = useState<{
+    [id: string]: TaskResponse[];
+  }>();
 
-  /*unused older order changing functions (that caused the bug)*/
-  /*
-  const changeOrder = async (list: ColumnResponseAll[]) => {
-    const newList = list.map((item: ColumnResponseAll, idx) => {
-      return {
-        column: {
-          title: item.title,
-          order: idx + 1,
-        },
-        id: id as string,
-        columnId: item.id,
-      };
-    });
-    Promise.allSettled(
-      newList.map((item) => {
-        return updateColumn(item);
-      })
-    );
-  };
+  const taskStore = useTypedSelector((state: RootState) => state.taskListSlice[id]);
 
-  const changeTaskOrder = async (list: TaskResponse[], colId: string) => {
-    const newList = list.map((item: TaskResponse, idx) => {
-      return {
-        task: {
-          title: item.title,
-          order: idx + 1,
-          description: item.description,
-          userId: item.userId,
-          boardId: (board as Board).id,
-          columnId: colId,
-        },
-        taskId: item.id,
-        boardId: id,
-        columnId: colId,
-      };
-    });
-    Promise.allSettled(
-      newList.map((item) => {
-        return updateTask(item);
-      })
-    );
-  };
-*/
+  useEffect(() => {
+    setTaskData({ ...taskData, ...taskStore });
+  }, [taskStore]);
+
   const reorder = (
     list: ColumnResponseAll[] | TaskResponse[],
     startIndex: number,
     endIndex: number
   ) => {
-    console.log('startIndex', startIndex);
-    console.log('endIndex', endIndex);
+    console.log(list);
     const result = list.slice();
     const [removed] = result.splice(startIndex, 1);
-    console.log('removed', removed);
     result.splice(endIndex, 0, removed);
-    console.log('reordering result', result);
-    /*return result;*/
     return result;
   };
 
   const updateTaskOrder = async (item: TaskResponse, idx: number) => {
-    console.log('updating task');
     return updateTask({
       task: {
         title: item.title,
@@ -146,7 +97,7 @@ export function BoardPage() {
   };
 
   const onDragEnd = async (result: DropResult) => {
-    const { destination, source, draggableId, type } = result;
+    const { destination, source, type } = result;
 
     if (!destination) {
       return;
@@ -163,7 +114,7 @@ export function BoardPage() {
         destination.index
       );
       setData(items);
-      /*await changeOrder(items);*/
+
       await updateColumnOrder(items[destination.index], destination.index);
       return;
     }
@@ -171,58 +122,37 @@ export function BoardPage() {
     /*Dragging inside the column*/
 
     if (source.droppableId === destination.droppableId) {
-      const home = (board as Board).columns.find(
-        (col: ColInt) => col.id == source.droppableId
-      ) as ColInt;
       const col = reorder(
-        home.tasks as TaskResponse[],
+        taskData![source.droppableId] as TaskResponse[],
         result.source.index,
         destination.index
       ) as TaskResponse[];
 
-      dispatch(
-        boardSlice.actions.updateColumnTasks({ taskList: col as TaskResponse[], colId: home.id })
-      );
-
+      const columnId = col[0].columnId;
+      setTaskData({ ...taskData, ...{ [columnId]: col } });
       await updateTaskOrder((col as TaskResponse[])[destination.index], destination.index);
       return;
     }
 
-    /*Dragging outside the column*/
-    console.log('ATTENTION THE ITEM IS DRAGGED OUTSIDE');
+    if (source.droppableId !== destination.droppableId) {
+      const task = taskData![source.droppableId].find((col) => col.id == result.draggableId);
 
-    const home = (board as Board).columns.find(
-      (col: ColInt) => col.id == source.droppableId
-    ) as ColInt;
-    const foreign = (board as Board).columns.find(
-      (col: ColInt) => col.id == destination.droppableId
-    ) as ColInt;
-    const newHome = (home.tasks as TaskResponse[]).slice();
-    const newForeign = (foreign.tasks as TaskResponse[]).slice();
-    const [removed] = newHome.splice(source.index, 1);
-    console.log('removed item is ', removed.title);
-    newForeign.splice(destination.index, 0, removed);
-    /*dispatch(
-      boardSlice.actions.updateColumnTasks({
-        taskList: newForeign as TaskResponse[],
-        colId: foreign.id,
-      })
-    );
-    dispatch(
-      boardSlice.actions.updateColumnTasks({ taskList: newHome as TaskResponse[], colId: home.id })
-    );*/
+      await createTask({
+        task: {
+          title: task?.title as string,
+          description: task?.description as string,
+          userId: task?.userId as string,
+        },
+        boardId: id,
+        columnId: destination.droppableId,
+      });
 
-    await deleteTask({ taskId: removed.id, columnId: removed.columnId, boardId: removed.boardId });
-
-    await createTask({
-      task: {
-        title: removed.title,
-        description: removed.description,
-        userId: removed.userId,
-      },
-      boardId: id,
-      columnId: destination.droppableId,
-    });
+      await deleteTask({
+        taskId: result.draggableId,
+        columnId: result.source.droppableId,
+        boardId: id,
+      });
+    }
 
     return;
   };
@@ -240,20 +170,20 @@ export function BoardPage() {
 
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal" type="column">
-          {(provided, snapshot) => (
+          {(provided) => (
             <ul className="board-list" ref={provided.innerRef} {...provided.droppableProps}>
               <>
                 {data
                   ? data.map((item: ColumnResponseAll, idx) => {
                       return (
                         <Draggable key={item.id} draggableId={item.id} index={idx}>
-                          {(provided, snapshot) => (
+                          {(provided) => (
                             <div
                               ref={provided.innerRef}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <Column key={idx} column={item} board={board as Board} />
+                              <Column key={idx} column={item} tasks={taskData} />
                             </div>
                           )}
                         </Draggable>
