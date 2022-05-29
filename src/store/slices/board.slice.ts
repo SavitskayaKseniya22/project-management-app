@@ -1,8 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import boardListApi from '../services/boardList.service';
-import columnApi from '../services/column.service';
-
 import { BoardState, Column, TaskResponse } from './types';
 
 const initialState: BoardState = {};

@@ -8,7 +8,7 @@ import {
   useUpdateColumnMutation,
 } from '../../store/services/column.service';
 import { errorSlice } from '../../store/slices/error.slice';
-import { Board, ColumnResponseAll, TaskResponse } from '../../store/slices/types';
+import { ColumnResponseAll, TaskResponse } from '../../store/slices/types';
 import './board-page.scss';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 
@@ -26,7 +26,6 @@ export function BoardPage() {
   const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
-  const board = useTypedSelector((state: RootState) => state.boardSlice.board) as Board;
 
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -62,7 +61,6 @@ export function BoardPage() {
     startIndex: number,
     endIndex: number
   ) => {
-    console.log(list);
     const result = list.slice();
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
@@ -76,7 +74,7 @@ export function BoardPage() {
         order: idx + 1,
         description: item.description,
         userId: item.userId,
-        boardId: (board as Board).id,
+        boardId: id,
         columnId: item.columnId,
       },
       taskId: item.id,
