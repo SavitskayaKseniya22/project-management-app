@@ -90,12 +90,7 @@ export const Column = (props: {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Task
-                            columnId={props.column.id}
-                            taskId={item.id}
-                            index={idx}
-                            taskItem={item}
-                          />
+                          <Task index={idx} taskItem={item} tasks={props.tasks} />
                         </div>
                       )}
                     </Draggable>

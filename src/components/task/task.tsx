@@ -6,10 +6,9 @@ import { TaskResponse } from '../../store/slices/types';
 import { ModalWindow } from '../modal-window/modal-window';
 
 interface TaskProps {
-  columnId: string;
   taskItem: TaskResponse;
-  taskId: string;
   index: number;
+  tasks?: { [id: string]: TaskResponse[] };
 }
 
 export const Task = (props: TaskProps) => {
@@ -18,6 +17,8 @@ export const Task = (props: TaskProps) => {
   const location = useLocation();
   const boardId = location.pathname.slice(1);
   const dispatch = useTypedDispatch();
+
+  const [taskListLocalStore, setTaskData] = useState(props.tasks);
 
   const { columnId, id, title, description } = props.taskItem;
 
@@ -36,6 +37,15 @@ export const Task = (props: TaskProps) => {
   }, [dispatch, deleteTaskError]);
 
   const confirmRemoval = async () => {
+    const taskIndex = taskListLocalStore![columnId].findIndex((col) => col.id == id);
+    const copySource = taskListLocalStore![columnId].slice();
+    copySource.splice(taskIndex, 1);
+
+    setTaskData({
+      ...taskListLocalStore,
+      ...{ [columnId]: copySource },
+    });
+
     await deleteTask({ taskId: id, boardId, columnId });
     toggleTaskRemoval();
   };
