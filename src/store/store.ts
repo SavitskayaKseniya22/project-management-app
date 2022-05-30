@@ -8,10 +8,12 @@ import columnApi from './services/column.service';
 import taskApi from './services/task.service';
 import profileApi from './services/profile.service';
 import { authReducer, authSlice, errorReducer, errorSlice } from './slices';
-import { boardReducer, boardSlice } from './slices/board.slice';
-import { boardListReducer, boardListSlice } from './slices/boardList.slice';
-import { columnListReducer, columnListSlice } from './slices/columnList.slice';
+
 import { searchSlice, searchReducer } from './slices/search.slice';
+import { taskListSlice } from './slices/taskList.slice';
+import { boardSlice } from './slices/board.slice';
+import { boardListSlice } from './slices/boardList.slice';
+import { columnListSlice } from './slices/columnList.slice';
 
 const reducers = {
   [authApi.reducerPath]: authApi.reducer,
@@ -21,10 +23,11 @@ const reducers = {
   [taskApi.reducerPath]: taskApi.reducer,
   [authSlice.name]: authReducer,
   [errorSlice.name]: errorReducer,
-  [boardListSlice.name]: boardListReducer,
+  [boardListSlice.name]: boardListSlice.reducer,
   [searchSlice.name]: searchReducer,
-  [boardSlice.name]: boardReducer,
-  [columnListSlice.name]: columnListReducer,
+  [boardSlice.name]: boardSlice.reducer,
+  [columnListSlice.name]: columnListSlice.reducer,
+  [taskListSlice.name]: taskListSlice.reducer,
 };
 
 const combinedReducer = combineReducers<typeof reducers>(reducers);

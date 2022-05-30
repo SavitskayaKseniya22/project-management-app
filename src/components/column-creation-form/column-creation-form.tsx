@@ -2,19 +2,17 @@ import { Form } from '../form';
 import { useForm } from 'react-hook-form';
 import { useEffect } from 'react';
 import { ColumnRequest } from '../../store/slices/types';
-import { RootState, useTypedDispatch, useTypedSelector } from '../../store';
+import { useTypedDispatch } from '../../store';
 import { errorSlice } from '../../store/slices';
-import {
-  useCreateColumnMutation,
-  useGetColumnListQuery,
-} from '../../store/services/column.service';
+import { useCreateColumnMutation } from '../../store/services/column.service';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 type ColumnDataModel = ColumnRequest;
 
 function ColumnCreationForm(props: { declineFunction: () => void }) {
-  const id = useTypedSelector((state: RootState) => state.boardSlice.board?.id);
-  const { data } = useGetColumnListQuery(id);
+  const location = useLocation();
+  const id = location.pathname.slice(1);
   const [createColumn, { error }] = useCreateColumnMutation();
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
