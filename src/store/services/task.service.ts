@@ -10,14 +10,14 @@ export const taskApi = createApi({
   endpoints: (builder) => ({
     getTaskList: builder.query<TaskResponse[], { columnId: string; boardId: string }>({
       query: ({ boardId, columnId }) => ({
-        url: `/boards/${boardId}/columns/${columnId}/tasks`,
+        url: `/${boardId}/columns/${columnId}/tasks`,
         method: 'GET',
       }),
       providesTags: ['Task'],
     }),
     getTask: builder.query<TaskResponse, { taskId: string; columnId: string; boardId: string }>({
       query: ({ taskId, boardId, columnId }) => ({
-        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        url: `/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'GET',
       }),
       providesTags: ['Task'],
@@ -27,7 +27,7 @@ export const taskApi = createApi({
       { task: TaskRequest; boardId: string; columnId: string }
     >({
       query: ({ task, boardId, columnId }) => ({
-        url: `/boards/${boardId}/columns/${columnId}/tasks`,
+        url: `/${boardId}/columns/${columnId}/tasks`,
         method: 'POST',
         body: task,
       }),
@@ -35,7 +35,7 @@ export const taskApi = createApi({
     }),
     deleteTask: builder.mutation<undefined, { taskId: string; columnId: string; boardId: string }>({
       query: ({ taskId, columnId, boardId }) => ({
-        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        url: `/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Task'],
@@ -45,7 +45,7 @@ export const taskApi = createApi({
       { task: TaskRequest; taskId: string; columnId: string; boardId: string }
     >({
       query: ({ task, taskId, columnId, boardId }) => ({
-        url: `/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        url: `/${boardId}/columns/${columnId}/tasks/${taskId}`,
         method: 'PUT',
         body: task,
       }),

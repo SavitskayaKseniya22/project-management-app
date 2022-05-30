@@ -11,21 +11,21 @@ export const columnApi = createApi({
   endpoints: (builder) => ({
     getColumnList: builder.query<ColumnResponseAll[], string | undefined>({
       query: (id: string) => ({
-        url: `/boards/${id}/columns`,
+        url: `/${id}/columns`,
         method: 'GET',
       }),
       providesTags: ['Column'],
     }),
     getColumn: builder.query<Column, { id: string; columnId: string }>({
       query: ({ id, columnId }) => ({
-        url: `/boards/${id}/columns/${columnId}`,
+        url: `/${id}/columns/${columnId}`,
         method: 'GET',
       }),
       providesTags: ['Column'],
     }),
     createColumn: builder.mutation<ColumnResponseAll, { column: { title: string }; id: string }>({
       query: ({ column, id }) => ({
-        url: `/boards/${id}/columns`,
+        url: `/${id}/columns`,
         method: 'POST',
         body: column,
       }),
@@ -33,7 +33,7 @@ export const columnApi = createApi({
     }),
     deleteColumn: builder.mutation<undefined, { id: string; columnId: string }>({
       query: ({ id, columnId }) => ({
-        url: `/boards/${id}/columns/${columnId}`,
+        url: `/${id}/columns/${columnId}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Column'],
@@ -42,7 +42,7 @@ export const columnApi = createApi({
     updateColumn: builder.mutation<Column, { column: ColumnRequest; id: string; columnId: string }>(
       {
         query: ({ column, columnId, id }) => ({
-          url: `/boards/${id}/columns/${columnId}`,
+          url: `/${id}/columns/${columnId}`,
           method: 'PUT',
           body: column,
         }),
