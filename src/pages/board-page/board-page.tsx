@@ -22,11 +22,13 @@ export function BoardPage() {
   const location = useLocation();
   const id = location.pathname.slice(1);
 
+  const { error: GetColumnListError } = useGetColumnListQuery(id);
+
   const columnListGlobalStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
   const [columnListLocalStore, setData] = useState<ColumnResponseAll[] | undefined | null>(
     columnListGlobalStore
   );
-  const { error: GetColumnListError } = useGetColumnListQuery(id);
+
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
 
   const toggleColumnForm = () => {
@@ -66,11 +68,10 @@ export function BoardPage() {
     setData(columnListGlobalStore);
   }, [columnListGlobalStore]);
 
+  const taskListGlobalStore = useTypedSelector((state: RootState) => state.taskListSlice[id]);
   const [taskListLocalStore, setTaskData] = useState<{
     [id: string]: TaskResponse[];
-  }>();
-
-  const taskListGlobalStore = useTypedSelector((state: RootState) => state.taskListSlice[id]);
+  }>(taskListGlobalStore);
 
   useEffect(() => {
     setTaskData({ ...taskListLocalStore, ...taskListGlobalStore });
