@@ -22,8 +22,10 @@ export function BoardPage() {
   const location = useLocation();
   const id = location.pathname.slice(1);
 
-  const dataStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
-  const [data, setData] = useState<ColumnResponseAll[] | undefined | null>(dataStore);
+  const columnListGlobalStore = useTypedSelector((state: RootState) => state.columnListSlice[id]);
+  const [columnListLocalStore, setData] = useState<ColumnResponseAll[] | undefined | null>(
+    columnListGlobalStore
+  );
   const { error } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
 
@@ -43,18 +45,18 @@ export function BoardPage() {
   }, [dispatch, error]);
 
   useEffect(() => {
-    setData(dataStore);
-  }, [dataStore]);
+    setData(columnListGlobalStore);
+  }, [columnListGlobalStore]);
 
-  const [taskData, setTaskData] = useState<{
+  const [taskListLocalStore, setTaskData] = useState<{
     [id: string]: TaskResponse[];
   }>();
 
-  const taskStore = useTypedSelector((state: RootState) => state.taskListSlice[id]);
+  const taskListGlobalStore = useTypedSelector((state: RootState) => state.taskListSlice[id]);
 
   useEffect(() => {
-    setTaskData({ ...taskData, ...taskStore });
-  }, [taskStore]);
+    setTaskData({ ...taskListLocalStore, ...taskListGlobalStore });
+  }, [taskListGlobalStore]);
 
   const reorder = (
     list: ColumnResponseAll[] | TaskResponse[],
@@ -107,7 +109,7 @@ export function BoardPage() {
 
     if (type === 'column') {
       const items = reorder(
-        dataStore as ColumnResponseAll[],
+        columnListGlobalStore as ColumnResponseAll[],
         result.source.index,
         destination.index
       );
@@ -121,21 +123,34 @@ export function BoardPage() {
 
     if (source.droppableId === destination.droppableId) {
       const col = reorder(
-        taskData![source.droppableId] as TaskResponse[],
+        taskListLocalStore![source.droppableId] as TaskResponse[],
         result.source.index,
         destination.index
       ) as TaskResponse[];
 
       const columnId = col[0].columnId;
-      setTaskData({ ...taskData, ...{ [columnId]: col } });
+      setTaskData({ ...taskListLocalStore, ...{ [columnId]: col } });
       await updateTaskOrder((col as TaskResponse[])[destination.index], destination.index);
       return;
     }
 
     if (source.droppableId !== destination.droppableId) {
-      const task = taskData![source.droppableId].find((col) => col.id == result.draggableId);
+      const task = taskListLocalStore![source.droppableId].find(
+        (col) => col.id == result.draggableId
+      );
 
-      await createTask({
+      const copySource = taskListLocalStore![source.droppableId].slice();
+      const [removed] = copySource.splice(result.source.index, 1);
+      const copyDest = taskListLocalStore![destination.droppableId].slice();
+      copyDest.splice(destination.index, 0, removed);
+
+      setTaskData({
+        ...taskListLocalStore,
+        ...{ [source.droppableId]: copySource },
+        ...{ [destination.droppableId]: copyDest },
+      });
+
+      createTask({
         task: {
           title: task?.title as string,
           description: task?.description as string,
@@ -145,7 +160,7 @@ export function BoardPage() {
         columnId: destination.droppableId,
       });
 
-      await deleteTask({
+      deleteTask({
         taskId: result.draggableId,
         columnId: result.source.droppableId,
         boardId: id,
@@ -171,8 +186,8 @@ export function BoardPage() {
           {(provided) => (
             <ul className="board-list" ref={provided.innerRef} {...provided.droppableProps}>
               <>
-                {data
-                  ? data.map((item: ColumnResponseAll, idx) => {
+                {columnListLocalStore
+                  ? columnListLocalStore.map((item: ColumnResponseAll, idx) => {
                       return (
                         <Draggable key={item.id} draggableId={item.id} index={idx}>
                           {(provided) => (
@@ -181,7 +196,7 @@ export function BoardPage() {
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                             >
-                              <Column key={idx} column={item} tasks={taskData} />
+                              <Column key={idx} column={item} tasks={taskListLocalStore} />
                             </div>
                           )}
                         </Draggable>
