@@ -14,7 +14,7 @@ export function BoardItemSmall(props: BoardItemProps) {
       <button onClick={props.openDeleteModal} className="board-delete">
         <i className="fa-solid fa-trash-can"></i>
       </button>
-      <Link to={`/boards/${props.board.id}`} className="board-open">
+      <Link to={`/${props.board.id}`} className="board-open">
         <i className="fa-solid fa-up-right-from-square"></i>
       </Link>
     </div>

@@ -18,6 +18,8 @@ import {
   useUpdateTaskMutation,
 } from '../../store/services/task.service';
 
+import { TaskRequest } from '../../store/slices/types';
+
 export function BoardPage() {
   const location = useLocation();
   const id = location.pathname.slice(1);
@@ -184,6 +186,24 @@ export function BoardPage() {
         columnId: result.source.droppableId,
         boardId: id,
       });
+      /*
+      if (task) {
+        const updatedTask: TaskRequest = {
+          title: task.title,
+          order: destination.index + 1,
+          description: task.description,
+          userId: task.userId,
+          boardId: task.boardId,
+          columnId: destination.droppableId,
+        };
+
+        updateTask({
+          task: updatedTask,
+          taskId: task.id,
+          columnId: task.columnId,
+          boardId: id,
+        });
+      }*/
     }
 
     return;

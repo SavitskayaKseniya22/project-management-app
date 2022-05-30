@@ -21,15 +21,13 @@ function App() {
 
       <Routes>
         <Route element={<ProtectedRoute onlyPublic={true} />}>
-          <Route path="signin" element={<SigninPage />} />
-          <Route path="signup" element={<SignupPage />} />
+          <Route path="/signin" element={<SigninPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<WelcomePage></WelcomePage>} />
           <Route path="main" element={<MainPage></MainPage>} />
-          <Route path="boards" element={<BoardPage></BoardPage>}>
-            <Route path=":id" element={<BoardPage></BoardPage>} />
-          </Route>
+          <Route path=":id" element={<BoardPage></BoardPage>} />
           <Route path="search" element={<SearchResults />} />
           <Route path="profile" element={<ProfilePage />}></Route>
         </Route>
