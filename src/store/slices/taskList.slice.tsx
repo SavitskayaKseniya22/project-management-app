@@ -24,13 +24,12 @@ export const taskListSlice = createSlice({
         payloadCopy.sort(function (a, b) {
           return a.order - b.order;
         });
-        const board = {
-          [boardId]: {
-            [columnId]: payloadCopy,
-          },
-        };
 
-        Object.assign(state, board);
+        if (state[boardId]) {
+          state[boardId][columnId] = payloadCopy;
+        } else {
+          state[boardId] = { [columnId]: payloadCopy };
+        }
       }
     );
   },

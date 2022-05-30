@@ -11,6 +11,7 @@ import { SigninPage } from './pages/signin';
 import { SignupPage } from './pages/signup';
 import { ErrorPropmt } from './components/error-prompt/error-prompt';
 import { ProfilePage } from './pages/profile-page';
+import SearchResults from './components/searchResults/searchResults';
 
 function App() {
   return (
@@ -20,15 +21,15 @@ function App() {
 
       <Routes>
         <Route element={<ProtectedRoute onlyPublic={true} />}>
-          <Route path="/" element={<WelcomePage></WelcomePage>} />
           <Route path="/signin" element={<SigninPage />} />
           <Route path="/signup" element={<SignupPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="/main" element={<MainPage></MainPage>} />
-          <Route path="/:id" element={<BoardPage></BoardPage>} />
-          <Route path="/search" element={<BoardPage></BoardPage>} />
-          <Route path="/profile" element={<ProfilePage />}></Route>
+          <Route path="/" element={<WelcomePage></WelcomePage>} />
+          <Route path="main" element={<MainPage></MainPage>} />
+          <Route path=":id" element={<BoardPage></BoardPage>} />
+          <Route path="search" element={<SearchResults />} />
+          <Route path="profile" element={<ProfilePage />}></Route>
         </Route>
         <Route path="*" element={<NotFoundPage></NotFoundPage>} />
       </Routes>

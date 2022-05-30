@@ -1,7 +1,12 @@
 const SearchResults = () => {
   return (
-    <div className="search-results">
-      <h1>search results</h1>
+    <div
+      className="search-results"
+      style={{
+        flexGrow: '1',
+      }}
+    >
+      <h2>search results</h2>
     </div>
   );
 };
