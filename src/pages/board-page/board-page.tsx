@@ -26,7 +26,7 @@ export function BoardPage() {
   const [columnListLocalStore, setData] = useState<ColumnResponseAll[] | undefined | null>(
     columnListGlobalStore
   );
-  const { error } = useGetColumnListQuery(id);
+  const { error: GetColumnListError } = useGetColumnListQuery(id);
   const [columnFormOpen, setColumnFormOpen] = useState<boolean>(false);
 
   const toggleColumnForm = () => {
@@ -34,15 +34,33 @@ export function BoardPage() {
   };
 
   const dispatch = useTypedDispatch();
-  const [updateColumn] = useUpdateColumnMutation();
-  const [updateTask] = useUpdateTaskMutation();
-  const [deleteTask] = useDeleteTaskMutation();
-  const [createTask] = useCreateTaskMutation();
+  const [updateColumn, { error: updateColumnError }] = useUpdateColumnMutation();
+  const [updateTask, { error: updateTaskError }] = useUpdateTaskMutation();
+  const [deleteTask, { error: deleteTaskError }] = useDeleteTaskMutation();
+  const [createTask, { error: createTaskError }] = useCreateTaskMutation();
 
   useEffect(() => {
-    if (!error) return;
-    if (error) dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);
+    if (
+      !GetColumnListError &&
+      !updateColumnError &&
+      !updateTaskError &&
+      !deleteTaskError &&
+      !createTaskError
+    )
+      return;
+    if (GetColumnListError) dispatch(errorSlice.actions.updateError(GetColumnListError));
+    if (updateColumnError) dispatch(errorSlice.actions.updateError(updateColumnError));
+    if (updateTaskError) dispatch(errorSlice.actions.updateError(updateTaskError));
+    if (deleteTaskError) dispatch(errorSlice.actions.updateError(deleteTaskError));
+    if (createTaskError) dispatch(errorSlice.actions.updateError(createTaskError));
+  }, [
+    dispatch,
+    GetColumnListError,
+    updateColumnError,
+    updateTaskError,
+    deleteTaskError,
+    createTaskError,
+  ]);
 
   useEffect(() => {
     setData(columnListGlobalStore);

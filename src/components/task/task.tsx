@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useTypedDispatch, errorSlice } from '../../store';
 import { useDeleteTaskMutation } from '../../store/services/task.service';
 import { TaskResponse } from '../../store/slices/types';
 import { ModalWindow } from '../modal-window/modal-window';
@@ -16,8 +17,10 @@ export const Task = (props: TaskProps) => {
   const [taskEditToConfirm, setTaskEditToConfirm] = useState<boolean>(false);
   const location = useLocation();
   const boardId = location.pathname.slice(1);
+  const dispatch = useTypedDispatch();
 
   const { columnId, id, title, description } = props.taskItem;
+
   const toggleTaskRemoval = () => {
     setTaskRemovalToConfirm(!taskRemovalToConfirm);
   };
@@ -25,7 +28,12 @@ export const Task = (props: TaskProps) => {
     setTaskEditToConfirm(!taskEditToConfirm);
   };
 
-  const [deleteTask] = useDeleteTaskMutation();
+  const [deleteTask, { error: deleteTaskError }] = useDeleteTaskMutation();
+
+  useEffect(() => {
+    if (!deleteTaskError) return;
+    if (deleteTaskError) dispatch(errorSlice.actions.updateError(deleteTaskError));
+  }, [dispatch, deleteTaskError]);
 
   const confirmRemoval = async () => {
     await deleteTask({ taskId: id, boardId, columnId });

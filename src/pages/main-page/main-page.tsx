@@ -9,18 +9,19 @@ import { Board } from '../../store/slices/types';
 import './main-page.scss';
 
 export function MainPage() {
-  const { data, error } = useBoardListQuery(undefined);
+  const { data, error: getBoardListError } = useBoardListQuery(undefined);
   const [boardToDelete, setBoardToDelete] = useState<string | null>(null);
   const [boardFormOpen, setBoardFormOpen] = useState<boolean>(false);
 
-  const [triggerDelete] = useDeleteBoardMutation();
+  const [triggerDelete, { error: deleteBoardError }] = useDeleteBoardMutation();
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!error) return;
-    if (error) dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);
+    if (!getBoardListError && !deleteBoardError) return;
+    if (getBoardListError) dispatch(errorSlice.actions.updateError(getBoardListError));
+    if (deleteBoardError) dispatch(errorSlice.actions.updateError(deleteBoardError));
+  }, [deleteBoardError, dispatch, getBoardListError]);
 
   const openBoardForm = () => {
     setBoardFormOpen(true);

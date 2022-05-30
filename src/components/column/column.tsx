@@ -22,7 +22,7 @@ export const Column = (props: {
   const location = useLocation();
   const id = location.pathname.slice(1);
 
-  const { data, error } = useGetTaskListQuery({
+  const { data, error: getTaskListError } = useGetTaskListQuery({
     boardId: id,
     columnId: props.column.id,
   });
@@ -31,7 +31,7 @@ export const Column = (props: {
   const [taskFormOpen, setTaskFormOpen] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
 
-  const [deleteColumn] = useDeleteColumnMutation();
+  const [deleteColumn, { error: deleteColumnError }] = useDeleteColumnMutation();
 
   const toggleColumnForm = () => {
     setColumnFormOpen((columnFormOpen) => !columnFormOpen);
@@ -48,10 +48,10 @@ export const Column = (props: {
 
   const dispatch = useTypedDispatch();
   useEffect(() => {
-    if (!error) return;
-    if (error) dispatch(errorSlice.actions.updateError(error));
-    if (error) dispatch(errorSlice.actions.updateError(error));
-  }, [dispatch, error]);
+    if (!getTaskListError && !deleteColumnError) return;
+    if (getTaskListError) dispatch(errorSlice.actions.updateError(getTaskListError));
+    if (deleteColumnError) dispatch(errorSlice.actions.updateError(deleteColumnError));
+  }, [deleteColumnError, dispatch, getTaskListError]);
 
   return (
     <li className="board-item">

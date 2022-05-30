@@ -33,16 +33,16 @@ function TaskCreationForm(props: TaskFormProps) {
   const userToken = useTypedSelector((state: RootState) => state.auth.accessToken);
   const { userId } = jwt_decode(userToken as string) as ParsedToken;
 
-  const [createTask, { error }] = useCreateTaskMutation();
-  const [updateTask, { error: updateError }] = useUpdateTaskMutation();
+  const [createTask, { error: createTaskError }] = useCreateTaskMutation();
+  const [updateTask, { error: updateTaskError }] = useUpdateTaskMutation();
   const dispatch = useTypedDispatch();
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (!error && !updateError) return;
-    if (error) dispatch(errorSlice.actions.updateError(error));
-    if (updateError) dispatch(errorSlice.actions.updateError(updateError));
-  }, [dispatch, error]);
+    if (!createTaskError && !updateTaskError) return;
+    if (createTaskError) dispatch(errorSlice.actions.updateError(createTaskError));
+    if (updateTaskError) dispatch(errorSlice.actions.updateError(updateTaskError));
+  }, [dispatch, createTaskError, updateTaskError]);
 
   const onSubmit = async (formData: TaskFormData) => {
     const task: TaskRequest = {

@@ -11,6 +11,8 @@ import {
 } from '../../store/services/profile.service';
 import { Spinner } from '../spinner/spinner';
 import { UserDataModel } from '../../interfaces';
+import { useEffect } from 'react';
+import { errorSlice, useTypedDispatch } from '../../store';
 
 const schema = yup
   .object({
@@ -21,9 +23,11 @@ const schema = yup
   .required();
 
 function ProfileEditor({ profileId }: { profileId: string }) {
-  const { data: profile } = useGetProfileQuery(profileId);
-  const [deleteProfile] = useDeleteProfileMutation();
-  const [updateProfile] = useUpdateProfileMutation();
+  const { data: profile, error: getProfileError } = useGetProfileQuery(profileId);
+  const [deleteProfile, { error: deleteProfileError }] = useDeleteProfileMutation();
+  const [updateProfile, { error: updataProfileError }] = useUpdateProfileMutation();
+  const { t } = useTranslation();
+  const dispatch = useTypedDispatch();
 
   const {
     register,
@@ -33,11 +37,16 @@ function ProfileEditor({ profileId }: { profileId: string }) {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    if (!deleteProfileError && !updataProfileError && !getProfileError) return;
+    if (deleteProfileError) dispatch(errorSlice.actions.updateError(deleteProfileError));
+    if (updataProfileError) dispatch(errorSlice.actions.updateError(updataProfileError));
+    if (getProfileError) dispatch(errorSlice.actions.updateError(getProfileError));
+  }, [dispatch, deleteProfileError, updataProfileError, getProfileError]);
+
   const deleteProfileHandler = async () => {
     await deleteProfile(profileId);
   };
-
-  const { t } = useTranslation();
 
   if (!profile) return <Spinner />;
 
